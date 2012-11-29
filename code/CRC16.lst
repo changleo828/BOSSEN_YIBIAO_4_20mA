@@ -1,0 +1,135 @@
+   1               		.file	"CRC16.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	CRC16
+  18               	CRC16:
+  19               	.LFB2:
+  20               	.LM1:
+  21               	.LVL0:
+  22 0000 CF93      		push r28
+  23 0002 DF93      		push r29
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26 0004 EC01      		movw r28,r24
+  27               	.LM2:
+  28 0006 2FEF      		ldi r18,lo8(-1)
+  29 0008 3FEF      		ldi r19,hi8(-1)
+  30               	.LVL1:
+  31 000a 40E0      		ldi r20,lo8(0)
+  32 000c 50E0      		ldi r21,hi8(0)
+  33               	.LVL2:
+  34 000e 00C0      		rjmp .L2
+  35               	.LVL3:
+  36               	.L3:
+  37               	.LM3:
+  38 0010 E991      		ld r30,Y+
+  39               	.LVL4:
+  40               	.LM4:
+  41 0012 AE2F      		mov r26,r30
+  42 0014 B0E0      		ldi r27,lo8(0)
+  43               	.LVL5:
+  44 0016 A227      		eor r26,r18
+  45 0018 B327      		eor r27,r19
+  46               	.LVL6:
+  47 001a AF70      		andi r26,lo8(15)
+  48 001c B070      		andi r27,hi8(15)
+  49               	.LVL7:
+  50 001e AA0F      		lsl r26
+  51 0020 BB1F      		rol r27
+  52               	.LVL8:
+  53 0022 A050      		subi r26,lo8(-(wCRCTalbeAbs))
+  54 0024 B040      		sbci r27,hi8(-(wCRCTalbeAbs))
+  55               	.LVL9:
+  56 0026 8D91      		ld r24,X+
+  57 0028 9C91      		ld r25,X
+  58               	.LVL10:
+  59 002a B4E0      		ldi r27,4
+  60 002c 3695      	1:	lsr r19
+  61 002e 2795      		ror r18
+  62 0030 BA95      		dec r27
+  63 0032 01F4      		brne 1b
+  64               	.LVL11:
+  65 0034 8227      		eor r24,r18
+  66 0036 9327      		eor r25,r19
+  67               	.LVL12:
+  68               	.LM5:
+  69 0038 E295      		swap r30
+  70               	.LVL13:
+  71 003a EF70      		andi r30,lo8(15)
+  72 003c F0E0      		ldi r31,lo8(0)
+  73 003e E827      		eor r30,r24
+  74 0040 F927      		eor r31,r25
+  75               	.LVL14:
+  76 0042 EF70      		andi r30,lo8(15)
+  77 0044 F070      		andi r31,hi8(15)
+  78 0046 EE0F      		lsl r30
+  79 0048 FF1F      		rol r31
+  80 004a E050      		subi r30,lo8(-(wCRCTalbeAbs))
+  81 004c F040      		sbci r31,hi8(-(wCRCTalbeAbs))
+  82 004e 2081      		ld r18,Z
+  83 0050 3181      		ldd r19,Z+1
+  84               	.LVL15:
+  85 0052 E4E0      		ldi r30,4
+  86 0054 9695      	1:	lsr r25
+  87 0056 8795      		ror r24
+  88 0058 EA95      		dec r30
+  89 005a 01F4      		brne 1b
+  90               	.LVL16:
+  91 005c 2827      		eor r18,r24
+  92 005e 3927      		eor r19,r25
+  93               	.LVL17:
+  94               	.LM6:
+  95 0060 4F5F      		subi r20,lo8(-(1))
+  96 0062 5F4F      		sbci r21,hi8(-(1))
+  97               	.LVL18:
+  98               	.L2:
+  99 0064 4617      		cp r20,r22
+ 100 0066 5707      		cpc r21,r23
+ 101 0068 00F0      		brlo .L3
+ 102               	.LM7:
+ 103 006a C901      		movw r24,r18
+ 104               	.LVL19:
+ 105               	/* epilogue start */
+ 106 006c DF91      		pop r29
+ 107 006e CF91      		pop r28
+ 108               	.LVL20:
+ 109 0070 0895      		ret
+ 110               	.LFE2:
+ 112               	.global	wCRCTalbeAbs
+ 113               		.data
+ 116               	wCRCTalbeAbs:
+ 117 0000 0000      		.word	0
+ 118 0002 01CC      		.word	-13311
+ 119 0004 01D8      		.word	-10239
+ 120 0006 0014      		.word	5120
+ 121 0008 01F0      		.word	-4095
+ 122 000a 003C      		.word	15360
+ 123 000c 0028      		.word	10240
+ 124 000e 01E4      		.word	-7167
+ 125 0010 01A0      		.word	-24575
+ 126 0012 006C      		.word	27648
+ 127 0014 0078      		.word	30720
+ 128 0016 01B4      		.word	-19455
+ 129 0018 0050      		.word	20480
+ 130 001a 019C      		.word	-25599
+ 131 001c 0188      		.word	-30719
+ 132 001e 0044      		.word	17408
+ 157               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 CRC16.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:18     .text:00000000 CRC16
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccVM0EkZ.s:116    .data:00000000 wCRCTalbeAbs
+
+UNDEFINED SYMBOLS
+__do_copy_data

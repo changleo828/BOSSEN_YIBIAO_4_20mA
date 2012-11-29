@@ -1,0 +1,742 @@
+Archive member included because of file (symbol)
+
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+                              main.o (__floatunsisf)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+                              main.o (__mulsi3)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+                              led.o (__udivmodhi4)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+                              main.o (__udivmodsi4)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+                              main.o (__divmodsi4)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+                              d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o (exit)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+                              led.o (__do_copy_data)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+                              main.o (__do_clear_bss)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+                              main.o (__eerd_byte_m8)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+                              main.o (__eerd_word_m8)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+                              main.o (__eewr_byte_m8)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+                              main.o (__eewr_word_m8)
+d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+                              d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o) (__eerd_blraw_m8)
+
+Allocating common symbols
+Common symbol       size              file
+
+ADS1110_SETUP_DATA  0x2               ads1110.o
+RxFrame             0x8               main.o
+XiaoShuDian         0x1               main.o
+TimerCycleF         0x2               main.o
+ADS1110_READ_DATA   0x4               ads1110.o
+RxArrayTemp         0x14              main.o
+ErrFlag             0x2               main.o
+TimerOver           0x1               main.o
+TimerCycleI         0x2               main.o
+T_C                 0x2               main.o
+VALUE_MAX           0x2               main.o
+VALUE_MIN           0x2               main.o
+ErrCodeDisplay      0x2               main.o
+DeviceAddr          0x1               main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00002000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+LOAD main.o
+LOAD led.o
+LOAD CRC16.o
+LOAD ads1110.o
+LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a
+LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a
+LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a
+LOAD d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x1568
+ *(.vectors)
+ .vectors       0x00000000       0x26 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+                0x00000026                . = ALIGN (0x2)
+                0x00000026                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x00000026        0x0 linker stubs
+ *(.trampolines*)
+                0x00000026                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x00000026                __ctors_start = .
+ *(.ctors)
+                0x00000026                __ctors_end = .
+                0x00000026                __dtors_start = .
+ *(.dtors)
+                0x00000026                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x00000026        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+                0x00000026                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x00000026        0xc d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000032       0x16 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+                0x00000032                __do_copy_data
+ .init4         0x00000048       0x10 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+                0x00000048                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x00000058        0x4 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+ *(.init9)
+ *(.text)
+ .text          0x0000005c        0x2 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+                0x0000005c                __vector_1
+                0x0000005c                __vector_12
+                0x0000005c                __bad_interrupt
+                0x0000005c                __vector_6
+                0x0000005c                __vector_3
+                0x0000005c                __vector_13
+                0x0000005c                __vector_17
+                0x0000005c                __vector_7
+                0x0000005c                __vector_5
+                0x0000005c                __vector_2
+                0x0000005c                __vector_15
+                0x0000005c                __vector_14
+                0x0000005c                __vector_10
+                0x0000005c                __vector_16
+                0x0000005c                __vector_18
+ .text          0x0000005e      0xecc main.o
+                0x000007d0                ADCInit
+                0x000004a0                FrameCRC16IsOK
+                0x000000f4                TimerDelayMs
+                0x00000478                IsErrorOrNot
+                0x00000534                SendDataToPC
+                0x0000045e                ErrorDisplay
+                0x00000254                RxOverrunTimer
+                0x00000330                __vector_11
+                0x000006b2                ChangeADCResult
+                0x000001f2                USART_Init
+                0x0000022a                USART_Transmit
+                0x00000744                RefreshLED
+                0x00000232                printk
+                0x000007d4                WRITE_BYTE_EEP
+                0x00000974                main
+                0x0000026a                __vector_4
+                0x000000ae                Out_MIN
+                0x00000800                SystemInit
+                0x0000005e                Out_MAX
+                0x000005f4                ADCOutOne
+                0x000007ea                WRITE_WORD_EEP
+                0x00000626                ADCOut
+                0x000007e2                READ_BYTE_EEP
+                0x0000017c                __vector_8
+                0x000007f8                READ_WORD_EEP
+ .text          0x00000f2a      0x260 led.o
+                0x00001032                DisplayHex
+                0x00001088                Display10
+                0x00000f2a                SPISend
+                0x0000101c                OpenDisplayLED
+                0x00001188                DisplayFloat
+                0x00000f6a                __vector_9
+ .text          0x0000118a       0x72 CRC16.o
+                0x0000118a                CRC16
+ .text          0x000011fc      0x1b4 ads1110.o
+                0x0000129e                IIC_Receive_Byte
+                0x0000121a                IIC_Stop
+                0x00001304                Init_ADS1110
+                0x00001238                IIC_Send_Byte
+                0x000012f0                SetUpADS1110
+                0x000011fc                IIC_Start
+                0x0000130e                ReadADS1110
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+ .text          0x000013b0        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+                0x000013b0                . = ALIGN (0x2)
+ *(.text.*)
+ .text.avr-libc.fplib
+                0x000013b0       0x7a d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+                0x000013b4                __floatsisf
+                0x000013b0                __floatunsisf
+ .text.libgcc   0x0000142a       0x3e d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+                0x0000142a                __mulsi3
+ .text.libgcc   0x00001468       0x28 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+                0x00001468                __udivmodhi4
+ .text.libgcc   0x00001490       0x44 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+                0x00001490                __udivmodsi4
+ .text.libgcc   0x000014d4       0x36 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+                0x000014d4                __divmodsi4
+ .text.libgcc   0x0000150a        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+ .text.libgcc   0x0000150a        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000150a        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+ .text.avr-libc
+                0x0000150a       0x10 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+                0x0000150a                __eerd_byte_m8
+ .text.avr-libc
+                0x0000151a        0xa d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+                0x0000151a                __eerd_word_m8
+ .text.avr-libc
+                0x00001524       0x1a d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+                0x00001524                __eewr_byte_m8
+                0x00001526                __eewr_r18_m8
+ .text.avr-libc
+                0x0000153e        0x6 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+                0x0000153e                __eewr_word_m8
+ .text.avr-libc
+                0x00001544       0x20 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+                0x00001548                __eerd_blraw_m8
+                0x00001544                __eerd_block_m8
+                0x00001564                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00001564        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+                0x00001564                exit
+                0x00001564                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00001564        0x4 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+ *(.fini0)
+                0x00001568                _etext = .
+
+.data           0x00800060       0x34 load address 0x00001568
+                0x00800060                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800060        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+ .data          0x00800060        0x0 main.o
+ .data          0x00800060       0x14 led.o
+                0x00800070                LEDBUFFER
+                0x00800060                LEDMA
+ .data          0x00800074       0x20 CRC16.o
+                0x00800074                wCRCTalbeAbs
+ .data          0x00800094        0x0 ads1110.o
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+ .data          0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800094                . = ALIGN (0x2)
+                0x00800094                _edata = .
+                0x00800094                PROVIDE (__data_end, .)
+
+.bss            0x00800094       0x55
+                0x00800094                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800094        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+ .bss           0x00800094       0x21 main.o
+                0x00800097                RXDataTemp
+                0x00800094                RxMode
+                0x00800096                WorkMode
+                0x00800095                RxFrameComplete
+                0x00800098                ADCResult
+ .bss           0x008000b5        0x1 led.o
+                0x008000b5                DuanAddr
+ .bss           0x008000b6        0x0 CRC16.o
+ .bss           0x008000b6        0x0 ads1110.o
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+ .bss           0x008000b6        0x0 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x008000b6       0x2d main.o
+                0x008000b6                RxFrame
+                0x008000be                XiaoShuDian
+                0x008000bf                TimerCycleF
+                0x008000c1                RxArrayTemp
+                0x008000d5                ErrFlag
+                0x008000d7                TimerOver
+                0x008000d8                TimerCycleI
+                0x008000da                T_C
+                0x008000dc                VALUE_MAX
+                0x008000de                VALUE_MIN
+                0x008000e0                ErrCodeDisplay
+                0x008000e2                DeviceAddr
+ COMMON         0x008000e3        0x6 ads1110.o
+                0x008000e3                ADS1110_SETUP_DATA
+                0x008000e5                ADS1110_READ_DATA
+                0x008000e9                PROVIDE (__bss_end, .)
+                0x00001568                __data_load_start = LOADADDR (.data)
+                0x0000159c                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x008000e9        0x0
+                0x008000e9                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x008000e9                PROVIDE (__noinit_end, .)
+                0x008000e9                _end = .
+                0x008000e9                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000       0x22
+ *(.eeprom*)
+ .eeprom        0x00810000       0x22 main.o
+                0x00810010                Y_MAX_EEP
+                0x0081000e                T_ZERO_EEP
+                0x0081001c                L_ZERO_EEP
+                0x0081000b                T_MIN_EEP
+                0x00810020                ID1_EEP
+                0x00810014                Y_XSD_EEP
+                0x00810001                MEASURE_MODE_EEP
+                0x00810000                ADDR_EEP
+                0x0081001e                ID0_EEP
+                0x00810017                L_MAX_EEP
+                0x0081001b                L_XSD_EEP
+                0x00810002                I_MAX_EEP
+                0x00810007                I_ZERO_EEP
+                0x00810009                T_MAX_EEP
+                0x00810006                I_XSD_EEP
+                0x0081000d                T_XSD_EEP
+                0x00810015                Y_ZERO_EEP
+                0x00810004                I_MIN_EEP
+                0x00810012                Y_MIN_EEP
+                0x00810019                L_MIN_EEP
+                0x00810022                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x80
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 main.o
+ .debug_aranges
+                0x00000020       0x20 led.o
+ .debug_aranges
+                0x00000040       0x20 CRC16.o
+ .debug_aranges
+                0x00000060       0x20 ads1110.o
+
+.debug_pubnames
+                0x00000000      0x51f
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000      0x3ac main.o
+ .debug_pubnames
+                0x000003ac       0x93 led.o
+ .debug_pubnames
+                0x0000043f       0x2d CRC16.o
+ .debug_pubnames
+                0x0000046c       0xb3 ads1110.o
+
+.debug_info     0x00000000     0x124d
+ *(.debug_info)
+ .debug_info    0x00000000      0xc8d main.o
+ .debug_info    0x00000c8d      0x1bf led.o
+ .debug_info    0x00000e4c       0xd0 CRC16.o
+ .debug_info    0x00000f1c      0x331 ads1110.o
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000      0x64f
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x349 main.o
+ .debug_abbrev  0x00000349       0xde led.o
+ .debug_abbrev  0x00000427       0xb0 CRC16.o
+ .debug_abbrev  0x000004d7      0x178 ads1110.o
+
+.debug_line     0x00000000     0x11ac
+ *(.debug_line)
+ .debug_line    0x00000000      0xc39 main.o
+ .debug_line    0x00000c39      0x237 led.o
+ .debug_line    0x00000e70       0x81 CRC16.o
+ .debug_line    0x00000ef1      0x2bb ads1110.o
+
+.debug_frame    0x00000000      0x2b0
+ *(.debug_frame)
+ .debug_frame   0x00000000      0x1a0 main.o
+ .debug_frame   0x000001a0       0x70 led.o
+ .debug_frame   0x00000210       0x20 CRC16.o
+ .debug_frame   0x00000230       0x80 ads1110.o
+
+.debug_str      0x00000000      0x753
+ *(.debug_str)
+ .debug_str     0x00000000      0x5c8 main.o
+                                0x636 (size before relaxing)
+ .debug_str     0x000005c8       0x7a led.o
+                                0x114 (size before relaxing)
+ .debug_str     0x00000642       0x33 CRC16.o
+                                 0x7c (size before relaxing)
+ .debug_str     0x00000675       0xde ads1110.o
+                                0x189 (size before relaxing)
+
+.debug_loc      0x00000000      0x878
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x609 main.o
+ .debug_loc     0x00000609       0xb3 led.o
+ .debug_loc     0x000006bc       0xd9 CRC16.o
+ .debug_loc     0x00000795       0xe3 ads1110.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(main.elf elf32-avr)
+LOAD linker stubs
+
+.debug_ranges   0x00000000       0x48
+ .debug_ranges  0x00000000       0x48 main.o
+
+Cross Reference Table
+
+Symbol                                            File
+ADCInit                                           main.o
+ADCOut                                            main.o
+ADCOutOne                                         main.o
+ADCResult                                         main.o
+ADDR_EEP                                          main.o
+ADS1110_READ_DATA                                 ads1110.o
+ADS1110_SETUP_DATA                                ads1110.o
+CRC16                                             CRC16.o
+                                                  main.o
+ChangeADCResult                                   main.o
+DeviceAddr                                        main.o
+Display10                                         led.o
+                                                  main.o
+DisplayFloat                                      led.o
+DisplayHex                                        led.o
+                                                  main.o
+DuanAddr                                          led.o
+ErrCodeDisplay                                    main.o
+ErrFlag                                           main.o
+ErrorDisplay                                      main.o
+FrameCRC16IsOK                                    main.o
+ID0_EEP                                           main.o
+ID1_EEP                                           main.o
+IIC_Receive_Byte                                  ads1110.o
+IIC_Send_Byte                                     ads1110.o
+IIC_Start                                         ads1110.o
+IIC_Stop                                          ads1110.o
+I_MAX_EEP                                         main.o
+I_MIN_EEP                                         main.o
+I_XSD_EEP                                         main.o
+I_ZERO_EEP                                        main.o
+Init_ADS1110                                      ads1110.o
+                                                  main.o
+IsErrorOrNot                                      main.o
+LEDBUFFER                                         led.o
+LEDMA                                             led.o
+L_MAX_EEP                                         main.o
+L_MIN_EEP                                         main.o
+L_XSD_EEP                                         main.o
+L_ZERO_EEP                                        main.o
+MEASURE_MODE_EEP                                  main.o
+OpenDisplayLED                                    led.o
+                                                  main.o
+Out_MAX                                           main.o
+Out_MIN                                           main.o
+READ_BYTE_EEP                                     main.o
+READ_WORD_EEP                                     main.o
+RXDataTemp                                        main.o
+ReadADS1110                                       ads1110.o
+                                                  main.o
+RefreshLED                                        main.o
+RxArrayTemp                                       main.o
+RxFrame                                           main.o
+RxFrameComplete                                   main.o
+RxMode                                            main.o
+RxOverrunTimer                                    main.o
+SPISend                                           led.o
+SendDataToPC                                      main.o
+SetUpADS1110                                      ads1110.o
+SystemInit                                        main.o
+T_C                                               main.o
+T_MAX_EEP                                         main.o
+T_MIN_EEP                                         main.o
+T_XSD_EEP                                         main.o
+T_ZERO_EEP                                        main.o
+TimerCycleF                                       main.o
+TimerCycleI                                       main.o
+TimerDelayMs                                      main.o
+TimerOver                                         main.o
+USART_Init                                        main.o
+USART_Transmit                                    main.o
+VALUE_MAX                                         main.o
+VALUE_MIN                                         main.o
+WRITE_BYTE_EEP                                    main.o
+WRITE_WORD_EEP                                    main.o
+WorkMode                                          main.o
+XiaoShuDian                                       led.o
+                                                  main.o
+Y_MAX_EEP                                         main.o
+Y_MIN_EEP                                         main.o
+Y_XSD_EEP                                         main.o
+Y_ZERO_EEP                                        main.o
+__bad_interrupt                                   d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__bss_end                                         d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+__bss_start                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+__data_end                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+__data_load_start                                 d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+__data_start                                      d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+__divmodsi4                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+                                                  main.o
+__do_clear_bss                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_clear_bss.o)
+                                                  ads1110.o
+                                                  led.o
+                                                  main.o
+__do_copy_data                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_copy_data.o)
+                                                  CRC16.o
+                                                  led.o
+__eerd_block_m8                                   d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+__eerd_blraw_m8                                   d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_block_atmega8.o)
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+__eerd_byte_m8                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_byte_atmega8.o)
+                                                  main.o
+__eerd_word_m8                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eerd_word_atmega8.o)
+                                                  main.o
+__eewr_byte_m8                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+                                                  main.o
+__eewr_r18_m8                                     d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_byte_atmega8.o)
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+__eewr_word_m8                                    d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libc.a(eewr_word_atmega8.o)
+                                                  main.o
+__floatsisf                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+__floatunsisf                                     d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4\libm.a(floatsisf.o)
+                                                  main.o
+__heap_end                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__init                                            d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__mulsi3                                          d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_mulsi3.o)
+                                                  main.o
+__stack                                           d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__udivmodhi4                                      d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodhi4.o)
+                                                  led.o
+__udivmodsi4                                      d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_udivmodsi4.o)
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_divmodsi4.o)
+                                                  main.o
+__vector_1                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_10                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_11                                       main.o
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_12                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_13                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_14                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_15                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_16                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_17                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_18                                       d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_2                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_3                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_4                                        main.o
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_5                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_6                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_7                                        d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_8                                        main.o
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_9                                        led.o
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vector_default                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+__vectors                                         d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+_exit                                             d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+exit                                              d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr4\libgcc.a(_exit.o)
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+main                                              main.o
+                                                  d:/program files/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr4/crtm8.o
+printk                                            main.o
+wCRCTalbeAbs                                      CRC16.o

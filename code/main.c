@@ -39,6 +39,9 @@ void ErrorDisplay(unsigned int ErrCode);
 #define CODE_PID        (0x80)
 #define CODE_VID        (0x00)
 
+#define ID0        (0x1234)
+#define ID1        (0x5678)
+
 #define CHAR_COMPANY    ("BOSSUN\r\n")
 #define CHAR_DESCRIBE   ("Change 4~20mA to 485, ADC And Display!\r\n")
 #define def_DeviceAddr  (0x01)
@@ -51,7 +54,7 @@ void ErrorDisplay(unsigned int ErrCode);
 
 #define ADC_ADS1110
 
-#define AUTO_ZERO (-120)
+#define AUTO_ZERO (-75)
 
 #define I_RangeMAX        (2000L)
 #define I_RangeMIN        (400L)
@@ -188,6 +191,9 @@ unsigned char L_XSD_EEP  __attribute__((section(".eeprom"))) = L_DEF_XiaoShuDian
 unsigned int L_ZERO_EEP  __attribute__((section(".eeprom"))) = L_ZERO;
 
 
+unsigned int ID0_EEP  __attribute__((section(".eeprom"))) = ID0;
+unsigned int ID1_EEP  __attribute__((section(".eeprom"))) = ID1;
+
 static unsigned int  * pMAX_EEP;
 static unsigned int  * pMIN_EEP;
 static unsigned char * pXSD_EEP;
@@ -240,6 +246,7 @@ enum{
     ADDR_XSD = 0x0022,
     ADDR_F1_VALUE,
     ADDR_F2_VALUE,
+    ADDR_ZERO,
     ADDR_FW_MAX = 0x1016,
     ADDR_FW_MIN = 0x1018,
     ADDR_VALUE = 0x1020,
@@ -270,7 +277,7 @@ typedef union {
 static LONG V_MAX;
 static LONG V_MIN;
 static FLOAT V_DATA;
-
+static LONG ID;
 /* ********************************************************************** */
 volatile unsigned char RxMode = 0;
 volatile unsigned char RxFrameComplete = 0;
@@ -791,31 +798,52 @@ int main(void)
     /* System init */
     SystemInit();
     //RxOverrunTimer();
+    ID.L = 0;
+    ID.L = READ_WORD_EEP(&ID0_EEP);
+    ID.L <<=16;
+    ID.L += READ_WORD_EEP(&ID1_EEP);
 #ifndef MYDEBUG
     ErrCodeDisplay = MEASURE_MODE + 0xD000;
     DisplayHex(ErrCodeDisplay);
     for(tempint = 0;tempint < 10;tempint ++)
     {
-    	_delay_ms(200);
-    	wdt_reset();
+        _delay_ms(200);
+        wdt_reset();
     }
 #endif
     while(1)
     {
         if(!RxFrameComplete)
         {
-	    //if(ErrFlag == 0)
- 	        RefreshLED();
+            //if(ErrFlag == 0)
+            RefreshLED();
             IsErrorOrNot();
             wdt_reset();
             continue;
         }
-	
+
         /* clear receive finish flag */
         RxFrameComplete = 0;
         /* Judge Addr is OK */
         if(RxFrame.Addr != DeviceAddr)
         {
+            if(RxFrame.Addr != 0xFE){
+                continue;
+            }
+            if(RxFrame.FunCode != 0x88){
+                continue;
+            }
+            if(RxFrame.Data[0] == 'B' &&
+               RxFrame.Data[1] == 'o' &&
+               RxFrame.Data[2] == 's' &&
+               RxFrame.Data[3] == 's' &&
+               RxFrame.Data[4] == 'u' &&
+               RxFrame.Data[5] == 'N')
+            SendTemp[0] = ID.ch[3];
+            SendTemp[1] = ID.ch[2];
+            SendTemp[2] = ID.ch[1];
+            SendTemp[3] = ID.ch[0];
+            SendDataToPC(0x77, SendTemp , 4);
             //ErrorDisplay(ERRCODE_DeviceAddrErr);
             continue;
         }
@@ -826,15 +854,15 @@ int main(void)
              CRCYesOrNo = 0x80;
         }else{
              CRCYesOrNo = 0;
-	}
+        }
         tempint = (unsigned int)RxFrame.Data[0];
         tempint <<= 8;
         tempint |= (unsigned int)RxFrame.Data[1];
         switch(RxFrame.FunCode){
             case CommunicationTest:
-		SendDataToPC(CommunicationTest, RxFrame.Data, RxFrame.Len - 2);
+                SendDataToPC(CommunicationTest, RxFrame.Data, RxFrame.Len - 2);
                 break;
-	    case GET_VALUE:
+            case GET_VALUE:
                 switch(tempint){
                     case ADDR_VALUE:/* Get ADC data */
                         V_DATA.F = (float)T_C;
@@ -842,48 +870,53 @@ int main(void)
                         SendTemp[1] = V_DATA.ch[2];
                         SendTemp[2] = V_DATA.ch[1];
                         SendTemp[3] = V_DATA.ch[0];
-			SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
+                        SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
                         break;
-		    default:
-			SendTemp[0] = 0x00;
+                    default:
+                        SendTemp[0] = 0x00;
                         SendDataToPC(GET_VALUE | 0x80, SendTemp , 1);
                         break;
-		}
-		break;
+                }
+                break;
             case GET_DATA:
                 switch(tempint)
                 {
                     case ADDR_XSD:/* Get XiaoShuDian Data */
                         SendTemp[0] = 0;
                         SendTemp[1] = XiaoShuDian;
-			SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        break;
+                    case ADDR_ZERO:/* Get XiaoShuDian Data */
+                        SendTemp[0] = 0;
+                        SendTemp[1] = ADJ_ZERO;
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
                         break;
                     case ADDR_F1_VALUE:/* Get Freq Data */
                         SendTemp[0] = 0x00;
                         SendTemp[1] = 0x00;
-			SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
                         break;
                     case ADDR_F2_VALUE:/* Get Freq Data */
                         SendTemp[0] = 0x00;
                         SendTemp[1] = 0x00;
-			SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
                         break;
                     case ADDR_FW_MAX:
-			SendTemp[0] = V_MAX.ch[3];
-			SendTemp[1] = V_MAX.ch[2];
-			SendTemp[2] = V_MAX.ch[1];
-			SendTemp[3] = V_MAX.ch[0];
+                        SendTemp[0] = V_MAX.ch[3];
+                        SendTemp[1] = V_MAX.ch[2];
+                        SendTemp[2] = V_MAX.ch[1];
+                        SendTemp[3] = V_MAX.ch[0];
 
                         SendTemp[4] = V_MIN.ch[3];
-			SendTemp[5] = V_MIN.ch[2];
-			SendTemp[6] = V_MIN.ch[1];
-			SendTemp[7] = V_MIN.ch[0];
-			SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 8);
+                        SendTemp[5] = V_MIN.ch[2];
+                        SendTemp[6] = V_MIN.ch[1];
+                        SendTemp[7] = V_MIN.ch[0];
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 8);
                         break;
-		    default:
-			SendTemp[0] = 0x00;
+                    default:
+                        SendTemp[0] = 0x00;
                         CRCYesOrNo = 0x80;
-			SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 1);
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 1);
                         break;
                 }
                 break;
@@ -899,26 +932,37 @@ int main(void)
                         SendTemp[0] = RxFrame.Data[0];
                         SendTemp[1] = RxFrame.Data[1];
                         SendTemp[2] = 0x00;
-			SendTemp[3] = tempch;
+                        SendTemp[3] = tempch;
                         SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
                         DeviceAddr = tempch;
 #ifndef MYDEBUG
                         WRITE_BYTE_EEP(DeviceAddr,&ADDR_EEP);
 #endif
-			break;
-     		    case ADDR_XSD:
-			XiaoShuDian =  RxFrame.Data[3];
-			
-			//SendTemp[0] = XiaoShuDian;
-			SendTemp[0] = RxFrame.Data[0];
-			SendTemp[1] = RxFrame.Data[1];
-			SendTemp[2] = 0x00;
-			SendTemp[3] = XiaoShuDian;
-			SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-#ifndef MYDEBUG			
-			WRITE_BYTE_EEP(XiaoShuDian,pXSD_EEP);
+                        break;
+                    case ADDR_XSD:
+                        XiaoShuDian =  RxFrame.Data[3];
+                        //SendTemp[0] = XiaoShuDian;
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        SendTemp[2] = 0x00;
+                        SendTemp[3] = XiaoShuDian;
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+#ifndef MYDEBUG
+                        WRITE_BYTE_EEP(XiaoShuDian,pXSD_EEP);
 #endif
-			break;
+                        break;
+                    case ADDR_ZERO:
+                        ADJ_ZERO =  RxFrame.Data[3];
+                        //SendTemp[0] = XiaoShuDian;
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        SendTemp[2] = 0x00;
+                        SendTemp[3] = XiaoShuDian;
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+#ifndef MYDEBUG
+                        WRITE_BYTE_EEP(ADJ_ZERO,pADJ_ZERO);
+#endif
+                        break;
                     default:
                         SendTemp[0] = 0x00;
                         SendDataToPC(SET_DEVICEADDR | 0x80, SendTemp , 1);
@@ -927,41 +971,41 @@ int main(void)
                 break;
             case SET_VALUE:
 #if 1
-		switch(tempint){
+                switch(tempint){
                     case ADDR_FW_MAX:
 
-			V_MAX.ch[0] = RxFrame.Data[5];
-			V_MAX.ch[1] = RxFrame.Data[6];
-			V_MAX.ch[2] = RxFrame.Data[7];
-			V_MAX.ch[3] = RxFrame.Data[8];
+                        V_MAX.ch[3] = RxFrame.Data[5];
+                        V_MAX.ch[2] = RxFrame.Data[6];
+                        V_MAX.ch[1] = RxFrame.Data[7];
+                        V_MAX.ch[0] = RxFrame.Data[8];
 
-			V_MIN.ch[0] = RxFrame.Data[9];
-			V_MIN.ch[1] = RxFrame.Data[10];
-			V_MIN.ch[2] = RxFrame.Data[11];
-			V_MIN.ch[3] = RxFrame.Data[12];
+                        V_MIN.ch[3] = RxFrame.Data[9];
+                        V_MIN.ch[2] = RxFrame.Data[10];
+                        V_MIN.ch[1] = RxFrame.Data[11];
+                        V_MIN.ch[0] = RxFrame.Data[12];
 
-			tempA =(unsigned int) V_MAX.L;
-			tempB =(unsigned int) V_MIN.L;
+                        tempA =(unsigned int) V_MAX.L;
+                        tempB =(unsigned int) V_MIN.L;
 
-		        VALUE_MAX = Out_MAX(tempA,tempB);
-			VALUE_MIN = Out_MIN(tempA,tempB);
+                        VALUE_MAX = Out_MAX(tempA,tempB);
+                        VALUE_MIN = Out_MIN(tempA,tempB);
 
-			SendTemp[0] = RxFrame.Data[0];
-			SendTemp[1] = RxFrame.Data[1];
-			SendTemp[2] = 0x08;
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        SendTemp[2] = 0x08;
 
-                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 3);
+                        SendDataToPC(SET_VALUE | CRCYesOrNo, SendTemp , 3);
 #ifndef MYDEBUG
-			WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
-			WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);			
-			WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
-			WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
-#endif		
-		}
-		break;
+                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
+                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
+                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
+                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
 #endif
-     	    case GET_ID:
-		SendTemp[0] = 0x00;
+                }
+                break;
+#endif
+            case GET_ID:
+                SendTemp[0] = 0x00;
                 switch(tempint)
                 {
                     case ADDR_CID:
@@ -976,7 +1020,7 @@ int main(void)
                     case ADDR_FID:
                         SendTemp[1] = MEASURE_MODE;
                         break;
-		    default:
+                    default:
                         SendTemp[0] = 0x00;
                         CRCYesOrNo = 0x80;
                         break;
@@ -999,17 +1043,16 @@ int main(void)
                 }
                 break;
 #endif
-	    default:
+            default:
                 RxFrame.FunCode |= 0x80;
                 SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
                 ErrorDisplay(ERRCODE_FunCodeInvalid);
                 PORTD ^= (1<<6);
-		break;
-        }
-        
-    }
+                break;
+        }//switch end
+    }//while end
     return 0;
-}
+}//main end
 
 
 

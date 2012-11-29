@@ -1,0 +1,602 @@
+   1               		.file	"ads1110.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	IIC_Start
+  18               	IIC_Start:
+  19               	.LFB2:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24               	/* #APP */
+  25               	 ;  108 "ads1110.c" 1
+  26 0000 0000      		NOP
+  27               	 ;  0 "" 2
+  28               	/* #NOAPP */
+  29 0002 AC9A      		sbi 53-32,4
+  30               	/* #APP */
+  31               	 ;  108 "ads1110.c" 1
+  32 0004 0000      		NOP
+  33               	 ;  0 "" 2
+  34               	 ;  108 "ads1110.c" 1
+  35 0006 0000      		NOP
+  36               	 ;  0 "" 2
+  37               	.LM3:
+  38               	 ;  109 "ads1110.c" 1
+  39 0008 0000      		NOP
+  40               	 ;  0 "" 2
+  41               	/* #NOAPP */
+  42 000a AD9A      		sbi 53-32,5
+  43               	/* #APP */
+  44               	 ;  109 "ads1110.c" 1
+  45 000c 0000      		NOP
+  46               	 ;  0 "" 2
+  47               	.LM4:
+  48               	 ;  110 "ads1110.c" 1
+  49 000e 0000      		NOP
+  50               	 ;  0 "" 2
+  51               	/* #NOAPP */
+  52 0010 AC98      		cbi 53-32,4
+  53               	/* #APP */
+  54               	 ;  110 "ads1110.c" 1
+  55 0012 0000      		NOP
+  56               	 ;  0 "" 2
+  57               	 ;  110 "ads1110.c" 1
+  58 0014 0000      		NOP
+  59               	 ;  0 "" 2
+  60               	.LM5:
+  61               	 ;  111 "ads1110.c" 1
+  62 0016 0000      		NOP
+  63               	 ;  0 "" 2
+  64               	/* #NOAPP */
+  65 0018 AD98      		cbi 53-32,5
+  66               	/* #APP */
+  67               	 ;  111 "ads1110.c" 1
+  68 001a 0000      		NOP
+  69               	 ;  0 "" 2
+  70               	/* epilogue start */
+  71               	.LM6:
+  72               	/* #NOAPP */
+  73 001c 0895      		ret
+  74               	.LFE2:
+  76               	.global	IIC_Stop
+  78               	IIC_Stop:
+  79               	.LFB3:
+  80               	.LM7:
+  81               	/* prologue: function */
+  82               	/* frame size = 0 */
+  83               	.LM8:
+  84               	/* #APP */
+  85               	 ;  116 "ads1110.c" 1
+  86 001e 0000      		NOP
+  87               	 ;  0 "" 2
+  88               	/* #NOAPP */
+  89 0020 AD98      		cbi 53-32,5
+  90               	/* #APP */
+  91               	 ;  116 "ads1110.c" 1
+  92 0022 0000      		NOP
+  93               	 ;  0 "" 2
+  94               	.LM9:
+  95               	 ;  117 "ads1110.c" 1
+  96 0024 0000      		NOP
+  97               	 ;  0 "" 2
+  98               	/* #NOAPP */
+  99 0026 AC98      		cbi 53-32,4
+ 100               	/* #APP */
+ 101               	 ;  117 "ads1110.c" 1
+ 102 0028 0000      		NOP
+ 103               	 ;  0 "" 2
+ 104               	 ;  117 "ads1110.c" 1
+ 105 002a 0000      		NOP
+ 106               	 ;  0 "" 2
+ 107               	.LM10:
+ 108               	 ;  118 "ads1110.c" 1
+ 109 002c 0000      		NOP
+ 110               	 ;  0 "" 2
+ 111               	/* #NOAPP */
+ 112 002e AD9A      		sbi 53-32,5
+ 113               	/* #APP */
+ 114               	 ;  118 "ads1110.c" 1
+ 115 0030 0000      		NOP
+ 116               	 ;  0 "" 2
+ 117               	.LM11:
+ 118               	 ;  119 "ads1110.c" 1
+ 119 0032 0000      		NOP
+ 120               	 ;  0 "" 2
+ 121               	/* #NOAPP */
+ 122 0034 AC9A      		sbi 53-32,4
+ 123               	/* #APP */
+ 124               	 ;  119 "ads1110.c" 1
+ 125 0036 0000      		NOP
+ 126               	 ;  0 "" 2
+ 127               	 ;  119 "ads1110.c" 1
+ 128 0038 0000      		NOP
+ 129               	 ;  0 "" 2
+ 130               	/* epilogue start */
+ 131               	.LM12:
+ 132               	/* #NOAPP */
+ 133 003a 0895      		ret
+ 134               	.LFE3:
+ 136               	.global	IIC_Send_Byte
+ 138               	IIC_Send_Byte:
+ 139               	.LFB4:
+ 140               	.LM13:
+ 141               	.LVL0:
+ 142               	/* prologue: function */
+ 143               	/* frame size = 0 */
+ 144               	.LM14:
+ 145 003c 20E0      		ldi r18,lo8(0)
+ 146 003e 30E0      		ldi r19,hi8(0)
+ 147               	.LM15:
+ 148 0040 482F      		mov r20,r24
+ 149 0042 50E0      		ldi r21,lo8(0)
+ 150               	.LVL1:
+ 151               	.L8:
+ 152 0044 CA01      		movw r24,r20
+ 153 0046 022E      		mov r0,r18
+ 154 0048 00C0      		rjmp 2f
+ 155 004a 880F      	1:	lsl r24
+ 156 004c 991F      		rol r25
+ 157 004e 0A94      	2:	dec r0
+ 158 0050 02F4      		brpl 1b
+ 159 0052 87FF      		sbrs r24,7
+ 160 0054 00C0      		rjmp .L6
+ 161               	.LM16:
+ 162               	/* #APP */
+ 163               	 ;  126 "ads1110.c" 1
+ 164 0056 0000      		NOP
+ 165               	 ;  0 "" 2
+ 166               	/* #NOAPP */
+ 167 0058 AC9A      		sbi 53-32,4
+ 168               	/* #APP */
+ 169               	 ;  126 "ads1110.c" 1
+ 170 005a 0000      		NOP
+ 171               	 ;  0 "" 2
+ 172               	 ;  126 "ads1110.c" 1
+ 173 005c 0000      		NOP
+ 174               	 ;  0 "" 2
+ 175               	/* #NOAPP */
+ 176 005e 00C0      		rjmp .L7
+ 177               	.L6:
+ 178               	.LM17:
+ 179               	/* #APP */
+ 180               	 ;  128 "ads1110.c" 1
+ 181 0060 0000      		NOP
+ 182               	 ;  0 "" 2
+ 183               	/* #NOAPP */
+ 184 0062 AC98      		cbi 53-32,4
+ 185               	/* #APP */
+ 186               	 ;  128 "ads1110.c" 1
+ 187 0064 0000      		NOP
+ 188               	 ;  0 "" 2
+ 189               	 ;  128 "ads1110.c" 1
+ 190 0066 0000      		NOP
+ 191               	 ;  0 "" 2
+ 192               	/* #NOAPP */
+ 193               	.L7:
+ 194               	.LM18:
+ 195               	/* #APP */
+ 196               	 ;  130 "ads1110.c" 1
+ 197 0068 0000      		NOP
+ 198               	 ;  0 "" 2
+ 199               	/* #NOAPP */
+ 200 006a AD9A      		sbi 53-32,5
+ 201               	/* #APP */
+ 202               	 ;  130 "ads1110.c" 1
+ 203 006c 0000      		NOP
+ 204               	 ;  0 "" 2
+ 205               	.LM19:
+ 206               	 ;  131 "ads1110.c" 1
+ 207 006e 0000      		NOP
+ 208               	 ;  0 "" 2
+ 209               	.LM20:
+ 210               	 ;  132 "ads1110.c" 1
+ 211 0070 0000      		NOP
+ 212               	 ;  0 "" 2
+ 213               	.LM21:
+ 214               	 ;  133 "ads1110.c" 1
+ 215 0072 0000      		NOP
+ 216               	 ;  0 "" 2
+ 217               	/* #NOAPP */
+ 218 0074 AD98      		cbi 53-32,5
+ 219               	/* #APP */
+ 220               	 ;  133 "ads1110.c" 1
+ 221 0076 0000      		NOP
+ 222               	 ;  0 "" 2
+ 223               	/* #NOAPP */
+ 224 0078 2F5F      		subi r18,lo8(-(1))
+ 225 007a 3F4F      		sbci r19,hi8(-(1))
+ 226               	.LM22:
+ 227 007c 2830      		cpi r18,8
+ 228 007e 3105      		cpc r19,__zero_reg__
+ 229 0080 01F4      		brne .L8
+ 230               	.LM23:
+ 231               	/* #APP */
+ 232               	 ;  135 "ads1110.c" 1
+ 233 0082 0000      		NOP
+ 234               	 ;  0 "" 2
+ 235               	/* #NOAPP */
+ 236 0084 AD98      		cbi 53-32,5
+ 237               	/* #APP */
+ 238               	 ;  135 "ads1110.c" 1
+ 239 0086 0000      		NOP
+ 240               	 ;  0 "" 2
+ 241               	.LM24:
+ 242               	 ;  136 "ads1110.c" 1
+ 243 0088 0000      		NOP
+ 244               	 ;  0 "" 2
+ 245               	/* #NOAPP */
+ 246 008a AC98      		cbi 53-32,4
+ 247               	/* #APP */
+ 248               	 ;  136 "ads1110.c" 1
+ 249 008c 0000      		NOP
+ 250               	 ;  0 "" 2
+ 251               	 ;  136 "ads1110.c" 1
+ 252 008e 0000      		NOP
+ 253               	 ;  0 "" 2
+ 254               	.LM25:
+ 255               	 ;  137 "ads1110.c" 1
+ 256 0090 0000      		NOP
+ 257               	 ;  0 "" 2
+ 258               	/* #NOAPP */
+ 259 0092 AD9A      		sbi 53-32,5
+ 260               	/* #APP */
+ 261               	 ;  137 "ads1110.c" 1
+ 262 0094 0000      		NOP
+ 263               	 ;  0 "" 2
+ 264               	.LM26:
+ 265               	 ;  138 "ads1110.c" 1
+ 266 0096 0000      		NOP
+ 267               	 ;  0 "" 2
+ 268               	.LM27:
+ 269               	 ;  139 "ads1110.c" 1
+ 270 0098 0000      		NOP
+ 271               	 ;  0 "" 2
+ 272               	.LM28:
+ 273               	 ;  140 "ads1110.c" 1
+ 274 009a 0000      		NOP
+ 275               	 ;  0 "" 2
+ 276               	/* #NOAPP */
+ 277 009c AD98      		cbi 53-32,5
+ 278               	/* #APP */
+ 279               	 ;  140 "ads1110.c" 1
+ 280 009e 0000      		NOP
+ 281               	 ;  0 "" 2
+ 282               	/* epilogue start */
+ 283               	.LM29:
+ 284               	/* #NOAPP */
+ 285 00a0 0895      		ret
+ 286               	.LFE4:
+ 288               	.global	IIC_Receive_Byte
+ 290               	IIC_Receive_Byte:
+ 291               	.LFB5:
+ 292               	.LM30:
+ 293               	.LVL2:
+ 294               	/* prologue: function */
+ 295               	/* frame size = 0 */
+ 296 00a2 FC01      		movw r30,r24
+ 297               	.LM31:
+ 298               	/* #APP */
+ 299               	 ;  146 "ads1110.c" 1
+ 300 00a4 0000      		NOP
+ 301               	 ;  0 "" 2
+ 302               	/* #NOAPP */
+ 303 00a6 AD98      		cbi 53-32,5
+ 304               	/* #APP */
+ 305               	 ;  146 "ads1110.c" 1
+ 306 00a8 0000      		NOP
+ 307               	 ;  0 "" 2
+ 308               	.LM32:
+ 309               	/* #NOAPP */
+ 310 00aa A498      		cbi 52-32,4
+ 311               	.LM33:
+ 312               	/* #APP */
+ 313               	 ;  148 "ads1110.c" 1
+ 314 00ac 0000      		NOP
+ 315               	 ;  0 "" 2
+ 316               	/* #NOAPP */
+ 317 00ae AC98      		cbi 53-32,4
+ 318               	/* #APP */
+ 319               	 ;  148 "ads1110.c" 1
+ 320 00b0 0000      		NOP
+ 321               	 ;  0 "" 2
+ 322               	 ;  148 "ads1110.c" 1
+ 323 00b2 0000      		NOP
+ 324               	 ;  0 "" 2
+ 325               	/* #NOAPP */
+ 326 00b4 90E0      		ldi r25,lo8(0)
+ 327               	.LVL3:
+ 328 00b6 80E0      		ldi r24,lo8(0)
+ 329               	.LVL4:
+ 330               	.L13:
+ 331               	.LM34:
+ 332               	/* #APP */
+ 333               	 ;  150 "ads1110.c" 1
+ 334 00b8 0000      		NOP
+ 335               	 ;  0 "" 2
+ 336               	/* #NOAPP */
+ 337 00ba AD98      		cbi 53-32,5
+ 338               	/* #APP */
+ 339               	 ;  150 "ads1110.c" 1
+ 340 00bc 0000      		NOP
+ 341               	 ;  0 "" 2
+ 342               	.LM35:
+ 343               	 ;  151 "ads1110.c" 1
+ 344 00be 0000      		NOP
+ 345               	 ;  0 "" 2
+ 346               	/* #NOAPP */
+ 347 00c0 AD9A      		sbi 53-32,5
+ 348               	/* #APP */
+ 349               	 ;  151 "ads1110.c" 1
+ 350 00c2 0000      		NOP
+ 351               	 ;  0 "" 2
+ 352               	.LM36:
+ 353               	/* #NOAPP */
+ 354 00c4 880F      		lsl r24
+ 355               	.LM37:
+ 356 00c6 9C99      		sbic 51-32,4
+ 357               	.LM38:
+ 358 00c8 8160      		ori r24,lo8(1)
+ 359               	.L12:
+ 360               	.LM39:
+ 361 00ca 9F5F      		subi r25,lo8(-(1))
+ 362 00cc 9830      		cpi r25,lo8(8)
+ 363 00ce 01F4      		brne .L13
+ 364 00d0 8083      		st Z,r24
+ 365               	.LM40:
+ 366               	/* #APP */
+ 367               	 ;  158 "ads1110.c" 1
+ 368 00d2 0000      		NOP
+ 369               	 ;  0 "" 2
+ 370               	/* #NOAPP */
+ 371 00d4 AD98      		cbi 53-32,5
+ 372               	/* #APP */
+ 373               	 ;  158 "ads1110.c" 1
+ 374 00d6 0000      		NOP
+ 375               	 ;  0 "" 2
+ 376               	.LM41:
+ 377               	 ;  159 "ads1110.c" 1
+ 378 00d8 0000      		NOP
+ 379               	 ;  0 "" 2
+ 380               	/* #NOAPP */
+ 381 00da AC98      		cbi 53-32,4
+ 382               	/* #APP */
+ 383               	 ;  159 "ads1110.c" 1
+ 384 00dc 0000      		NOP
+ 385               	 ;  0 "" 2
+ 386               	 ;  159 "ads1110.c" 1
+ 387 00de 0000      		NOP
+ 388               	 ;  0 "" 2
+ 389               	.LM42:
+ 390               	/* #NOAPP */
+ 391 00e0 A49A      		sbi 52-32,4
+ 392               	.LM43:
+ 393               	/* #APP */
+ 394               	 ;  161 "ads1110.c" 1
+ 395 00e2 0000      		NOP
+ 396               	 ;  0 "" 2
+ 397               	/* #NOAPP */
+ 398 00e4 AD9A      		sbi 53-32,5
+ 399               	/* #APP */
+ 400               	 ;  161 "ads1110.c" 1
+ 401 00e6 0000      		NOP
+ 402               	 ;  0 "" 2
+ 403               	.LM44:
+ 404               	 ;  162 "ads1110.c" 1
+ 405 00e8 0000      		NOP
+ 406               	 ;  0 "" 2
+ 407               	.LM45:
+ 408               	 ;  163 "ads1110.c" 1
+ 409 00ea 0000      		NOP
+ 410               	 ;  0 "" 2
+ 411               	.LM46:
+ 412               	 ;  164 "ads1110.c" 1
+ 413 00ec 0000      		NOP
+ 414               	 ;  0 "" 2
+ 415               	/* #NOAPP */
+ 416 00ee AD98      		cbi 53-32,5
+ 417               	/* #APP */
+ 418               	 ;  164 "ads1110.c" 1
+ 419 00f0 0000      		NOP
+ 420               	 ;  0 "" 2
+ 421               	/* epilogue start */
+ 422               	.LM47:
+ 423               	/* #NOAPP */
+ 424 00f2 0895      		ret
+ 425               	.LFE5:
+ 427               	.global	SetUpADS1110
+ 429               	SetUpADS1110:
+ 430               	.LFB6:
+ 431               	.LM48:
+ 432               	.LVL5:
+ 433 00f4 1F93      		push r17
+ 434               	/* prologue: function */
+ 435               	/* frame size = 0 */
+ 436 00f6 182F      		mov r17,r24
+ 437               	.LM49:
+ 438 00f8 00D0      		rcall IIC_Start
+ 439               	.LVL6:
+ 440               	.LM50:
+ 441 00fa 80E9      		ldi r24,lo8(-112)
+ 442 00fc 00D0      		rcall IIC_Send_Byte
+ 443               	.LM51:
+ 444 00fe 812F      		mov r24,r17
+ 445 0100 00D0      		rcall IIC_Send_Byte
+ 446               	.LM52:
+ 447 0102 00D0      		rcall IIC_Stop
+ 448               	/* epilogue start */
+ 449               	.LM53:
+ 450 0104 1F91      		pop r17
+ 451               	.LVL7:
+ 452 0106 0895      		ret
+ 453               	.LFE6:
+ 455               	.global	Init_ADS1110
+ 457               	Init_ADS1110:
+ 458               	.LFB7:
+ 459               	.LM54:
+ 460               	/* prologue: function */
+ 461               	/* frame size = 0 */
+ 462               	.LM55:
+ 463 0108 A49A      		sbi 52-32,4
+ 464               	.LM56:
+ 465 010a A59A      		sbi 52-32,5
+ 466               	.LM57:
+ 467 010c 8CE1      		ldi r24,lo8(28)
+ 468 010e 00D0      		rcall SetUpADS1110
+ 469               	/* epilogue start */
+ 470               	.LM58:
+ 471 0110 0895      		ret
+ 472               	.LFE7:
+ 474               	.global	ReadADS1110
+ 476               	ReadADS1110:
+ 477               	.LFB8:
+ 478               	.LM59:
+ 479 0112 AF92      		push r10
+ 480 0114 BF92      		push r11
+ 481 0116 CF92      		push r12
+ 482 0118 DF92      		push r13
+ 483 011a EF92      		push r14
+ 484 011c FF92      		push r15
+ 485 011e 0F93      		push r16
+ 486 0120 1F93      		push r17
+ 487 0122 DF93      		push r29
+ 488 0124 CF93      		push r28
+ 489 0126 00D0      		rcall .
+ 490 0128 0F92      		push __tmp_reg__
+ 491 012a CDB7      		in r28,__SP_L__
+ 492 012c DEB7      		in r29,__SP_H__
+ 493               	/* prologue: function */
+ 494               	/* frame size = 3 */
+ 495               	.LM60:
+ 496 012e 1982      		std Y+1,__zero_reg__
+ 497               	.LVL8:
+ 498               	.LM61:
+ 499 0130 1A82      		std Y+2,__zero_reg__
+ 500               	.LVL9:
+ 501               	.LM62:
+ 502 0132 1B82      		std Y+3,__zero_reg__
+ 503               	.LVL10:
+ 504               	.LM63:
+ 505 0134 8CE9      		ldi r24,lo8(-100)
+ 506 0136 00D0      		rcall SetUpADS1110
+ 507 0138 04EF      		ldi r16,lo8(500)
+ 508 013a 11E0      		ldi r17,hi8(500)
+ 509               	.LVL11:
+ 510               	.LM64:
+ 511 013c 5E01      		movw r10,r28
+ 512 013e 0894      		sec
+ 513 0140 A11C      		adc r10,__zero_reg__
+ 514 0142 B11C      		adc r11,__zero_reg__
+ 515               	.LM65:
+ 516 0144 92E0      		ldi r25,lo8(2)
+ 517 0146 C92E      		mov r12,r25
+ 518 0148 D12C      		mov r13,__zero_reg__
+ 519 014a CC0E      		add r12,r28
+ 520 014c DD1E      		adc r13,r29
+ 521               	.LM66:
+ 522 014e 83E0      		ldi r24,lo8(3)
+ 523 0150 E82E      		mov r14,r24
+ 524 0152 F12C      		mov r15,__zero_reg__
+ 525 0154 EC0E      		add r14,r28
+ 526 0156 FD1E      		adc r15,r29
+ 527               	.LVL12:
+ 528               	.L22:
+ 529               	.LM67:
+ 530 0158 0150      		subi r16,lo8(-(-1))
+ 531 015a 1040      		sbci r17,hi8(-(-1))
+ 532               	.LM68:
+ 533 015c 00D0      		rcall IIC_Start
+ 534               	.LM69:
+ 535 015e 81E9      		ldi r24,lo8(-111)
+ 536 0160 00D0      		rcall IIC_Send_Byte
+ 537               	.LM70:
+ 538 0162 C501      		movw r24,r10
+ 539 0164 00D0      		rcall IIC_Receive_Byte
+ 540               	.LM71:
+ 541 0166 C601      		movw r24,r12
+ 542 0168 00D0      		rcall IIC_Receive_Byte
+ 543               	.LM72:
+ 544 016a C701      		movw r24,r14
+ 545 016c 00D0      		rcall IIC_Receive_Byte
+ 546               	.LM73:
+ 547 016e 00D0      		rcall IIC_Stop
+ 548               	.LM74:
+ 549 0170 8B81      		ldd r24,Y+3
+ 550 0172 8068      		ori r24,lo8(-128)
+ 551               	.LVL13:
+ 552 0174 8038      		cpi r24,lo8(-128)
+ 553 0176 01F4      		brne .L21
+ 554 0178 0115      		cp r16,__zero_reg__
+ 555 017a 1105      		cpc r17,__zero_reg__
+ 556 017c 01F4      		brne .L22
+ 557               	.L21:
+ 558               	.LM75:
+ 559 017e 17FF      		sbrs r17,7
+ 560 0180 00C0      		rjmp .L23
+ 561 0182 20E0      		ldi r18,lo8(0)
+ 562 0184 30E0      		ldi r19,hi8(0)
+ 563               	.LVL14:
+ 564 0186 00C0      		rjmp .L24
+ 565               	.LVL15:
+ 566               	.L23:
+ 567               	.LM76:
+ 568 0188 9981      		ldd r25,Y+1
+ 569               	.LVL16:
+ 570 018a 80E0      		ldi r24,lo8(0)
+ 571               	.LVL17:
+ 572               	.LM77:
+ 573 018c 2A81      		ldd r18,Y+2
+ 574 018e AC01      		movw r20,r24
+ 575 0190 420F      		add r20,r18
+ 576 0192 511D      		adc r21,__zero_reg__
+ 577 0194 9A01      		movw r18,r20
+ 578               	.LVL18:
+ 579               	.L24:
+ 580               	.LM78:
+ 581 0196 C901      		movw r24,r18
+ 582               	.LVL19:
+ 583               	/* epilogue start */
+ 584 0198 0F90      		pop __tmp_reg__
+ 585 019a 0F90      		pop __tmp_reg__
+ 586 019c 0F90      		pop __tmp_reg__
+ 587 019e CF91      		pop r28
+ 588 01a0 DF91      		pop r29
+ 589 01a2 1F91      		pop r17
+ 590 01a4 0F91      		pop r16
+ 591               	.LVL20:
+ 592 01a6 FF90      		pop r15
+ 593 01a8 EF90      		pop r14
+ 594 01aa DF90      		pop r13
+ 595 01ac CF90      		pop r12
+ 596 01ae BF90      		pop r11
+ 597 01b0 AF90      		pop r10
+ 598 01b2 0895      		ret
+ 599               	.LFE8:
+ 601               		.comm ADS1110_READ_DATA,4,1
+ 602               		.comm ADS1110_SETUP_DATA,2,1
+ 675               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 ads1110.c
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:18     .text:00000000 IIC_Start
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:78     .text:0000001e IIC_Stop
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:138    .text:0000003c IIC_Send_Byte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:290    .text:000000a2 IIC_Receive_Byte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:429    .text:000000f4 SetUpADS1110
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:457    .text:00000108 Init_ADS1110
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:476    .text:00000112 ReadADS1110
+                            *COM*:00000004 ADS1110_READ_DATA
+                            *COM*:00000002 ADS1110_SETUP_DATA
+
+UNDEFINED SYMBOLS
+__do_clear_bss
