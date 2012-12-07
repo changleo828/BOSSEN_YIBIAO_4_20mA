@@ -56,9 +56,9 @@ void ErrorDisplay(unsigned int ErrCode);
 
 #define AUTO_ZERO (-75)
 
-#define I_RangeMAX        (2000L)
-#define I_RangeMIN        (400L)
-#define I_DEF_XiaoShuDian (0)
+#define I_RangeMAX        (20000L)
+#define I_RangeMIN        (0L)
+#define I_DEF_XiaoShuDian (2)
 #ifdef ADC_ADS1110
 #define I_ZERO            AUTO_ZERO
 #else
@@ -247,6 +247,7 @@ enum{
     ADDR_F1_VALUE,
     ADDR_F2_VALUE,
     ADDR_ZERO,
+    ADDR_RETURN_ID,
     ADDR_FW_MAX = 0x1016,
     ADDR_FW_MIN = 0x1018,
     ADDR_VALUE = 0x1020,
@@ -578,13 +579,13 @@ void RefreshLED(void)
     unsigned int T_C_temp;
     T_C_temp = ChangeADCResult();
     if(T_C > T_C_temp){
-        if( (T_C - T_C_temp) > 2 )
+        if( (T_C - T_C_temp) > 3 )
 	{
             T_C = T_C_temp;
     	    Display10(T_C_temp);
 	}
     } else {
-        if( (T_C_temp - T_C) > 2 )
+        if( (T_C_temp - T_C) > 3 )
 	{
             T_C = T_C_temp;
     	    Display10(T_C_temp);
@@ -594,8 +595,8 @@ void RefreshLED(void)
     if(TimerOver != 0)
     {
         /* change T_C value 1S */
-        T_C = ChangeADCResult();
         Display10(T_C);
+        T_C = ChangeADCResult();
         /*  */
         TimerOver = 0;
         TimerDelayMs(1000);
@@ -788,6 +789,7 @@ int main(void)
     long tempB = 0;
     unsigned char CRCYesOrNo;
     unsigned char tempch;
+    unsigned char ReturnID = 1;
     //unsigned int i = 0;
     /* 0:wait receive frame 1:receive frame finish */
     RxFrameComplete = 0;
@@ -830,22 +832,36 @@ int main(void)
             if(RxFrame.Addr != 0xFE){
                 continue;
             }
-            if(RxFrame.FunCode != 0x88){
-                continue;
-            }
-            if(RxFrame.Data[0] == 'B' &&
-               RxFrame.Data[1] == 'o' &&
-               RxFrame.Data[2] == 's' &&
-               RxFrame.Data[3] == 's' &&
-               RxFrame.Data[4] == 'u' &&
-               RxFrame.Data[5] == 'N')
-            SendTemp[0] = ID.ch[3];
-            SendTemp[1] = ID.ch[2];
-            SendTemp[2] = ID.ch[1];
-            SendTemp[3] = ID.ch[0];
-            SendDataToPC(0x77, SendTemp , 4);
-            //ErrorDisplay(ERRCODE_DeviceAddrErr);
+            if((RxFrame.FunCode == 0x88)&&(ReturnID)){
+                if(RxFrame.Data[0] == 'B' &&
+                   RxFrame.Data[1] == 'o' &&
+                   RxFrame.Data[2] == 's' &&
+                   RxFrame.Data[3] == 's' &&
+                   RxFrame.Data[4] == 'u' &&
+                   RxFrame.Data[5] == 'N'){
+                    SendTemp[0] = ID.ch[3];
+                    SendTemp[1] = ID.ch[2];
+                    SendTemp[2] = ID.ch[1];
+                    SendTemp[3] = ID.ch[0];
+                    SendDataToPC(0x78, SendTemp , 4);
+                }
             continue;
+            }
+            if(RxFrame.FunCode == 0x89){
+                if(RxFrame.Data[0] == ID.ch[3] &&
+                   RxFrame.Data[1] == ID.ch[2] &&
+                   RxFrame.Data[2] == ID.ch[1] &&
+                   RxFrame.Data[3] == ID.ch[0] ){
+                    
+                    SendTemp[0] = DeviceAddr;
+                    SendDataToPC(0x79, SendTemp , 1);
+                    DeviceAddr = RxFrame.Data[4];
+#ifndef MYDEBUG
+                    WRITE_BYTE_EEP(DeviceAddr,&ADDR_EEP);
+#endif
+                }
+            continue;
+            }
         }
         /* Judge CRC16 is OK */
         if(!FrameCRC16IsOK(RxFrame))
@@ -952,16 +968,29 @@ int main(void)
 #endif
                         break;
                     case ADDR_ZERO:
-                        ADJ_ZERO =  RxFrame.Data[3];
+                        ((char *)&ADJ_ZERO)[1] =  RxFrame.Data[2];
+                        ((char *)&ADJ_ZERO)[0] =  RxFrame.Data[3];
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        SendTemp[2] = (char)(ADJ_ZERO>>8);
+                        SendTemp[3] = (char)ADJ_ZERO;
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+#ifndef MYDEBUG
+                        WRITE_WORD_EEP(ADJ_ZERO,pADJ_ZERO);
+#endif
+                        break;
+                    case ADDR_RETURN_ID:
+                        if(RxFrame.Data[3] != 0){
+                            ReturnID = 1;
+                        }else{
+                            ReturnID = 0;
+                        }
                         //SendTemp[0] = XiaoShuDian;
                         SendTemp[0] = RxFrame.Data[0];
                         SendTemp[1] = RxFrame.Data[1];
                         SendTemp[2] = 0x00;
-                        SendTemp[3] = XiaoShuDian;
+                        SendTemp[3] = ReturnID;
                         SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-#ifndef MYDEBUG
-                        WRITE_BYTE_EEP(ADJ_ZERO,pADJ_ZERO);
-#endif
                         break;
                     default:
                         SendTemp[0] = 0x00;

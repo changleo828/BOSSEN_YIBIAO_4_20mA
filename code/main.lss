@@ -3,31 +3,31 @@ main.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00001568  00000000  00000000  000000b4  2**1
+  0 .text         0000163a  00000000  00000000  000000b4  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000034  00800060  00001568  0000161c  2**0
+  1 .data         00000034  00800060  0000163a  000016ee  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000055  00800094  00800094  00001650  2**0
+  2 .bss          00000055  00800094  00800094  00001722  2**0
                   ALLOC
-  3 .eeprom       00000022  00810000  00810000  00001650  2**0
+  3 .eeprom       00000022  00810000  00810000  00001722  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .debug_aranges 00000080  00000000  00000000  00001672  2**0
+  4 .debug_aranges 00000080  00000000  00000000  00001744  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_pubnames 0000051f  00000000  00000000  000016f2  2**0
+  5 .debug_pubnames 0000051f  00000000  00000000  000017c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000124d  00000000  00000000  00001c11  2**0
+  6 .debug_info   0000126b  00000000  00000000  00001ce3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000064f  00000000  00000000  00002e5e  2**0
+  7 .debug_abbrev 00000642  00000000  00000000  00002f4e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000011ac  00000000  00000000  000034ad  2**0
+  8 .debug_line   0000121c  00000000  00000000  00003590  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000002b0  00000000  00000000  0000465c  2**2
+  9 .debug_frame  000002b0  00000000  00000000  000047ac  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000753  00000000  00000000  0000490c  2**0
+ 10 .debug_str    0000078f  00000000  00000000  00004a5c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000878  00000000  00000000  0000505f  2**0
+ 11 .debug_loc    000008c6  00000000  00000000  000051eb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000048  00000000  00000000  000058d7  2**0
+ 12 .debug_ranges 00000018  00000000  00000000  00005ab1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -42,7 +42,7 @@ Disassembly of section .text:
        c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
        e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
       10:	b5 c0       	rjmp	.+362    	; 0x17c <__vector_8>
-      12:	ab c7       	rjmp	.+3926   	; 0xf6a <__vector_9>
+      12:	14 c8       	rjmp	.-4056   	; 0xfffff03c <__eeprom_end+0xff7ef01a>
       14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
       16:	8c c1       	rjmp	.+792    	; 0x330 <__vector_11>
       18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
@@ -65,8 +65,8 @@ Disassembly of section .text:
       32:	10 e0       	ldi	r17, 0x00	; 0
       34:	a0 e6       	ldi	r26, 0x60	; 96
       36:	b0 e0       	ldi	r27, 0x00	; 0
-      38:	e8 e6       	ldi	r30, 0x68	; 104
-      3a:	f5 e1       	ldi	r31, 0x15	; 21
+      38:	ea e3       	ldi	r30, 0x3A	; 58
+      3a:	f6 e1       	ldi	r31, 0x16	; 22
       3c:	02 c0       	rjmp	.+4      	; 0x42 <.do_copy_data_start>
 
 0000003e <.do_copy_data_loop>:
@@ -92,7 +92,7 @@ Disassembly of section .text:
       54:	b1 07       	cpc	r27, r17
       56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
       58:	8d d4       	rcall	.+2330   	; 0x974 <main>
-      5a:	84 ca       	rjmp	.-2808   	; 0xfffff564 <__eeprom_end+0xff7ef542>
+      5a:	ed ca       	rjmp	.-2598   	; 0xfffff636 <__eeprom_end+0xff7ef614>
 
 0000005c <__bad_interrupt>:
       5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
@@ -125,13 +125,13 @@ signed long Out_MAX(signed int max,signed int min)
       7a:	36 e0       	ldi	r19, 0x06	; 6
       7c:	40 e0       	ldi	r20, 0x00	; 0
       7e:	50 e0       	ldi	r21, 0x00	; 0
-      80:	d4 d9       	rcall	.-3160   	; 0xfffff42a <__eeprom_end+0xff7ef408>
+      80:	3d da       	rcall	.-2950   	; 0xfffff4fc <__eeprom_end+0xff7ef4da>
     temp /= (signed long)(2000-400);
       82:	20 e4       	ldi	r18, 0x40	; 64
       84:	36 e0       	ldi	r19, 0x06	; 6
       86:	40 e0       	ldi	r20, 0x00	; 0
       88:	50 e0       	ldi	r21, 0x00	; 0
-      8a:	24 da       	rcall	.-3000   	; 0xfffff4d4 <__eeprom_end+0xff7ef4b2>
+      8a:	8d da       	rcall	.-2790   	; 0xfffff5a6 <__eeprom_end+0xff7ef584>
       8c:	c9 01       	movw	r24, r18
       8e:	da 01       	movw	r26, r20
       90:	00 27       	eor	r16, r16
@@ -177,7 +177,7 @@ signed long Out_MIN(signed int max,signed int min)
       ca:	30 e0       	ldi	r19, 0x00	; 0
       cc:	40 e0       	ldi	r20, 0x00	; 0
       ce:	50 e0       	ldi	r21, 0x00	; 0
-      d0:	01 da       	rcall	.-3070   	; 0xfffff4d4 <__eeprom_end+0xff7ef4b2>
+      d0:	6a da       	rcall	.-2860   	; 0xfffff5a6 <__eeprom_end+0xff7ef584>
       d2:	c9 01       	movw	r24, r18
       d4:	da 01       	movw	r26, r20
       d6:	00 27       	eor	r16, r16
@@ -368,7 +368,7 @@ void USART_Init(unsigned int baud)
      1fa:	71 ea       	ldi	r23, 0xA1	; 161
      1fc:	87 e0       	ldi	r24, 0x07	; 7
      1fe:	90 e0       	ldi	r25, 0x00	; 0
-     200:	47 d9       	rcall	.-3442   	; 0xfffff490 <__eeprom_end+0xff7ef46e>
+     200:	b0 d9       	rcall	.-3232   	; 0xfffff562 <__eeprom_end+0xff7ef540>
      202:	c9 01       	movw	r24, r18
      204:	da 01       	movw	r26, r20
      206:	01 97       	sbiw	r24, 0x01	; 1
@@ -838,7 +838,7 @@ void IsErrorOrNot(void)
         DisplayHex(ErrCodeDisplay);
      494:	80 91 e0 00 	lds	r24, 0x00E0
      498:	90 91 e1 00 	lds	r25, 0x00E1
-     49c:	ca d5       	rcall	.+2964   	; 0x1032 <DisplayHex>
+     49c:	33 d6       	rcall	.+3174   	; 0x1104 <DisplayHex>
      49e:	08 95       	ret
 
 000004a0 <FrameCRC16IsOK>:
@@ -916,7 +916,7 @@ unsigned char FrameCRC16IsOK(MODBUSFRAME Temp)
     CRCtemp = CRC16(sch, Temp.Len);
      506:	ce 01       	movw	r24, r28
      508:	01 96       	adiw	r24, 0x01	; 1
-     50a:	3f d6       	rcall	.+3198   	; 0x118a <CRC16>
+     50a:	a8 d6       	rcall	.+3408   	; 0x125c <CRC16>
 
     if(Temp.CRCL != (unsigned char)CRCtemp)
      50c:	08 17       	cp	r16, r24
@@ -1029,7 +1029,7 @@ void SendDataToPC(FUNCODE Fcode, unsigned char * SendTemp, unsigned int Len)
      598:	15 1f       	adc	r17, r21
      59a:	c7 01       	movw	r24, r14
      59c:	b8 01       	movw	r22, r16
-     59e:	f5 d5       	rcall	.+3050   	; 0x118a <CRC16>
+     59e:	5e d6       	rcall	.+3260   	; 0x125c <CRC16>
 
     TX485();
      5a0:	92 9a       	sbi	0x12, 2	; 18
@@ -1136,9 +1136,9 @@ unsigned int ADCOutOne(void)
     #define ADC_COUNT 2
     for(i = 0;i < ADC_COUNT; i++){
         sum += ReadADS1110();
-     5fc:	88 d6       	rcall	.+3344   	; 0x130e <ReadADS1110>
+     5fc:	f1 d6       	rcall	.+3554   	; 0x13e0 <ReadADS1110>
      5fe:	7c 01       	movw	r14, r24
-     600:	86 d6       	rcall	.+3340   	; 0x130e <ReadADS1110>
+     600:	ef d6       	rcall	.+3550   	; 0x13e0 <ReadADS1110>
      602:	00 e0       	ldi	r16, 0x00	; 0
      604:	10 e0       	ldi	r17, 0x00	; 0
      606:	a0 e0       	ldi	r26, 0x00	; 0
@@ -1187,10 +1187,10 @@ unsigned int ADCOut(void)
     tempMIN = ADCOutOne();
      63c:	db df       	rcall	.-74     	; 0x5f4 <ADCOutOne>
      63e:	ec 01       	movw	r28, r24
-     640:	bb 24       	eor	r11, r11
-     642:	ee 24       	eor	r14, r14
-     644:	ff 24       	eor	r15, r15
-     646:	87 01       	movw	r16, r14
+     640:	ee 24       	eor	r14, r14
+     642:	ff 24       	eor	r15, r15
+     644:	87 01       	movw	r16, r14
+     646:	bb 24       	eor	r11, r11
     
     for(i = 0;i < 34;i++)
     {
@@ -1307,7 +1307,7 @@ unsigned int ChangeADCResult(void)
      706:	90 e0       	ldi	r25, 0x00	; 0
      708:	40 e0       	ldi	r20, 0x00	; 0
      70a:	50 e0       	ldi	r21, 0x00	; 0
-     70c:	8e d6       	rcall	.+3356   	; 0x142a <__mulsi3>
+     70c:	f7 d6       	rcall	.+3566   	; 0x14fc <__mulsi3>
      70e:	ef e0       	ldi	r30, 0x0F	; 15
      710:	95 95       	asr	r25
      712:	87 95       	ror	r24
@@ -1348,7 +1348,7 @@ void RefreshLED(void)
      750:	28 17       	cp	r18, r24
      752:	39 07       	cpc	r19, r25
      754:	38 f4       	brcc	.+14     	; 0x764 <RefreshLED+0x20>
-        if( (T_C - T_C_temp) > 2 )
+        if( (T_C - T_C_temp) > 3 )
      756:	80 91 da 00 	lds	r24, 0x00DA
      75a:	90 91 db 00 	lds	r25, 0x00DB
      75e:	82 1b       	sub	r24, r18
@@ -1359,14 +1359,14 @@ void RefreshLED(void)
     	    Display10(T_C_temp);
 	}
     } else {
-        if( (T_C_temp - T_C) > 2 )
+        if( (T_C_temp - T_C) > 3 )
      764:	80 91 da 00 	lds	r24, 0x00DA
      768:	90 91 db 00 	lds	r25, 0x00DB
      76c:	a9 01       	movw	r20, r18
      76e:	48 1b       	sub	r20, r24
      770:	59 0b       	sbc	r21, r25
      772:	ca 01       	movw	r24, r20
-     774:	03 97       	sbiw	r24, 0x03	; 3
+     774:	04 97       	sbiw	r24, 0x04	; 4
      776:	30 f0       	brcs	.+12     	; 0x784 <RefreshLED+0x40>
 	{
             T_C = T_C_temp;
@@ -1374,7 +1374,7 @@ void RefreshLED(void)
      77c:	20 93 da 00 	sts	0x00DA, r18
     	    Display10(T_C_temp);
      780:	c9 01       	movw	r24, r18
-     782:	82 d4       	rcall	.+2308   	; 0x1088 <Display10>
+     782:	eb d4       	rcall	.+2518   	; 0x115a <Display10>
 	}
     }
 #ifdef TIMERDELAY
@@ -1384,14 +1384,14 @@ void RefreshLED(void)
      78a:	09 f1       	breq	.+66     	; 0x7ce <RefreshLED+0x8a>
     {
         /* change T_C value 1S */
-        T_C = ChangeADCResult();
-     78c:	92 df       	rcall	.-220    	; 0x6b2 <ChangeADCResult>
-     78e:	90 93 db 00 	sts	0x00DB, r25
-     792:	80 93 da 00 	sts	0x00DA, r24
         Display10(T_C);
-     796:	80 91 da 00 	lds	r24, 0x00DA
-     79a:	90 91 db 00 	lds	r25, 0x00DB
-     79e:	74 d4       	rcall	.+2280   	; 0x1088 <Display10>
+     78c:	80 91 da 00 	lds	r24, 0x00DA
+     790:	90 91 db 00 	lds	r25, 0x00DB
+     794:	e2 d4       	rcall	.+2500   	; 0x115a <Display10>
+        T_C = ChangeADCResult();
+     796:	8d df       	rcall	.-230    	; 0x6b2 <ChangeADCResult>
+     798:	90 93 db 00 	sts	0x00DB, r25
+     79c:	80 93 da 00 	sts	0x00DA, r24
         /*  */
         TimerOver = 0;
      7a0:	10 92 d7 00 	sts	0x00D7, r1
@@ -1424,7 +1424,7 @@ void ADCInit(void)
 {
 #ifdef ADC_ADS1110	
      Init_ADS1110();
-     7d0:	99 d5       	rcall	.+2866   	; 0x1304 <Init_ADS1110>
+     7d0:	02 d6       	rcall	.+3076   	; 0x13d6 <Init_ADS1110>
              (0<<ADFR)|     /* ADC Free Running Select */
              (0<<ADIF)|     /* ADC Interrupt Flag ,1:clear */
              (0<<ADIE)|     /* ADC Interrupt Enable */
@@ -1445,7 +1445,7 @@ void WRITE_BYTE_EEP(unsigned char x,unsigned char * addr) {eeprom_busy_wait();ee
      7d8:	fe cf       	rjmp	.-4      	; 0x7d6 <WRITE_BYTE_EEP+0x2>
      7da:	cb 01       	movw	r24, r22
      7dc:	62 2f       	mov	r22, r18
-     7de:	a2 d6       	rcall	.+3396   	; 0x1524 <__eewr_byte_m8>
+     7de:	0b d7       	rcall	.+3606   	; 0x15f6 <__eewr_byte_m8>
      7e0:	08 95       	ret
 
 000007e2 <READ_BYTE_EEP>:
@@ -1457,7 +1457,7 @@ void WRITE_WORD_EEP(unsigned int x,unsigned int * addr) {eeprom_busy_wait();eepr
 unsigned char READ_BYTE_EEP(unsigned char * addr) {eeprom_busy_wait();return eeprom_read_byte(addr);}
      7e2:	e1 99       	sbic	0x1c, 1	; 28
      7e4:	fe cf       	rjmp	.-4      	; 0x7e2 <READ_BYTE_EEP>
-     7e6:	91 d6       	rcall	.+3362   	; 0x150a <__eerd_byte_m8>
+     7e6:	fa d6       	rcall	.+3572   	; 0x15dc <__eerd_byte_m8>
      7e8:	08 95       	ret
 
 000007ea <WRITE_WORD_EEP>:
@@ -1472,7 +1472,7 @@ void WRITE_WORD_EEP(unsigned int x,unsigned int * addr) {eeprom_busy_wait();eepr
      7ee:	fe cf       	rjmp	.-4      	; 0x7ec <WRITE_WORD_EEP+0x2>
      7f0:	cb 01       	movw	r24, r22
      7f2:	b9 01       	movw	r22, r18
-     7f4:	a4 d6       	rcall	.+3400   	; 0x153e <__eewr_word_m8>
+     7f4:	0d d7       	rcall	.+3610   	; 0x1610 <__eewr_word_m8>
      7f6:	08 95       	ret
 
 000007f8 <READ_WORD_EEP>:
@@ -1484,7 +1484,7 @@ static unsigned int  ADJ_ZERO;
 unsigned int READ_WORD_EEP(unsigned int * addr) {eeprom_busy_wait();return eeprom_read_word(addr);}
      7f8:	e1 99       	sbic	0x1c, 1	; 28
      7fa:	fe cf       	rjmp	.-4      	; 0x7f8 <READ_WORD_EEP>
-     7fc:	8e d6       	rcall	.+3356   	; 0x151a <__eerd_word_m8>
+     7fc:	f7 d6       	rcall	.+3566   	; 0x15ec <__eerd_word_m8>
      7fe:	08 95       	ret
 
 00000800 <SystemInit>:
@@ -1659,7 +1659,7 @@ unsigned int READ_WORD_EEP(unsigned int * addr) {eeprom_busy_wait();return eepro
      944:	78 94       	sei
 //Display Open
     OpenDisplayLED();
-     946:	6a d3       	rcall	.+1748   	; 0x101c <OpenDisplayLED>
+     946:	d3 d3       	rcall	.+1958   	; 0x10ee <OpenDisplayLED>
 //485 enabile
     RX485();
      948:	92 98       	cbi	0x12, 2	; 18
@@ -1679,7 +1679,7 @@ void ADCInit(void)
 {
 #ifdef ADC_ADS1110	
      Init_ADS1110();
-     954:	d7 d4       	rcall	.+2478   	; 0x1304 <Init_ADS1110>
+     954:	40 d5       	rcall	.+2688   	; 0x13d6 <Init_ADS1110>
     /* clock select clk/128 */
     TCCR2 = Timer2ClkSel;
 //Enable ADC
@@ -1738,9 +1738,9 @@ int main(void)
      9a2:	de bf       	out	0x3e, r29	; 62
      9a4:	0f be       	out	0x3f, r0	; 63
      9a6:	cd bf       	out	0x3d, r28	; 61
-    long tempB = 0;
     unsigned char CRCYesOrNo;
     unsigned char tempch;
+    unsigned char ReturnID = 1;
     //unsigned int i = 0;
     /* 0:wait receive frame 1:receive frame finish */
     RxFrameComplete = 0;
@@ -1801,12 +1801,12 @@ int main(void)
     DisplayHex(ErrCodeDisplay);
      a20:	80 91 e0 00 	lds	r24, 0x00E0
      a24:	90 91 e1 00 	lds	r25, 0x00E1
-     a28:	04 d3       	rcall	.+1544   	; 0x1032 <DisplayHex>
+     a28:	6d d3       	rcall	.+1754   	; 0x1104 <DisplayHex>
      a2a:	20 e0       	ldi	r18, 0x00	; 0
      a2c:	30 e0       	ldi	r19, 0x00	; 0
      a2e:	48 ec       	ldi	r20, 0xC8	; 200
      a30:	50 e0       	ldi	r21, 0x00	; 0
-     a32:	0b c0       	rjmp	.+22     	; 0xa4a <main+0xd6>
+     a32:	18 c0       	rjmp	.+48     	; 0xa64 <main+0xf0>
      a34:	fa 01       	movw	r30, r20
      a36:	31 97       	sbiw	r30, 0x01	; 1
      a38:	f1 f7       	brne	.-4      	; 0xa36 <main+0xc2>
@@ -1839,1839 +1839,1955 @@ int main(void)
      a42:	3f 4f       	sbci	r19, 0xFF	; 255
      a44:	2a 30       	cpi	r18, 0x0A	; 10
      a46:	31 05       	cpc	r19, r1
-     a48:	19 f0       	breq	.+6      	; 0xa50 <main+0xdc>
-     a4a:	80 ed       	ldi	r24, 0xD0	; 208
-     a4c:	97 e0       	ldi	r25, 0x07	; 7
-     a4e:	f2 cf       	rjmp	.-28     	; 0xa34 <main+0xc0>
+     a48:	69 f4       	brne	.+26     	; 0xa64 <main+0xf0>
+     a4a:	55 24       	eor	r5, r5
+     a4c:	53 94       	inc	r5
                         //SendTemp[0] = XiaoShuDian;
                         SendTemp[0] = RxFrame.Data[0];
                         SendTemp[1] = RxFrame.Data[1];
                         SendTemp[2] = 0x00;
                         SendTemp[3] = XiaoShuDian;
                         SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-     a50:	4e 01       	movw	r8, r28
-     a52:	08 94       	sec
-     a54:	81 1c       	adc	r8, r1
-     a56:	91 1c       	adc	r9, r1
-}
-void ErrorDisplay(unsigned int ErrCode)
-{
-    ErrFlag = 1;
-    ErrCode &= 0x0FFF;
-    ErrCodeDisplay = ErrCode | 0xE000;
-     a58:	a5 e0       	ldi	r26, 0x05	; 5
-     a5a:	4a 2e       	mov	r4, r26
-     a5c:	a0 ee       	ldi	r26, 0xE0	; 224
-     a5e:	5a 2e       	mov	r5, r26
-        wdt_reset();
-    }
-#endif
-    while(1)
-    {
-        if(!RxFrameComplete)
-     a60:	f2 e0       	ldi	r31, 0x02	; 2
-     a62:	2f 2e       	mov	r2, r31
-     a64:	f0 ee       	ldi	r31, 0xE0	; 224
-     a66:	3f 2e       	mov	r3, r31
-     a68:	80 91 95 00 	lds	r24, 0x0095
-     a6c:	88 23       	and	r24, r24
-     a6e:	21 f4       	brne	.+8      	; 0xa78 <main+0x104>
-        {
-            //if(ErrFlag == 0)
-            RefreshLED();
-     a70:	69 de       	rcall	.-814    	; 0x744 <RefreshLED>
-            IsErrorOrNot();
-     a72:	02 dd       	rcall	.-1532   	; 0x478 <IsErrorOrNot>
-            wdt_reset();
-     a74:	a8 95       	wdr
-     a76:	f8 cf       	rjmp	.-16     	; 0xa68 <main+0xf4>
-            continue;
-        }
-
-        /* clear receive finish flag */
-        RxFrameComplete = 0;
-     a78:	10 92 95 00 	sts	0x0095, r1
-        /* Judge Addr is OK */
-        if(RxFrame.Addr != DeviceAddr)
-     a7c:	90 91 b6 00 	lds	r25, 0x00B6
-     a80:	80 91 e2 00 	lds	r24, 0x00E2
-     a84:	98 17       	cp	r25, r24
-     a86:	09 f4       	brne	.+2      	; 0xa8a <main+0x116>
-     a88:	40 c0       	rjmp	.+128    	; 0xb0a <main+0x196>
-        {
-            if(RxFrame.Addr != 0xFE){
-     a8a:	80 91 b6 00 	lds	r24, 0x00B6
-     a8e:	8e 3f       	cpi	r24, 0xFE	; 254
-     a90:	59 f7       	brne	.-42     	; 0xa68 <main+0xf4>
-                continue;
-            }
-            if(RxFrame.FunCode != 0x88){
-     a92:	80 91 b7 00 	lds	r24, 0x00B7
-     a96:	88 38       	cpi	r24, 0x88	; 136
-     a98:	39 f7       	brne	.-50     	; 0xa68 <main+0xf4>
-                continue;
-            }
-            if(RxFrame.Data[0] == 'B' &&
-     a9a:	e0 91 b8 00 	lds	r30, 0x00B8
-     a9e:	f0 91 b9 00 	lds	r31, 0x00B9
-     aa2:	80 81       	ld	r24, Z
-     aa4:	82 34       	cpi	r24, 0x42	; 66
-     aa6:	31 f5       	brne	.+76     	; 0xaf4 <main+0x180>
-     aa8:	e0 91 b8 00 	lds	r30, 0x00B8
-     aac:	f0 91 b9 00 	lds	r31, 0x00B9
-     ab0:	81 81       	ldd	r24, Z+1	; 0x01
-     ab2:	8f 36       	cpi	r24, 0x6F	; 111
-     ab4:	f9 f4       	brne	.+62     	; 0xaf4 <main+0x180>
-     ab6:	e0 91 b8 00 	lds	r30, 0x00B8
-     aba:	f0 91 b9 00 	lds	r31, 0x00B9
-     abe:	82 81       	ldd	r24, Z+2	; 0x02
-     ac0:	83 37       	cpi	r24, 0x73	; 115
-     ac2:	c1 f4       	brne	.+48     	; 0xaf4 <main+0x180>
-     ac4:	e0 91 b8 00 	lds	r30, 0x00B8
-     ac8:	f0 91 b9 00 	lds	r31, 0x00B9
-     acc:	83 81       	ldd	r24, Z+3	; 0x03
-     ace:	83 37       	cpi	r24, 0x73	; 115
-     ad0:	89 f4       	brne	.+34     	; 0xaf4 <main+0x180>
-     ad2:	e0 91 b8 00 	lds	r30, 0x00B8
-     ad6:	f0 91 b9 00 	lds	r31, 0x00B9
-     ada:	84 81       	ldd	r24, Z+4	; 0x04
-     adc:	85 37       	cpi	r24, 0x75	; 117
-     ade:	51 f4       	brne	.+20     	; 0xaf4 <main+0x180>
-     ae0:	e0 91 b8 00 	lds	r30, 0x00B8
-     ae4:	f0 91 b9 00 	lds	r31, 0x00B9
-     ae8:	85 81       	ldd	r24, Z+5	; 0x05
-     aea:	8e 34       	cpi	r24, 0x4E	; 78
-     aec:	19 f4       	brne	.+6      	; 0xaf4 <main+0x180>
-               RxFrame.Data[1] == 'o' &&
-               RxFrame.Data[2] == 's' &&
-               RxFrame.Data[3] == 's' &&
-               RxFrame.Data[4] == 'u' &&
-               RxFrame.Data[5] == 'N')
-            SendTemp[0] = ID.ch[3];
-     aee:	80 91 b4 00 	lds	r24, 0x00B4
-     af2:	89 83       	std	Y+1, r24	; 0x01
-            SendTemp[1] = ID.ch[2];
-     af4:	80 91 b3 00 	lds	r24, 0x00B3
-     af8:	8a 83       	std	Y+2, r24	; 0x02
-            SendTemp[2] = ID.ch[1];
-     afa:	80 91 b2 00 	lds	r24, 0x00B2
-     afe:	8b 83       	std	Y+3, r24	; 0x03
-            SendTemp[3] = ID.ch[0];
-     b00:	80 91 b1 00 	lds	r24, 0x00B1
-     b04:	8c 83       	std	Y+4, r24	; 0x04
-            SendDataToPC(0x77, SendTemp , 4);
-     b06:	87 e7       	ldi	r24, 0x77	; 119
-     b08:	72 c0       	rjmp	.+228    	; 0xbee <main+0x27a>
-            //ErrorDisplay(ERRCODE_DeviceAddrErr);
-            continue;
-        }
-        /* Judge CRC16 is OK */
-        if(!FrameCRC16IsOK(RxFrame))
-     b0a:	20 91 b6 00 	lds	r18, 0x00B6
-     b0e:	30 91 b7 00 	lds	r19, 0x00B7
-     b12:	40 91 b8 00 	lds	r20, 0x00B8
-     b16:	50 91 b9 00 	lds	r21, 0x00B9
-     b1a:	60 91 ba 00 	lds	r22, 0x00BA
-     b1e:	70 91 bb 00 	lds	r23, 0x00BB
-     b22:	80 91 bc 00 	lds	r24, 0x00BC
-     b26:	90 91 bd 00 	lds	r25, 0x00BD
-     b2a:	ba dc       	rcall	.-1676   	; 0x4a0 <FrameCRC16IsOK>
-     b2c:	88 23       	and	r24, r24
-     b2e:	11 f0       	breq	.+4      	; 0xb34 <main+0x1c0>
-     b30:	1b 86       	std	Y+11, r1	; 0x0b
-     b32:	0c c0       	rjmp	.+24     	; 0xb4c <main+0x1d8>
-        return 0;
-    return 1;
-}
-void ErrorDisplay(unsigned int ErrCode)
-{
-    ErrFlag = 1;
-     b34:	81 e0       	ldi	r24, 0x01	; 1
-     b36:	90 e0       	ldi	r25, 0x00	; 0
-     b38:	90 93 d6 00 	sts	0x00D6, r25
-     b3c:	80 93 d5 00 	sts	0x00D5, r24
-    ErrCode &= 0x0FFF;
-    ErrCodeDisplay = ErrCode | 0xE000;
-     b40:	30 92 e1 00 	sts	0x00E1, r3
-     b44:	20 92 e0 00 	sts	0x00E0, r2
-     b48:	20 e8       	ldi	r18, 0x80	; 128
-     b4a:	2b 87       	std	Y+11, r18	; 0x0b
-            ErrorDisplay(ERRCODE_CRC16Error);
-             CRCYesOrNo = 0x80;
-        }else{
-             CRCYesOrNo = 0;
-        }
-        tempint = (unsigned int)RxFrame.Data[0];
-     b4c:	e0 91 b8 00 	lds	r30, 0x00B8
-     b50:	f0 91 b9 00 	lds	r31, 0x00B9
-        tempint <<= 8;
-     b54:	70 80       	ld	r7, Z
-     b56:	66 24       	eor	r6, r6
-        tempint |= (unsigned int)RxFrame.Data[1];
-     b58:	e0 91 b8 00 	lds	r30, 0x00B8
-     b5c:	f0 91 b9 00 	lds	r31, 0x00B9
-     b60:	81 81       	ldd	r24, Z+1	; 0x01
-     b62:	90 e0       	ldi	r25, 0x00	; 0
-     b64:	86 29       	or	r24, r6
-     b66:	97 29       	or	r25, r7
-        switch(RxFrame.FunCode){
-     b68:	20 91 b7 00 	lds	r18, 0x00B7
-     b6c:	26 30       	cpi	r18, 0x06	; 6
-     b6e:	09 f4       	brne	.+2      	; 0xb72 <main+0x1fe>
-     b70:	87 c0       	rjmp	.+270    	; 0xc80 <main+0x30c>
-     b72:	27 30       	cpi	r18, 0x07	; 7
-     b74:	38 f4       	brcc	.+14     	; 0xb84 <main+0x210>
-     b76:	23 30       	cpi	r18, 0x03	; 3
-     b78:	09 f4       	brne	.+2      	; 0xb7c <main+0x208>
-     b7a:	40 c0       	rjmp	.+128    	; 0xbfc <main+0x288>
-     b7c:	24 30       	cpi	r18, 0x04	; 4
-     b7e:	09 f0       	breq	.+2      	; 0xb82 <main+0x20e>
-     b80:	b3 c1       	rjmp	.+870    	; 0xee8 <main+0x574>
-     b82:	15 c0       	rjmp	.+42     	; 0xbae <main+0x23a>
-     b84:	25 36       	cpi	r18, 0x65	; 101
-     b86:	09 f4       	brne	.+2      	; 0xb8a <main+0x216>
-     b88:	fe c0       	rjmp	.+508    	; 0xd86 <main+0x412>
-     b8a:	26 36       	cpi	r18, 0x66	; 102
-     b8c:	09 f4       	brne	.+2      	; 0xb90 <main+0x21c>
-     b8e:	86 c1       	rjmp	.+780    	; 0xe9c <main+0x528>
-     b90:	24 36       	cpi	r18, 0x64	; 100
-     b92:	09 f0       	breq	.+2      	; 0xb96 <main+0x222>
-     b94:	a9 c1       	rjmp	.+850    	; 0xee8 <main+0x574>
-            case CommunicationTest:
-                SendDataToPC(CommunicationTest, RxFrame.Data, RxFrame.Len - 2);
-     b96:	60 91 b8 00 	lds	r22, 0x00B8
-     b9a:	70 91 b9 00 	lds	r23, 0x00B9
-     b9e:	40 91 ba 00 	lds	r20, 0x00BA
-     ba2:	50 91 bb 00 	lds	r21, 0x00BB
-     ba6:	42 50       	subi	r20, 0x02	; 2
-     ba8:	50 40       	sbci	r21, 0x00	; 0
-     baa:	84 e6       	ldi	r24, 0x64	; 100
-     bac:	9b c1       	rjmp	.+822    	; 0xee4 <main+0x570>
-                break;
-            case GET_VALUE:
-                switch(tempint){
-     bae:	80 52       	subi	r24, 0x20	; 32
-     bb0:	90 41       	sbci	r25, 0x10	; 16
-     bb2:	09 f5       	brne	.+66     	; 0xbf6 <main+0x282>
-                    case ADDR_VALUE:/* Get ADC data */
-                        V_DATA.F = (float)T_C;
-     bb4:	60 91 da 00 	lds	r22, 0x00DA
-     bb8:	70 91 db 00 	lds	r23, 0x00DB
-     bbc:	80 e0       	ldi	r24, 0x00	; 0
-     bbe:	90 e0       	ldi	r25, 0x00	; 0
-     bc0:	f7 d3       	rcall	.+2030   	; 0x13b0 <__floatunsisf>
-     bc2:	60 93 ad 00 	sts	0x00AD, r22
-     bc6:	70 93 ae 00 	sts	0x00AE, r23
-     bca:	80 93 af 00 	sts	0x00AF, r24
-     bce:	90 93 b0 00 	sts	0x00B0, r25
-                        SendTemp[0] = V_DATA.ch[3];
-     bd2:	80 91 b0 00 	lds	r24, 0x00B0
-     bd6:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = V_DATA.ch[2];
-     bd8:	80 91 af 00 	lds	r24, 0x00AF
-     bdc:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = V_DATA.ch[1];
-     bde:	80 91 ae 00 	lds	r24, 0x00AE
-     be2:	8b 83       	std	Y+3, r24	; 0x03
-                        SendTemp[3] = V_DATA.ch[0];
-     be4:	80 91 ad 00 	lds	r24, 0x00AD
-     be8:	8c 83       	std	Y+4, r24	; 0x04
-                        SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
-     bea:	8b 85       	ldd	r24, Y+11	; 0x0b
-     bec:	84 60       	ori	r24, 0x04	; 4
-     bee:	b4 01       	movw	r22, r8
-     bf0:	44 e0       	ldi	r20, 0x04	; 4
-     bf2:	50 e0       	ldi	r21, 0x00	; 0
-     bf4:	77 c1       	rjmp	.+750    	; 0xee4 <main+0x570>
-                        break;
-                    default:
-                        SendTemp[0] = 0x00;
-     bf6:	19 82       	std	Y+1, r1	; 0x01
-                        SendDataToPC(GET_VALUE | 0x80, SendTemp , 1);
-     bf8:	84 e8       	ldi	r24, 0x84	; 132
-     bfa:	c1 c0       	rjmp	.+386    	; 0xd7e <main+0x40a>
-                        break;
-                }
-                break;
-            case GET_DATA:
-                switch(tempint)
-     bfc:	84 32       	cpi	r24, 0x24	; 36
-     bfe:	91 05       	cpc	r25, r1
-     c00:	c9 f0       	breq	.+50     	; 0xc34 <main+0x2c0>
-     c02:	85 32       	cpi	r24, 0x25	; 37
-     c04:	91 05       	cpc	r25, r1
-     c06:	30 f4       	brcc	.+12     	; 0xc14 <main+0x2a0>
-     c08:	82 32       	cpi	r24, 0x22	; 34
-     c0a:	91 05       	cpc	r25, r1
-     c0c:	51 f0       	breq	.+20     	; 0xc22 <main+0x2ae>
-     c0e:	83 97       	sbiw	r24, 0x23	; 35
-     c10:	a1 f5       	brne	.+104    	; 0xc7a <main+0x306>
-     c12:	10 c0       	rjmp	.+32     	; 0xc34 <main+0x2c0>
-     c14:	85 32       	cpi	r24, 0x25	; 37
-     c16:	91 05       	cpc	r25, r1
-     c18:	41 f0       	breq	.+16     	; 0xc2a <main+0x2b6>
-     c1a:	86 51       	subi	r24, 0x16	; 22
-     c1c:	90 41       	sbci	r25, 0x10	; 16
-     c1e:	69 f5       	brne	.+90     	; 0xc7a <main+0x306>
-     c20:	0e c0       	rjmp	.+28     	; 0xc3e <main+0x2ca>
-                {
-                    case ADDR_XSD:/* Get XiaoShuDian Data */
-                        SendTemp[0] = 0;
-     c22:	19 82       	std	Y+1, r1	; 0x01
-                        SendTemp[1] = XiaoShuDian;
-     c24:	80 91 be 00 	lds	r24, 0x00BE
-     c28:	03 c0       	rjmp	.+6      	; 0xc30 <main+0x2bc>
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
-                        break;
-                    case ADDR_ZERO:/* Get XiaoShuDian Data */
-                        SendTemp[0] = 0;
-     c2a:	19 82       	std	Y+1, r1	; 0x01
-                        SendTemp[1] = ADJ_ZERO;
-     c2c:	80 91 a3 00 	lds	r24, 0x00A3
-     c30:	8a 83       	std	Y+2, r24	; 0x02
-     c32:	02 c0       	rjmp	.+4      	; 0xc38 <main+0x2c4>
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
-                        break;
-                    case ADDR_F1_VALUE:/* Get Freq Data */
-                        SendTemp[0] = 0x00;
-     c34:	19 82       	std	Y+1, r1	; 0x01
-                        SendTemp[1] = 0x00;
-     c36:	1a 82       	std	Y+2, r1	; 0x02
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
-     c38:	8b 85       	ldd	r24, Y+11	; 0x0b
-     c3a:	83 60       	ori	r24, 0x03	; 3
-     c3c:	50 c1       	rjmp	.+672    	; 0xede <main+0x56a>
-                        SendTemp[0] = 0x00;
-                        SendTemp[1] = 0x00;
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
-                        break;
-                    case ADDR_FW_MAX:
-                        SendTemp[0] = V_MAX.ch[3];
-     c3e:	80 91 a8 00 	lds	r24, 0x00A8
-     c42:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = V_MAX.ch[2];
-     c44:	80 91 a7 00 	lds	r24, 0x00A7
-     c48:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = V_MAX.ch[1];
-     c4a:	80 91 a6 00 	lds	r24, 0x00A6
-     c4e:	8b 83       	std	Y+3, r24	; 0x03
-                        SendTemp[3] = V_MAX.ch[0];
-     c50:	80 91 a5 00 	lds	r24, 0x00A5
-     c54:	8c 83       	std	Y+4, r24	; 0x04
-
-                        SendTemp[4] = V_MIN.ch[3];
-     c56:	80 91 ac 00 	lds	r24, 0x00AC
-     c5a:	8d 83       	std	Y+5, r24	; 0x05
-                        SendTemp[5] = V_MIN.ch[2];
-     c5c:	80 91 ab 00 	lds	r24, 0x00AB
-     c60:	8e 83       	std	Y+6, r24	; 0x06
-                        SendTemp[6] = V_MIN.ch[1];
-     c62:	80 91 aa 00 	lds	r24, 0x00AA
-     c66:	8f 83       	std	Y+7, r24	; 0x07
-                        SendTemp[7] = V_MIN.ch[0];
-     c68:	80 91 a9 00 	lds	r24, 0x00A9
-     c6c:	88 87       	std	Y+8, r24	; 0x08
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 8);
-     c6e:	8b 85       	ldd	r24, Y+11	; 0x0b
-     c70:	83 60       	ori	r24, 0x03	; 3
-     c72:	b4 01       	movw	r22, r8
-     c74:	48 e0       	ldi	r20, 0x08	; 8
-     c76:	50 e0       	ldi	r21, 0x00	; 0
-     c78:	35 c1       	rjmp	.+618    	; 0xee4 <main+0x570>
-                        break;
-                    default:
-                        SendTemp[0] = 0x00;
-     c7a:	19 82       	std	Y+1, r1	; 0x01
-                        CRCYesOrNo = 0x80;
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 1);
-     c7c:	83 e8       	ldi	r24, 0x83	; 131
-     c7e:	7f c0       	rjmp	.+254    	; 0xd7e <main+0x40a>
-                        break;
-                }
-                break;
-            case SET_DEVICEADDR:
-                switch(tempint)
-     c80:	82 32       	cpi	r24, 0x22	; 34
-     c82:	91 05       	cpc	r25, r1
-     c84:	79 f1       	breq	.+94     	; 0xce4 <main+0x370>
-     c86:	85 32       	cpi	r24, 0x25	; 37
-     c88:	91 05       	cpc	r25, r1
-     c8a:	09 f4       	brne	.+2      	; 0xc8e <main+0x31a>
-     c8c:	4f c0       	rjmp	.+158    	; 0xd2c <main+0x3b8>
-     c8e:	40 97       	sbiw	r24, 0x10	; 16
-     c90:	09 f0       	breq	.+2      	; 0xc94 <main+0x320>
-     c92:	73 c0       	rjmp	.+230    	; 0xd7a <main+0x406>
-                {
-                    case ADDR_DEV:/* change device addr */
-                        if(RxFrame.Data[3] == 0x00){
-     c94:	e0 91 b8 00 	lds	r30, 0x00B8
-     c98:	f0 91 b9 00 	lds	r31, 0x00B9
-     c9c:	83 81       	ldd	r24, Z+3	; 0x03
-     c9e:	88 23       	and	r24, r24
-     ca0:	09 f4       	brne	.+2      	; 0xca4 <main+0x330>
-     ca2:	e2 ce       	rjmp	.-572    	; 0xa68 <main+0xf4>
-                            break;
-                        }
-                        tempch = RxFrame.Data[3];
-     ca4:	e0 91 b8 00 	lds	r30, 0x00B8
-     ca8:	f0 91 b9 00 	lds	r31, 0x00B9
-     cac:	13 81       	ldd	r17, Z+3	; 0x03
-                        //SendTemp[0] = DeviceAddr;
-                        SendTemp[0] = RxFrame.Data[0];
-     cae:	e0 91 b8 00 	lds	r30, 0x00B8
-     cb2:	f0 91 b9 00 	lds	r31, 0x00B9
-     cb6:	80 81       	ld	r24, Z
-     cb8:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = RxFrame.Data[1];
-     cba:	e0 91 b8 00 	lds	r30, 0x00B8
-     cbe:	f0 91 b9 00 	lds	r31, 0x00B9
-     cc2:	81 81       	ldd	r24, Z+1	; 0x01
-     cc4:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = 0x00;
-     cc6:	1b 82       	std	Y+3, r1	; 0x03
-                        SendTemp[3] = tempch;
-     cc8:	1c 83       	std	Y+4, r17	; 0x04
-                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-     cca:	8b 85       	ldd	r24, Y+11	; 0x0b
-     ccc:	86 60       	ori	r24, 0x06	; 6
-     cce:	b4 01       	movw	r22, r8
-     cd0:	44 e0       	ldi	r20, 0x04	; 4
-     cd2:	50 e0       	ldi	r21, 0x00	; 0
-     cd4:	2f dc       	rcall	.-1954   	; 0x534 <SendDataToPC>
-                        DeviceAddr = tempch;
-     cd6:	10 93 e2 00 	sts	0x00E2, r17
-#ifndef MYDEBUG
-                        WRITE_BYTE_EEP(DeviceAddr,&ADDR_EEP);
-     cda:	80 91 e2 00 	lds	r24, 0x00E2
-     cde:	60 e0       	ldi	r22, 0x00	; 0
-     ce0:	70 e0       	ldi	r23, 0x00	; 0
-     ce2:	49 c0       	rjmp	.+146    	; 0xd76 <main+0x402>
-#endif
-                        break;
-                    case ADDR_XSD:
-                        XiaoShuDian =  RxFrame.Data[3];
-     ce4:	e0 91 b8 00 	lds	r30, 0x00B8
-     ce8:	f0 91 b9 00 	lds	r31, 0x00B9
-     cec:	83 81       	ldd	r24, Z+3	; 0x03
-     cee:	80 93 be 00 	sts	0x00BE, r24
-                        //SendTemp[0] = XiaoShuDian;
-                        SendTemp[0] = RxFrame.Data[0];
-     cf2:	e0 91 b8 00 	lds	r30, 0x00B8
-     cf6:	f0 91 b9 00 	lds	r31, 0x00B9
-     cfa:	80 81       	ld	r24, Z
-     cfc:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = RxFrame.Data[1];
-     cfe:	e0 91 b8 00 	lds	r30, 0x00B8
-     d02:	f0 91 b9 00 	lds	r31, 0x00B9
-     d06:	81 81       	ldd	r24, Z+1	; 0x01
-     d08:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = 0x00;
-     d0a:	1b 82       	std	Y+3, r1	; 0x03
-                        SendTemp[3] = XiaoShuDian;
-     d0c:	80 91 be 00 	lds	r24, 0x00BE
-     d10:	8c 83       	std	Y+4, r24	; 0x04
-                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-     d12:	8b 85       	ldd	r24, Y+11	; 0x0b
-     d14:	86 60       	ori	r24, 0x06	; 6
-     d16:	b4 01       	movw	r22, r8
-     d18:	44 e0       	ldi	r20, 0x04	; 4
-     d1a:	50 e0       	ldi	r21, 0x00	; 0
-     d1c:	0b dc       	rcall	.-2026   	; 0x534 <SendDataToPC>
+     a4e:	4e 01       	movw	r8, r28
+     a50:	08 94       	sec
+     a52:	81 1c       	adc	r8, r1
+     a54:	91 1c       	adc	r9, r1
 #ifndef MYDEBUG
                         WRITE_BYTE_EEP(XiaoShuDian,pXSD_EEP);
-     d1e:	80 91 be 00 	lds	r24, 0x00BE
-     d22:	60 91 9e 00 	lds	r22, 0x009E
-     d26:	70 91 9f 00 	lds	r23, 0x009F
-     d2a:	25 c0       	rjmp	.+74     	; 0xd76 <main+0x402>
 #endif
                         break;
                     case ADDR_ZERO:
-                        ADJ_ZERO =  RxFrame.Data[3];
-     d2c:	e0 91 b8 00 	lds	r30, 0x00B8
-     d30:	f0 91 b9 00 	lds	r31, 0x00B9
-     d34:	83 81       	ldd	r24, Z+3	; 0x03
-     d36:	80 93 a3 00 	sts	0x00A3, r24
-     d3a:	10 92 a4 00 	sts	0x00A4, r1
-                        //SendTemp[0] = XiaoShuDian;
-                        SendTemp[0] = RxFrame.Data[0];
-     d3e:	e0 91 b8 00 	lds	r30, 0x00B8
-     d42:	f0 91 b9 00 	lds	r31, 0x00B9
-     d46:	80 81       	ld	r24, Z
-     d48:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = RxFrame.Data[1];
-     d4a:	e0 91 b8 00 	lds	r30, 0x00B8
-     d4e:	f0 91 b9 00 	lds	r31, 0x00B9
-     d52:	81 81       	ldd	r24, Z+1	; 0x01
-     d54:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = 0x00;
-     d56:	1b 82       	std	Y+3, r1	; 0x03
-                        SendTemp[3] = XiaoShuDian;
-     d58:	80 91 be 00 	lds	r24, 0x00BE
-     d5c:	8c 83       	std	Y+4, r24	; 0x04
-                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
-     d5e:	8b 85       	ldd	r24, Y+11	; 0x0b
-     d60:	86 60       	ori	r24, 0x06	; 6
-     d62:	b4 01       	movw	r22, r8
-     d64:	44 e0       	ldi	r20, 0x04	; 4
-     d66:	50 e0       	ldi	r21, 0x00	; 0
-     d68:	e5 db       	rcall	.-2102   	; 0x534 <SendDataToPC>
-#ifndef MYDEBUG
-                        WRITE_BYTE_EEP(ADJ_ZERO,pADJ_ZERO);
-     d6a:	60 91 a0 00 	lds	r22, 0x00A0
-     d6e:	70 91 a1 00 	lds	r23, 0x00A1
-     d72:	80 91 a3 00 	lds	r24, 0x00A3
-     d76:	2e dd       	rcall	.-1444   	; 0x7d4 <WRITE_BYTE_EEP>
-     d78:	77 ce       	rjmp	.-786    	; 0xa68 <main+0xf4>
-#endif
-                        break;
-                    default:
-                        SendTemp[0] = 0x00;
-     d7a:	19 82       	std	Y+1, r1	; 0x01
-                        SendDataToPC(SET_DEVICEADDR | 0x80, SendTemp , 1);
-     d7c:	86 e8       	ldi	r24, 0x86	; 134
-     d7e:	b4 01       	movw	r22, r8
-     d80:	41 e0       	ldi	r20, 0x01	; 1
-     d82:	50 e0       	ldi	r21, 0x00	; 0
-     d84:	af c0       	rjmp	.+350    	; 0xee4 <main+0x570>
-                        break;
-                }
-                break;
-            case SET_VALUE:
-#if 1
-                switch(tempint){
-     d86:	86 51       	subi	r24, 0x16	; 22
-     d88:	90 41       	sbci	r25, 0x10	; 16
-     d8a:	09 f0       	breq	.+2      	; 0xd8e <main+0x41a>
-     d8c:	6d ce       	rjmp	.-806    	; 0xa68 <main+0xf4>
-                    case ADDR_FW_MAX:
-
-                        V_MAX.ch[3] = RxFrame.Data[5];
-     d8e:	e0 91 b8 00 	lds	r30, 0x00B8
-     d92:	f0 91 b9 00 	lds	r31, 0x00B9
-     d96:	85 81       	ldd	r24, Z+5	; 0x05
-     d98:	80 93 a8 00 	sts	0x00A8, r24
-                        V_MAX.ch[2] = RxFrame.Data[6];
-     d9c:	e0 91 b8 00 	lds	r30, 0x00B8
-     da0:	f0 91 b9 00 	lds	r31, 0x00B9
-     da4:	86 81       	ldd	r24, Z+6	; 0x06
-     da6:	80 93 a7 00 	sts	0x00A7, r24
-                        V_MAX.ch[1] = RxFrame.Data[7];
-     daa:	e0 91 b8 00 	lds	r30, 0x00B8
-     dae:	f0 91 b9 00 	lds	r31, 0x00B9
-     db2:	87 81       	ldd	r24, Z+7	; 0x07
-     db4:	80 93 a6 00 	sts	0x00A6, r24
-                        V_MAX.ch[0] = RxFrame.Data[8];
-     db8:	e0 91 b8 00 	lds	r30, 0x00B8
-     dbc:	f0 91 b9 00 	lds	r31, 0x00B9
-     dc0:	80 85       	ldd	r24, Z+8	; 0x08
-     dc2:	80 93 a5 00 	sts	0x00A5, r24
-
-                        V_MIN.ch[3] = RxFrame.Data[9];
-     dc6:	e0 91 b8 00 	lds	r30, 0x00B8
-     dca:	f0 91 b9 00 	lds	r31, 0x00B9
-     dce:	81 85       	ldd	r24, Z+9	; 0x09
-     dd0:	80 93 ac 00 	sts	0x00AC, r24
-                        V_MIN.ch[2] = RxFrame.Data[10];
-     dd4:	e0 91 b8 00 	lds	r30, 0x00B8
-     dd8:	f0 91 b9 00 	lds	r31, 0x00B9
-     ddc:	82 85       	ldd	r24, Z+10	; 0x0a
-     dde:	80 93 ab 00 	sts	0x00AB, r24
-                        V_MIN.ch[1] = RxFrame.Data[11];
-     de2:	e0 91 b8 00 	lds	r30, 0x00B8
-     de6:	f0 91 b9 00 	lds	r31, 0x00B9
-     dea:	83 85       	ldd	r24, Z+11	; 0x0b
-     dec:	80 93 aa 00 	sts	0x00AA, r24
-                        V_MIN.ch[0] = RxFrame.Data[12];
-     df0:	e0 91 b8 00 	lds	r30, 0x00B8
-     df4:	f0 91 b9 00 	lds	r31, 0x00B9
-     df8:	84 85       	ldd	r24, Z+12	; 0x0c
-     dfa:	80 93 a9 00 	sts	0x00A9, r24
-
-                        tempA =(unsigned int) V_MAX.L;
-                        tempB =(unsigned int) V_MIN.L;
-
-                        VALUE_MAX = Out_MAX(tempA,tempB);
-     dfe:	a0 90 a5 00 	lds	r10, 0x00A5
-     e02:	b0 90 a6 00 	lds	r11, 0x00A6
-     e06:	e0 90 a9 00 	lds	r14, 0x00A9
-     e0a:	f0 90 aa 00 	lds	r15, 0x00AA
-     e0e:	c5 01       	movw	r24, r10
-     e10:	b7 01       	movw	r22, r14
-     e12:	25 d9       	rcall	.-3510   	; 0x5e <Out_MAX>
-     e14:	70 93 dd 00 	sts	0x00DD, r23
-     e18:	60 93 dc 00 	sts	0x00DC, r22
-                        VALUE_MIN = Out_MIN(tempA,tempB);
-     e1c:	c5 01       	movw	r24, r10
-     e1e:	b7 01       	movw	r22, r14
-     e20:	46 d9       	rcall	.-3444   	; 0xae <Out_MIN>
-     e22:	70 93 df 00 	sts	0x00DF, r23
-     e26:	60 93 de 00 	sts	0x00DE, r22
-
-                        SendTemp[0] = RxFrame.Data[0];
-     e2a:	e0 91 b8 00 	lds	r30, 0x00B8
-     e2e:	f0 91 b9 00 	lds	r31, 0x00B9
-     e32:	80 81       	ld	r24, Z
-     e34:	89 83       	std	Y+1, r24	; 0x01
-                        SendTemp[1] = RxFrame.Data[1];
-     e36:	e0 91 b8 00 	lds	r30, 0x00B8
-     e3a:	f0 91 b9 00 	lds	r31, 0x00B9
-     e3e:	81 81       	ldd	r24, Z+1	; 0x01
-     e40:	8a 83       	std	Y+2, r24	; 0x02
-                        SendTemp[2] = 0x08;
-     e42:	88 e0       	ldi	r24, 0x08	; 8
-     e44:	8b 83       	std	Y+3, r24	; 0x03
-
-                        SendDataToPC(SET_VALUE | CRCYesOrNo, SendTemp , 3);
-     e46:	8b 85       	ldd	r24, Y+11	; 0x0b
-     e48:	85 66       	ori	r24, 0x65	; 101
-     e4a:	b4 01       	movw	r22, r8
-     e4c:	43 e0       	ldi	r20, 0x03	; 3
-     e4e:	50 e0       	ldi	r21, 0x00	; 0
-     e50:	71 db       	rcall	.-2334   	; 0x534 <SendDataToPC>
-#ifndef MYDEBUG
-                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
-     e52:	80 91 dc 00 	lds	r24, 0x00DC
-     e56:	90 91 dd 00 	lds	r25, 0x00DD
-     e5a:	60 91 9a 00 	lds	r22, 0x009A
-     e5e:	70 91 9b 00 	lds	r23, 0x009B
-     e62:	c3 dc       	rcall	.-1658   	; 0x7ea <WRITE_WORD_EEP>
-                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
-     e64:	80 91 de 00 	lds	r24, 0x00DE
-     e68:	90 91 df 00 	lds	r25, 0x00DF
-     e6c:	60 91 9c 00 	lds	r22, 0x009C
-     e70:	70 91 9d 00 	lds	r23, 0x009D
-     e74:	ba dc       	rcall	.-1676   	; 0x7ea <WRITE_WORD_EEP>
-                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
-     e76:	80 91 dc 00 	lds	r24, 0x00DC
-     e7a:	90 91 dd 00 	lds	r25, 0x00DD
-     e7e:	60 91 9a 00 	lds	r22, 0x009A
-     e82:	70 91 9b 00 	lds	r23, 0x009B
-     e86:	b1 dc       	rcall	.-1694   	; 0x7ea <WRITE_WORD_EEP>
-                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
-     e88:	80 91 de 00 	lds	r24, 0x00DE
-     e8c:	90 91 df 00 	lds	r25, 0x00DF
-     e90:	60 91 9c 00 	lds	r22, 0x009C
-     e94:	70 91 9d 00 	lds	r23, 0x009D
-     e98:	a8 dc       	rcall	.-1712   	; 0x7ea <WRITE_WORD_EEP>
-     e9a:	e6 cd       	rjmp	.-1076   	; 0xa68 <main+0xf4>
-#endif
-                }
-                break;
-#endif
-            case GET_ID:
-                SendTemp[0] = 0x00;
-     e9c:	19 82       	std	Y+1, r1	; 0x01
-                switch(tempint)
-     e9e:	82 31       	cpi	r24, 0x12	; 18
-     ea0:	91 05       	cpc	r25, r1
-     ea2:	79 f0       	breq	.+30     	; 0xec2 <main+0x54e>
-     ea4:	83 31       	cpi	r24, 0x13	; 19
-     ea6:	91 05       	cpc	r25, r1
-     ea8:	18 f4       	brcc	.+6      	; 0xeb0 <main+0x53c>
-     eaa:	41 97       	sbiw	r24, 0x11	; 17
-     eac:	99 f4       	brne	.+38     	; 0xed4 <main+0x560>
-     eae:	06 c0       	rjmp	.+12     	; 0xebc <main+0x548>
-     eb0:	83 31       	cpi	r24, 0x13	; 19
-     eb2:	91 05       	cpc	r25, r1
-     eb4:	49 f0       	breq	.+18     	; 0xec8 <main+0x554>
-     eb6:	44 97       	sbiw	r24, 0x14	; 20
-     eb8:	69 f4       	brne	.+26     	; 0xed4 <main+0x560>
-     eba:	08 c0       	rjmp	.+16     	; 0xecc <main+0x558>
-                {
-                    case ADDR_CID:
-                        SendTemp[1] = CODE_CID;
-     ebc:	98 e8       	ldi	r25, 0x88	; 136
-     ebe:	9a 83       	std	Y+2, r25	; 0x02
-     ec0:	0c c0       	rjmp	.+24     	; 0xeda <main+0x566>
-                        break;
-                    case ADDR_PID:
-                        SendTemp[1] = CODE_PID;
-     ec2:	20 e8       	ldi	r18, 0x80	; 128
-     ec4:	2a 83       	std	Y+2, r18	; 0x02
-     ec6:	09 c0       	rjmp	.+18     	; 0xeda <main+0x566>
-                        break;
-                    case ADDR_VID:
-                        SendTemp[1] = CODE_VID;
-     ec8:	1a 82       	std	Y+2, r1	; 0x02
-     eca:	07 c0       	rjmp	.+14     	; 0xeda <main+0x566>
-                        break;
-                    case ADDR_FID:
-                        SendTemp[1] = MEASURE_MODE;
-     ecc:	80 91 a2 00 	lds	r24, 0x00A2
-     ed0:	8a 83       	std	Y+2, r24	; 0x02
-     ed2:	03 c0       	rjmp	.+6      	; 0xeda <main+0x566>
-                        break;
-                    default:
-                        SendTemp[0] = 0x00;
-     ed4:	19 82       	std	Y+1, r1	; 0x01
-     ed6:	80 e8       	ldi	r24, 0x80	; 128
-     ed8:	8b 87       	std	Y+11, r24	; 0x0b
-                        CRCYesOrNo = 0x80;
-                        break;
-                }
-                SendDataToPC(GET_ID | CRCYesOrNo, SendTemp , 2);
-     eda:	8b 85       	ldd	r24, Y+11	; 0x0b
-     edc:	86 66       	ori	r24, 0x66	; 102
-     ede:	b4 01       	movw	r22, r8
-     ee0:	42 e0       	ldi	r20, 0x02	; 2
-     ee2:	50 e0       	ldi	r21, 0x00	; 0
-     ee4:	27 db       	rcall	.-2482   	; 0x534 <SendDataToPC>
-     ee6:	c0 cd       	rjmp	.-1152   	; 0xa68 <main+0xf4>
-                        break;
-                }
-                break;
-#endif
-            default:
-                RxFrame.FunCode |= 0x80;
-     ee8:	80 91 b7 00 	lds	r24, 0x00B7
-     eec:	80 68       	ori	r24, 0x80	; 128
-     eee:	80 93 b7 00 	sts	0x00B7, r24
-                SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
-     ef2:	80 91 b7 00 	lds	r24, 0x00B7
-     ef6:	60 91 b8 00 	lds	r22, 0x00B8
-     efa:	70 91 b9 00 	lds	r23, 0x00B9
-     efe:	40 91 ba 00 	lds	r20, 0x00BA
-     f02:	50 91 bb 00 	lds	r21, 0x00BB
-     f06:	42 50       	subi	r20, 0x02	; 2
-     f08:	50 40       	sbci	r21, 0x00	; 0
-     f0a:	14 db       	rcall	.-2520   	; 0x534 <SendDataToPC>
-        return 0;
-    return 1;
-}
-void ErrorDisplay(unsigned int ErrCode)
-{
-    ErrFlag = 1;
-     f0c:	81 e0       	ldi	r24, 0x01	; 1
-     f0e:	90 e0       	ldi	r25, 0x00	; 0
-     f10:	90 93 d6 00 	sts	0x00D6, r25
-     f14:	80 93 d5 00 	sts	0x00D5, r24
-    ErrCode &= 0x0FFF;
-    ErrCodeDisplay = ErrCode | 0xE000;
-     f18:	50 92 e1 00 	sts	0x00E1, r5
-     f1c:	40 92 e0 00 	sts	0x00E0, r4
+                        ((char *)&ADJ_ZERO)[1] =  RxFrame.Data[2];
+     a56:	a3 ea       	ldi	r26, 0xA3	; 163
+     a58:	2a 2e       	mov	r2, r26
+     a5a:	a0 e0       	ldi	r26, 0x00	; 0
+     a5c:	3a 2e       	mov	r3, r26
 #endif
             default:
                 RxFrame.FunCode |= 0x80;
                 SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
                 ErrorDisplay(ERRCODE_FunCodeInvalid);
                 PORTD ^= (1<<6);
-     f20:	82 b3       	in	r24, 0x12	; 18
-     f22:	90 e4       	ldi	r25, 0x40	; 64
-     f24:	89 27       	eor	r24, r25
-     f26:	82 bb       	out	0x12, r24	; 18
-     f28:	9f cd       	rjmp	.-1218   	; 0xa68 <main+0xf4>
+     a5e:	f0 e4       	ldi	r31, 0x40	; 64
+     a60:	4f 2e       	mov	r4, r31
+     a62:	03 c0       	rjmp	.+6      	; 0xa6a <main+0xf6>
+    ID.L <<=16;
+    ID.L += READ_WORD_EEP(&ID1_EEP);
+#ifndef MYDEBUG
+    ErrCodeDisplay = MEASURE_MODE + 0xD000;
+    DisplayHex(ErrCodeDisplay);
+    for(tempint = 0;tempint < 10;tempint ++)
+     a64:	80 ed       	ldi	r24, 0xD0	; 208
+     a66:	97 e0       	ldi	r25, 0x07	; 7
+     a68:	e5 cf       	rjmp	.-54     	; 0xa34 <main+0xc0>
+        wdt_reset();
+    }
+#endif
+    while(1)
+    {
+        if(!RxFrameComplete)
+     a6a:	80 91 95 00 	lds	r24, 0x0095
+     a6e:	88 23       	and	r24, r24
+     a70:	21 f4       	brne	.+8      	; 0xa7a <main+0x106>
+        {
+            //if(ErrFlag == 0)
+            RefreshLED();
+     a72:	68 de       	rcall	.-816    	; 0x744 <RefreshLED>
+            IsErrorOrNot();
+     a74:	01 dd       	rcall	.-1534   	; 0x478 <IsErrorOrNot>
+            wdt_reset();
+     a76:	a8 95       	wdr
+     a78:	f8 cf       	rjmp	.-16     	; 0xa6a <main+0xf6>
+            continue;
+        }
 
-00000f2a <SPISend>:
+        /* clear receive finish flag */
+        RxFrameComplete = 0;
+     a7a:	10 92 95 00 	sts	0x0095, r1
+        /* Judge Addr is OK */
+        if(RxFrame.Addr != DeviceAddr)
+     a7e:	90 91 b6 00 	lds	r25, 0x00B6
+     a82:	80 91 e2 00 	lds	r24, 0x00E2
+     a86:	98 17       	cp	r25, r24
+     a88:	09 f4       	brne	.+2      	; 0xa8c <main+0x118>
+     a8a:	7f c0       	rjmp	.+254    	; 0xb8a <main+0x216>
+        {
+            if(RxFrame.Addr != 0xFE){
+     a8c:	80 91 b6 00 	lds	r24, 0x00B6
+     a90:	8e 3f       	cpi	r24, 0xFE	; 254
+     a92:	59 f7       	brne	.-42     	; 0xa6a <main+0xf6>
+                continue;
+            }
+            if((RxFrame.FunCode == 0x88)&&(ReturnID)){
+     a94:	80 91 b7 00 	lds	r24, 0x00B7
+     a98:	88 38       	cpi	r24, 0x88	; 136
+     a9a:	d9 f5       	brne	.+118    	; 0xb12 <main+0x19e>
+     a9c:	55 20       	and	r5, r5
+     a9e:	c9 f1       	breq	.+114    	; 0xb12 <main+0x19e>
+                if(RxFrame.Data[0] == 'B' &&
+     aa0:	e0 91 b8 00 	lds	r30, 0x00B8
+     aa4:	f0 91 b9 00 	lds	r31, 0x00B9
+     aa8:	80 81       	ld	r24, Z
+     aaa:	82 34       	cpi	r24, 0x42	; 66
+     aac:	f1 f6       	brne	.-68     	; 0xa6a <main+0xf6>
+     aae:	e0 91 b8 00 	lds	r30, 0x00B8
+     ab2:	f0 91 b9 00 	lds	r31, 0x00B9
+     ab6:	81 81       	ldd	r24, Z+1	; 0x01
+     ab8:	8f 36       	cpi	r24, 0x6F	; 111
+     aba:	b9 f6       	brne	.-82     	; 0xa6a <main+0xf6>
+     abc:	e0 91 b8 00 	lds	r30, 0x00B8
+     ac0:	f0 91 b9 00 	lds	r31, 0x00B9
+     ac4:	82 81       	ldd	r24, Z+2	; 0x02
+     ac6:	83 37       	cpi	r24, 0x73	; 115
+     ac8:	81 f6       	brne	.-96     	; 0xa6a <main+0xf6>
+     aca:	e0 91 b8 00 	lds	r30, 0x00B8
+     ace:	f0 91 b9 00 	lds	r31, 0x00B9
+     ad2:	83 81       	ldd	r24, Z+3	; 0x03
+     ad4:	83 37       	cpi	r24, 0x73	; 115
+     ad6:	49 f6       	brne	.-110    	; 0xa6a <main+0xf6>
+     ad8:	e0 91 b8 00 	lds	r30, 0x00B8
+     adc:	f0 91 b9 00 	lds	r31, 0x00B9
+     ae0:	84 81       	ldd	r24, Z+4	; 0x04
+     ae2:	85 37       	cpi	r24, 0x75	; 117
+     ae4:	11 f6       	brne	.-124    	; 0xa6a <main+0xf6>
+     ae6:	e0 91 b8 00 	lds	r30, 0x00B8
+     aea:	f0 91 b9 00 	lds	r31, 0x00B9
+     aee:	85 81       	ldd	r24, Z+5	; 0x05
+     af0:	8e 34       	cpi	r24, 0x4E	; 78
+     af2:	09 f0       	breq	.+2      	; 0xaf6 <main+0x182>
+     af4:	ba cf       	rjmp	.-140    	; 0xa6a <main+0xf6>
+                   RxFrame.Data[1] == 'o' &&
+                   RxFrame.Data[2] == 's' &&
+                   RxFrame.Data[3] == 's' &&
+                   RxFrame.Data[4] == 'u' &&
+                   RxFrame.Data[5] == 'N'){
+                    SendTemp[0] = ID.ch[3];
+     af6:	80 91 b4 00 	lds	r24, 0x00B4
+     afa:	89 83       	std	Y+1, r24	; 0x01
+                    SendTemp[1] = ID.ch[2];
+     afc:	80 91 b3 00 	lds	r24, 0x00B3
+     b00:	8a 83       	std	Y+2, r24	; 0x02
+                    SendTemp[2] = ID.ch[1];
+     b02:	80 91 b2 00 	lds	r24, 0x00B2
+     b06:	8b 83       	std	Y+3, r24	; 0x03
+                    SendTemp[3] = ID.ch[0];
+     b08:	80 91 b1 00 	lds	r24, 0x00B1
+     b0c:	8c 83       	std	Y+4, r24	; 0x04
+                    SendDataToPC(0x78, SendTemp , 4);
+     b0e:	88 e7       	ldi	r24, 0x78	; 120
+     b10:	99 c1       	rjmp	.+818    	; 0xe44 <main+0x4d0>
+                }
+            continue;
+            }
+            if(RxFrame.FunCode == 0x89){
+     b12:	80 91 b7 00 	lds	r24, 0x00B7
+     b16:	89 38       	cpi	r24, 0x89	; 137
+     b18:	c1 f5       	brne	.+112    	; 0xb8a <main+0x216>
+                if(RxFrame.Data[0] == ID.ch[3] &&
+     b1a:	e0 91 b8 00 	lds	r30, 0x00B8
+     b1e:	f0 91 b9 00 	lds	r31, 0x00B9
+     b22:	90 81       	ld	r25, Z
+     b24:	80 91 b4 00 	lds	r24, 0x00B4
+     b28:	98 17       	cp	r25, r24
+     b2a:	09 f0       	breq	.+2      	; 0xb2e <main+0x1ba>
+     b2c:	9e cf       	rjmp	.-196    	; 0xa6a <main+0xf6>
+     b2e:	e0 91 b8 00 	lds	r30, 0x00B8
+     b32:	f0 91 b9 00 	lds	r31, 0x00B9
+     b36:	91 81       	ldd	r25, Z+1	; 0x01
+     b38:	80 91 b3 00 	lds	r24, 0x00B3
+     b3c:	98 17       	cp	r25, r24
+     b3e:	09 f0       	breq	.+2      	; 0xb42 <main+0x1ce>
+     b40:	94 cf       	rjmp	.-216    	; 0xa6a <main+0xf6>
+     b42:	e0 91 b8 00 	lds	r30, 0x00B8
+     b46:	f0 91 b9 00 	lds	r31, 0x00B9
+     b4a:	92 81       	ldd	r25, Z+2	; 0x02
+     b4c:	80 91 b2 00 	lds	r24, 0x00B2
+     b50:	98 17       	cp	r25, r24
+     b52:	09 f0       	breq	.+2      	; 0xb56 <main+0x1e2>
+     b54:	8a cf       	rjmp	.-236    	; 0xa6a <main+0xf6>
+     b56:	e0 91 b8 00 	lds	r30, 0x00B8
+     b5a:	f0 91 b9 00 	lds	r31, 0x00B9
+     b5e:	93 81       	ldd	r25, Z+3	; 0x03
+     b60:	80 91 b1 00 	lds	r24, 0x00B1
+     b64:	98 17       	cp	r25, r24
+     b66:	09 f0       	breq	.+2      	; 0xb6a <main+0x1f6>
+     b68:	80 cf       	rjmp	.-256    	; 0xa6a <main+0xf6>
+                   RxFrame.Data[1] == ID.ch[2] &&
+                   RxFrame.Data[2] == ID.ch[1] &&
+                   RxFrame.Data[3] == ID.ch[0] ){
+                    
+                    SendTemp[0] = DeviceAddr;
+     b6a:	80 91 e2 00 	lds	r24, 0x00E2
+     b6e:	89 83       	std	Y+1, r24	; 0x01
+                    SendDataToPC(0x79, SendTemp , 1);
+     b70:	89 e7       	ldi	r24, 0x79	; 121
+     b72:	b4 01       	movw	r22, r8
+     b74:	41 e0       	ldi	r20, 0x01	; 1
+     b76:	50 e0       	ldi	r21, 0x00	; 0
+     b78:	dd dc       	rcall	.-1606   	; 0x534 <SendDataToPC>
+                    DeviceAddr = RxFrame.Data[4];
+     b7a:	e0 91 b8 00 	lds	r30, 0x00B8
+     b7e:	f0 91 b9 00 	lds	r31, 0x00B9
+     b82:	84 81       	ldd	r24, Z+4	; 0x04
+     b84:	80 93 e2 00 	sts	0x00E2, r24
+     b88:	ee c0       	rjmp	.+476    	; 0xd66 <main+0x3f2>
+                }
+            continue;
+            }
+        }
+        /* Judge CRC16 is OK */
+        if(!FrameCRC16IsOK(RxFrame))
+     b8a:	20 91 b6 00 	lds	r18, 0x00B6
+     b8e:	30 91 b7 00 	lds	r19, 0x00B7
+     b92:	40 91 b8 00 	lds	r20, 0x00B8
+     b96:	50 91 b9 00 	lds	r21, 0x00B9
+     b9a:	60 91 ba 00 	lds	r22, 0x00BA
+     b9e:	70 91 bb 00 	lds	r23, 0x00BB
+     ba2:	80 91 bc 00 	lds	r24, 0x00BC
+     ba6:	90 91 bd 00 	lds	r25, 0x00BD
+     baa:	7a dc       	rcall	.-1804   	; 0x4a0 <FrameCRC16IsOK>
+     bac:	88 23       	and	r24, r24
+     bae:	11 f0       	breq	.+4      	; 0xbb4 <main+0x240>
+     bb0:	1b 86       	std	Y+11, r1	; 0x0b
+     bb2:	0e c0       	rjmp	.+28     	; 0xbd0 <main+0x25c>
+        return 0;
+    return 1;
+}
+void ErrorDisplay(unsigned int ErrCode)
+{
+    ErrFlag = 1;
+     bb4:	81 e0       	ldi	r24, 0x01	; 1
+     bb6:	90 e0       	ldi	r25, 0x00	; 0
+     bb8:	90 93 d6 00 	sts	0x00D6, r25
+     bbc:	80 93 d5 00 	sts	0x00D5, r24
+    ErrCode &= 0x0FFF;
+    ErrCodeDisplay = ErrCode | 0xE000;
+     bc0:	82 e0       	ldi	r24, 0x02	; 2
+     bc2:	90 ee       	ldi	r25, 0xE0	; 224
+     bc4:	90 93 e1 00 	sts	0x00E1, r25
+     bc8:	80 93 e0 00 	sts	0x00E0, r24
+     bcc:	90 e8       	ldi	r25, 0x80	; 128
+     bce:	9b 87       	std	Y+11, r25	; 0x0b
+            ErrorDisplay(ERRCODE_CRC16Error);
+             CRCYesOrNo = 0x80;
+        }else{
+             CRCYesOrNo = 0;
+        }
+        tempint = (unsigned int)RxFrame.Data[0];
+     bd0:	e0 91 b8 00 	lds	r30, 0x00B8
+     bd4:	f0 91 b9 00 	lds	r31, 0x00B9
+        tempint <<= 8;
+     bd8:	70 80       	ld	r7, Z
+     bda:	66 24       	eor	r6, r6
+        tempint |= (unsigned int)RxFrame.Data[1];
+     bdc:	e0 91 b8 00 	lds	r30, 0x00B8
+     be0:	f0 91 b9 00 	lds	r31, 0x00B9
+     be4:	81 81       	ldd	r24, Z+1	; 0x01
+     be6:	90 e0       	ldi	r25, 0x00	; 0
+     be8:	86 29       	or	r24, r6
+     bea:	97 29       	or	r25, r7
+        switch(RxFrame.FunCode){
+     bec:	20 91 b7 00 	lds	r18, 0x00B7
+     bf0:	26 30       	cpi	r18, 0x06	; 6
+     bf2:	09 f4       	brne	.+2      	; 0xbf6 <main+0x282>
+     bf4:	83 c0       	rjmp	.+262    	; 0xcfc <main+0x388>
+     bf6:	27 30       	cpi	r18, 0x07	; 7
+     bf8:	30 f4       	brcc	.+12     	; 0xc06 <main+0x292>
+     bfa:	23 30       	cpi	r18, 0x03	; 3
+     bfc:	e9 f1       	breq	.+122    	; 0xc78 <main+0x304>
+     bfe:	24 30       	cpi	r18, 0x04	; 4
+     c00:	09 f0       	breq	.+2      	; 0xc04 <main+0x290>
+     c02:	da c1       	rjmp	.+948    	; 0xfb8 <main+0x644>
+     c04:	15 c0       	rjmp	.+42     	; 0xc30 <main+0x2bc>
+     c06:	25 36       	cpi	r18, 0x65	; 101
+     c08:	09 f4       	brne	.+2      	; 0xc0c <main+0x298>
+     c0a:	26 c1       	rjmp	.+588    	; 0xe58 <main+0x4e4>
+     c0c:	26 36       	cpi	r18, 0x66	; 102
+     c0e:	09 f4       	brne	.+2      	; 0xc12 <main+0x29e>
+     c10:	ae c1       	rjmp	.+860    	; 0xf6e <main+0x5fa>
+     c12:	24 36       	cpi	r18, 0x64	; 100
+     c14:	09 f0       	breq	.+2      	; 0xc18 <main+0x2a4>
+     c16:	d0 c1       	rjmp	.+928    	; 0xfb8 <main+0x644>
+            case CommunicationTest:
+                SendDataToPC(CommunicationTest, RxFrame.Data, RxFrame.Len - 2);
+     c18:	60 91 b8 00 	lds	r22, 0x00B8
+     c1c:	70 91 b9 00 	lds	r23, 0x00B9
+     c20:	40 91 ba 00 	lds	r20, 0x00BA
+     c24:	50 91 bb 00 	lds	r21, 0x00BB
+     c28:	42 50       	subi	r20, 0x02	; 2
+     c2a:	50 40       	sbci	r21, 0x00	; 0
+     c2c:	84 e6       	ldi	r24, 0x64	; 100
+     c2e:	c2 c1       	rjmp	.+900    	; 0xfb4 <main+0x640>
+                break;
+            case GET_VALUE:
+                switch(tempint){
+     c30:	80 52       	subi	r24, 0x20	; 32
+     c32:	90 41       	sbci	r25, 0x10	; 16
+     c34:	f1 f4       	brne	.+60     	; 0xc72 <main+0x2fe>
+                    case ADDR_VALUE:/* Get ADC data */
+                        V_DATA.F = (float)T_C;
+     c36:	60 91 da 00 	lds	r22, 0x00DA
+     c3a:	70 91 db 00 	lds	r23, 0x00DB
+     c3e:	80 e0       	ldi	r24, 0x00	; 0
+     c40:	90 e0       	ldi	r25, 0x00	; 0
+     c42:	1f d4       	rcall	.+2110   	; 0x1482 <__floatunsisf>
+     c44:	60 93 ad 00 	sts	0x00AD, r22
+     c48:	70 93 ae 00 	sts	0x00AE, r23
+     c4c:	80 93 af 00 	sts	0x00AF, r24
+     c50:	90 93 b0 00 	sts	0x00B0, r25
+                        SendTemp[0] = V_DATA.ch[3];
+     c54:	80 91 b0 00 	lds	r24, 0x00B0
+     c58:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = V_DATA.ch[2];
+     c5a:	80 91 af 00 	lds	r24, 0x00AF
+     c5e:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = V_DATA.ch[1];
+     c60:	80 91 ae 00 	lds	r24, 0x00AE
+     c64:	8b 83       	std	Y+3, r24	; 0x03
+                        SendTemp[3] = V_DATA.ch[0];
+     c66:	80 91 ad 00 	lds	r24, 0x00AD
+     c6a:	8c 83       	std	Y+4, r24	; 0x04
+                        SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
+     c6c:	8b 85       	ldd	r24, Y+11	; 0x0b
+     c6e:	84 60       	ori	r24, 0x04	; 4
+     c70:	e9 c0       	rjmp	.+466    	; 0xe44 <main+0x4d0>
+                        break;
+                    default:
+                        SendTemp[0] = 0x00;
+     c72:	19 82       	std	Y+1, r1	; 0x01
+                        SendDataToPC(GET_VALUE | 0x80, SendTemp , 1);
+     c74:	84 e8       	ldi	r24, 0x84	; 132
+     c76:	ec c0       	rjmp	.+472    	; 0xe50 <main+0x4dc>
+                        break;
+                }
+                break;
+            case GET_DATA:
+                switch(tempint)
+     c78:	84 32       	cpi	r24, 0x24	; 36
+     c7a:	91 05       	cpc	r25, r1
+     c7c:	d9 f0       	breq	.+54     	; 0xcb4 <main+0x340>
+     c7e:	85 32       	cpi	r24, 0x25	; 37
+     c80:	91 05       	cpc	r25, r1
+     c82:	30 f4       	brcc	.+12     	; 0xc90 <main+0x31c>
+     c84:	82 32       	cpi	r24, 0x22	; 34
+     c86:	91 05       	cpc	r25, r1
+     c88:	51 f0       	breq	.+20     	; 0xc9e <main+0x32a>
+     c8a:	83 97       	sbiw	r24, 0x23	; 35
+     c8c:	a1 f5       	brne	.+104    	; 0xcf6 <main+0x382>
+     c8e:	12 c0       	rjmp	.+36     	; 0xcb4 <main+0x340>
+     c90:	85 32       	cpi	r24, 0x25	; 37
+     c92:	91 05       	cpc	r25, r1
+     c94:	41 f0       	breq	.+16     	; 0xca6 <main+0x332>
+     c96:	86 51       	subi	r24, 0x16	; 22
+     c98:	90 41       	sbci	r25, 0x10	; 16
+     c9a:	69 f5       	brne	.+90     	; 0xcf6 <main+0x382>
+     c9c:	0e c0       	rjmp	.+28     	; 0xcba <main+0x346>
+                {
+                    case ADDR_XSD:/* Get XiaoShuDian Data */
+                        SendTemp[0] = 0;
+     c9e:	19 82       	std	Y+1, r1	; 0x01
+                        SendTemp[1] = XiaoShuDian;
+     ca0:	80 91 be 00 	lds	r24, 0x00BE
+     ca4:	03 c0       	rjmp	.+6      	; 0xcac <main+0x338>
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        break;
+                    case ADDR_ZERO:/* Get XiaoShuDian Data */
+                        SendTemp[0] = 0;
+     ca6:	19 82       	std	Y+1, r1	; 0x01
+                        SendTemp[1] = ADJ_ZERO;
+     ca8:	80 91 a3 00 	lds	r24, 0x00A3
+     cac:	8a 83       	std	Y+2, r24	; 0x02
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+     cae:	8b 85       	ldd	r24, Y+11	; 0x0b
+     cb0:	83 60       	ori	r24, 0x03	; 3
+     cb2:	7d c1       	rjmp	.+762    	; 0xfae <main+0x63a>
+                        SendTemp[0] = 0x00;
+                        SendTemp[1] = 0x00;
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        break;
+                    case ADDR_F2_VALUE:/* Get Freq Data */
+                        SendTemp[0] = 0x00;
+     cb4:	19 82       	std	Y+1, r1	; 0x01
+                        SendTemp[1] = 0x00;
+     cb6:	1a 82       	std	Y+2, r1	; 0x02
+     cb8:	fa cf       	rjmp	.-12     	; 0xcae <main+0x33a>
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
+                        break;
+                    case ADDR_FW_MAX:
+                        SendTemp[0] = V_MAX.ch[3];
+     cba:	80 91 a8 00 	lds	r24, 0x00A8
+     cbe:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = V_MAX.ch[2];
+     cc0:	80 91 a7 00 	lds	r24, 0x00A7
+     cc4:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = V_MAX.ch[1];
+     cc6:	80 91 a6 00 	lds	r24, 0x00A6
+     cca:	8b 83       	std	Y+3, r24	; 0x03
+                        SendTemp[3] = V_MAX.ch[0];
+     ccc:	80 91 a5 00 	lds	r24, 0x00A5
+     cd0:	8c 83       	std	Y+4, r24	; 0x04
+
+                        SendTemp[4] = V_MIN.ch[3];
+     cd2:	80 91 ac 00 	lds	r24, 0x00AC
+     cd6:	8d 83       	std	Y+5, r24	; 0x05
+                        SendTemp[5] = V_MIN.ch[2];
+     cd8:	80 91 ab 00 	lds	r24, 0x00AB
+     cdc:	8e 83       	std	Y+6, r24	; 0x06
+                        SendTemp[6] = V_MIN.ch[1];
+     cde:	80 91 aa 00 	lds	r24, 0x00AA
+     ce2:	8f 83       	std	Y+7, r24	; 0x07
+                        SendTemp[7] = V_MIN.ch[0];
+     ce4:	80 91 a9 00 	lds	r24, 0x00A9
+     ce8:	88 87       	std	Y+8, r24	; 0x08
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 8);
+     cea:	8b 85       	ldd	r24, Y+11	; 0x0b
+     cec:	83 60       	ori	r24, 0x03	; 3
+     cee:	b4 01       	movw	r22, r8
+     cf0:	48 e0       	ldi	r20, 0x08	; 8
+     cf2:	50 e0       	ldi	r21, 0x00	; 0
+     cf4:	5f c1       	rjmp	.+702    	; 0xfb4 <main+0x640>
+                        break;
+                    default:
+                        SendTemp[0] = 0x00;
+     cf6:	19 82       	std	Y+1, r1	; 0x01
+                        CRCYesOrNo = 0x80;
+                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 1);
+     cf8:	83 e8       	ldi	r24, 0x83	; 131
+     cfa:	aa c0       	rjmp	.+340    	; 0xe50 <main+0x4dc>
+                        break;
+                }
+                break;
+            case SET_DEVICEADDR:
+                switch(tempint)
+     cfc:	82 32       	cpi	r24, 0x22	; 34
+     cfe:	91 05       	cpc	r25, r1
+     d00:	c1 f1       	breq	.+112    	; 0xd72 <main+0x3fe>
+     d02:	83 32       	cpi	r24, 0x23	; 35
+     d04:	91 05       	cpc	r25, r1
+     d06:	20 f4       	brcc	.+8      	; 0xd10 <main+0x39c>
+     d08:	40 97       	sbiw	r24, 0x10	; 16
+     d0a:	09 f0       	breq	.+2      	; 0xd0e <main+0x39a>
+     d0c:	9f c0       	rjmp	.+318    	; 0xe4c <main+0x4d8>
+     d0e:	08 c0       	rjmp	.+16     	; 0xd20 <main+0x3ac>
+     d10:	85 32       	cpi	r24, 0x25	; 37
+     d12:	91 05       	cpc	r25, r1
+     d14:	09 f4       	brne	.+2      	; 0xd18 <main+0x3a4>
+     d16:	51 c0       	rjmp	.+162    	; 0xdba <main+0x446>
+     d18:	86 97       	sbiw	r24, 0x26	; 38
+     d1a:	09 f0       	breq	.+2      	; 0xd1e <main+0x3aa>
+     d1c:	97 c0       	rjmp	.+302    	; 0xe4c <main+0x4d8>
+     d1e:	7a c0       	rjmp	.+244    	; 0xe14 <main+0x4a0>
+                {
+                    case ADDR_DEV:/* change device addr */
+                        if(RxFrame.Data[3] == 0x00){
+     d20:	e0 91 b8 00 	lds	r30, 0x00B8
+     d24:	f0 91 b9 00 	lds	r31, 0x00B9
+     d28:	83 81       	ldd	r24, Z+3	; 0x03
+     d2a:	88 23       	and	r24, r24
+     d2c:	09 f4       	brne	.+2      	; 0xd30 <main+0x3bc>
+     d2e:	9d ce       	rjmp	.-710    	; 0xa6a <main+0xf6>
+                            break;
+                        }
+                        tempch = RxFrame.Data[3];
+     d30:	e0 91 b8 00 	lds	r30, 0x00B8
+     d34:	f0 91 b9 00 	lds	r31, 0x00B9
+     d38:	13 81       	ldd	r17, Z+3	; 0x03
+                        //SendTemp[0] = DeviceAddr;
+                        SendTemp[0] = RxFrame.Data[0];
+     d3a:	e0 91 b8 00 	lds	r30, 0x00B8
+     d3e:	f0 91 b9 00 	lds	r31, 0x00B9
+     d42:	80 81       	ld	r24, Z
+     d44:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = RxFrame.Data[1];
+     d46:	e0 91 b8 00 	lds	r30, 0x00B8
+     d4a:	f0 91 b9 00 	lds	r31, 0x00B9
+     d4e:	81 81       	ldd	r24, Z+1	; 0x01
+     d50:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = 0x00;
+     d52:	1b 82       	std	Y+3, r1	; 0x03
+                        SendTemp[3] = tempch;
+     d54:	1c 83       	std	Y+4, r17	; 0x04
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+     d56:	8b 85       	ldd	r24, Y+11	; 0x0b
+     d58:	86 60       	ori	r24, 0x06	; 6
+     d5a:	b4 01       	movw	r22, r8
+     d5c:	44 e0       	ldi	r20, 0x04	; 4
+     d5e:	50 e0       	ldi	r21, 0x00	; 0
+     d60:	e9 db       	rcall	.-2094   	; 0x534 <SendDataToPC>
+                        DeviceAddr = tempch;
+     d62:	10 93 e2 00 	sts	0x00E2, r17
+#ifndef MYDEBUG
+                        WRITE_BYTE_EEP(DeviceAddr,&ADDR_EEP);
+     d66:	80 91 e2 00 	lds	r24, 0x00E2
+     d6a:	60 e0       	ldi	r22, 0x00	; 0
+     d6c:	70 e0       	ldi	r23, 0x00	; 0
+     d6e:	32 dd       	rcall	.-1436   	; 0x7d4 <WRITE_BYTE_EEP>
+     d70:	7c ce       	rjmp	.-776    	; 0xa6a <main+0xf6>
+#endif
+                        break;
+                    case ADDR_XSD:
+                        XiaoShuDian =  RxFrame.Data[3];
+     d72:	e0 91 b8 00 	lds	r30, 0x00B8
+     d76:	f0 91 b9 00 	lds	r31, 0x00B9
+     d7a:	83 81       	ldd	r24, Z+3	; 0x03
+     d7c:	80 93 be 00 	sts	0x00BE, r24
+                        //SendTemp[0] = XiaoShuDian;
+                        SendTemp[0] = RxFrame.Data[0];
+     d80:	e0 91 b8 00 	lds	r30, 0x00B8
+     d84:	f0 91 b9 00 	lds	r31, 0x00B9
+     d88:	80 81       	ld	r24, Z
+     d8a:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = RxFrame.Data[1];
+     d8c:	e0 91 b8 00 	lds	r30, 0x00B8
+     d90:	f0 91 b9 00 	lds	r31, 0x00B9
+     d94:	81 81       	ldd	r24, Z+1	; 0x01
+     d96:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = 0x00;
+     d98:	1b 82       	std	Y+3, r1	; 0x03
+                        SendTemp[3] = XiaoShuDian;
+     d9a:	80 91 be 00 	lds	r24, 0x00BE
+     d9e:	8c 83       	std	Y+4, r24	; 0x04
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+     da0:	8b 85       	ldd	r24, Y+11	; 0x0b
+     da2:	86 60       	ori	r24, 0x06	; 6
+     da4:	b4 01       	movw	r22, r8
+     da6:	44 e0       	ldi	r20, 0x04	; 4
+     da8:	50 e0       	ldi	r21, 0x00	; 0
+     daa:	c4 db       	rcall	.-2168   	; 0x534 <SendDataToPC>
+#ifndef MYDEBUG
+                        WRITE_BYTE_EEP(XiaoShuDian,pXSD_EEP);
+     dac:	80 91 be 00 	lds	r24, 0x00BE
+     db0:	60 91 9e 00 	lds	r22, 0x009E
+     db4:	70 91 9f 00 	lds	r23, 0x009F
+     db8:	da cf       	rjmp	.-76     	; 0xd6e <main+0x3fa>
+#endif
+                        break;
+                    case ADDR_ZERO:
+                        ((char *)&ADJ_ZERO)[1] =  RxFrame.Data[2];
+     dba:	e0 91 b8 00 	lds	r30, 0x00B8
+     dbe:	f0 91 b9 00 	lds	r31, 0x00B9
+     dc2:	82 81       	ldd	r24, Z+2	; 0x02
+     dc4:	f1 01       	movw	r30, r2
+     dc6:	81 83       	std	Z+1, r24	; 0x01
+                        ((char *)&ADJ_ZERO)[0] =  RxFrame.Data[3];
+     dc8:	e0 91 b8 00 	lds	r30, 0x00B8
+     dcc:	f0 91 b9 00 	lds	r31, 0x00B9
+     dd0:	93 81       	ldd	r25, Z+3	; 0x03
+     dd2:	90 93 a3 00 	sts	0x00A3, r25
+                        SendTemp[0] = RxFrame.Data[0];
+     dd6:	e0 91 b8 00 	lds	r30, 0x00B8
+     dda:	f0 91 b9 00 	lds	r31, 0x00B9
+     dde:	80 81       	ld	r24, Z
+     de0:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = RxFrame.Data[1];
+     de2:	e0 91 b8 00 	lds	r30, 0x00B8
+     de6:	f0 91 b9 00 	lds	r31, 0x00B9
+     dea:	81 81       	ldd	r24, Z+1	; 0x01
+     dec:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = (char)(ADJ_ZERO>>8);
+     dee:	80 91 a4 00 	lds	r24, 0x00A4
+     df2:	8b 83       	std	Y+3, r24	; 0x03
+                        SendTemp[3] = (char)ADJ_ZERO;
+     df4:	9c 83       	std	Y+4, r25	; 0x04
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+     df6:	8b 85       	ldd	r24, Y+11	; 0x0b
+     df8:	86 60       	ori	r24, 0x06	; 6
+     dfa:	b4 01       	movw	r22, r8
+     dfc:	44 e0       	ldi	r20, 0x04	; 4
+     dfe:	50 e0       	ldi	r21, 0x00	; 0
+     e00:	99 db       	rcall	.-2254   	; 0x534 <SendDataToPC>
+#ifndef MYDEBUG
+                        WRITE_WORD_EEP(ADJ_ZERO,pADJ_ZERO);
+     e02:	60 91 a0 00 	lds	r22, 0x00A0
+     e06:	70 91 a1 00 	lds	r23, 0x00A1
+     e0a:	80 91 a3 00 	lds	r24, 0x00A3
+     e0e:	90 91 a4 00 	lds	r25, 0x00A4
+     e12:	ab c0       	rjmp	.+342    	; 0xf6a <main+0x5f6>
+#endif
+                        break;
+                    case ADDR_RETURN_ID:
+                        if(RxFrame.Data[3] != 0){
+     e14:	e0 91 b8 00 	lds	r30, 0x00B8
+     e18:	f0 91 b9 00 	lds	r31, 0x00B9
+     e1c:	83 81       	ldd	r24, Z+3	; 0x03
+     e1e:	81 11       	cpse	r24, r1
+     e20:	81 e0       	ldi	r24, 0x01	; 1
+     e22:	58 2e       	mov	r5, r24
+                            ReturnID = 1;
+                        }else{
+                            ReturnID = 0;
+                        }
+                        //SendTemp[0] = XiaoShuDian;
+                        SendTemp[0] = RxFrame.Data[0];
+     e24:	e0 91 b8 00 	lds	r30, 0x00B8
+     e28:	f0 91 b9 00 	lds	r31, 0x00B9
+     e2c:	80 81       	ld	r24, Z
+     e2e:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = RxFrame.Data[1];
+     e30:	e0 91 b8 00 	lds	r30, 0x00B8
+     e34:	f0 91 b9 00 	lds	r31, 0x00B9
+     e38:	81 81       	ldd	r24, Z+1	; 0x01
+     e3a:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = 0x00;
+     e3c:	1b 82       	std	Y+3, r1	; 0x03
+                        SendTemp[3] = ReturnID;
+     e3e:	5c 82       	std	Y+4, r5	; 0x04
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+     e40:	8b 85       	ldd	r24, Y+11	; 0x0b
+     e42:	86 60       	ori	r24, 0x06	; 6
+     e44:	b4 01       	movw	r22, r8
+     e46:	44 e0       	ldi	r20, 0x04	; 4
+     e48:	50 e0       	ldi	r21, 0x00	; 0
+     e4a:	b4 c0       	rjmp	.+360    	; 0xfb4 <main+0x640>
+                        break;
+                    default:
+                        SendTemp[0] = 0x00;
+     e4c:	19 82       	std	Y+1, r1	; 0x01
+                        SendDataToPC(SET_DEVICEADDR | 0x80, SendTemp , 1);
+     e4e:	86 e8       	ldi	r24, 0x86	; 134
+     e50:	b4 01       	movw	r22, r8
+     e52:	41 e0       	ldi	r20, 0x01	; 1
+     e54:	50 e0       	ldi	r21, 0x00	; 0
+     e56:	ae c0       	rjmp	.+348    	; 0xfb4 <main+0x640>
+                        break;
+                }
+                break;
+            case SET_VALUE:
+#if 1
+                switch(tempint){
+     e58:	86 51       	subi	r24, 0x16	; 22
+     e5a:	90 41       	sbci	r25, 0x10	; 16
+     e5c:	09 f0       	breq	.+2      	; 0xe60 <main+0x4ec>
+     e5e:	05 ce       	rjmp	.-1014   	; 0xa6a <main+0xf6>
+                    case ADDR_FW_MAX:
+
+                        V_MAX.ch[3] = RxFrame.Data[5];
+     e60:	e0 91 b8 00 	lds	r30, 0x00B8
+     e64:	f0 91 b9 00 	lds	r31, 0x00B9
+     e68:	85 81       	ldd	r24, Z+5	; 0x05
+     e6a:	80 93 a8 00 	sts	0x00A8, r24
+                        V_MAX.ch[2] = RxFrame.Data[6];
+     e6e:	e0 91 b8 00 	lds	r30, 0x00B8
+     e72:	f0 91 b9 00 	lds	r31, 0x00B9
+     e76:	86 81       	ldd	r24, Z+6	; 0x06
+     e78:	80 93 a7 00 	sts	0x00A7, r24
+                        V_MAX.ch[1] = RxFrame.Data[7];
+     e7c:	e0 91 b8 00 	lds	r30, 0x00B8
+     e80:	f0 91 b9 00 	lds	r31, 0x00B9
+     e84:	87 81       	ldd	r24, Z+7	; 0x07
+     e86:	80 93 a6 00 	sts	0x00A6, r24
+                        V_MAX.ch[0] = RxFrame.Data[8];
+     e8a:	e0 91 b8 00 	lds	r30, 0x00B8
+     e8e:	f0 91 b9 00 	lds	r31, 0x00B9
+     e92:	80 85       	ldd	r24, Z+8	; 0x08
+     e94:	80 93 a5 00 	sts	0x00A5, r24
+
+                        V_MIN.ch[3] = RxFrame.Data[9];
+     e98:	e0 91 b8 00 	lds	r30, 0x00B8
+     e9c:	f0 91 b9 00 	lds	r31, 0x00B9
+     ea0:	81 85       	ldd	r24, Z+9	; 0x09
+     ea2:	80 93 ac 00 	sts	0x00AC, r24
+                        V_MIN.ch[2] = RxFrame.Data[10];
+     ea6:	e0 91 b8 00 	lds	r30, 0x00B8
+     eaa:	f0 91 b9 00 	lds	r31, 0x00B9
+     eae:	82 85       	ldd	r24, Z+10	; 0x0a
+     eb0:	80 93 ab 00 	sts	0x00AB, r24
+                        V_MIN.ch[1] = RxFrame.Data[11];
+     eb4:	e0 91 b8 00 	lds	r30, 0x00B8
+     eb8:	f0 91 b9 00 	lds	r31, 0x00B9
+     ebc:	83 85       	ldd	r24, Z+11	; 0x0b
+     ebe:	80 93 aa 00 	sts	0x00AA, r24
+                        V_MIN.ch[0] = RxFrame.Data[12];
+     ec2:	e0 91 b8 00 	lds	r30, 0x00B8
+     ec6:	f0 91 b9 00 	lds	r31, 0x00B9
+     eca:	84 85       	ldd	r24, Z+12	; 0x0c
+     ecc:	80 93 a9 00 	sts	0x00A9, r24
+
+                        tempA =(unsigned int) V_MAX.L;
+                        tempB =(unsigned int) V_MIN.L;
+
+                        VALUE_MAX = Out_MAX(tempA,tempB);
+     ed0:	a0 90 a5 00 	lds	r10, 0x00A5
+     ed4:	b0 90 a6 00 	lds	r11, 0x00A6
+     ed8:	e0 90 a9 00 	lds	r14, 0x00A9
+     edc:	f0 90 aa 00 	lds	r15, 0x00AA
+     ee0:	c5 01       	movw	r24, r10
+     ee2:	b7 01       	movw	r22, r14
+     ee4:	bc d8       	rcall	.-3720   	; 0x5e <Out_MAX>
+     ee6:	70 93 dd 00 	sts	0x00DD, r23
+     eea:	60 93 dc 00 	sts	0x00DC, r22
+                        VALUE_MIN = Out_MIN(tempA,tempB);
+     eee:	c5 01       	movw	r24, r10
+     ef0:	b7 01       	movw	r22, r14
+     ef2:	dd d8       	rcall	.-3654   	; 0xae <Out_MIN>
+     ef4:	70 93 df 00 	sts	0x00DF, r23
+     ef8:	60 93 de 00 	sts	0x00DE, r22
+
+                        SendTemp[0] = RxFrame.Data[0];
+     efc:	e0 91 b8 00 	lds	r30, 0x00B8
+     f00:	f0 91 b9 00 	lds	r31, 0x00B9
+     f04:	80 81       	ld	r24, Z
+     f06:	89 83       	std	Y+1, r24	; 0x01
+                        SendTemp[1] = RxFrame.Data[1];
+     f08:	e0 91 b8 00 	lds	r30, 0x00B8
+     f0c:	f0 91 b9 00 	lds	r31, 0x00B9
+     f10:	81 81       	ldd	r24, Z+1	; 0x01
+     f12:	8a 83       	std	Y+2, r24	; 0x02
+                        SendTemp[2] = 0x08;
+     f14:	28 e0       	ldi	r18, 0x08	; 8
+     f16:	2b 83       	std	Y+3, r18	; 0x03
+
+                        SendDataToPC(SET_VALUE | CRCYesOrNo, SendTemp , 3);
+     f18:	8b 85       	ldd	r24, Y+11	; 0x0b
+     f1a:	85 66       	ori	r24, 0x65	; 101
+     f1c:	b4 01       	movw	r22, r8
+     f1e:	43 e0       	ldi	r20, 0x03	; 3
+     f20:	50 e0       	ldi	r21, 0x00	; 0
+     f22:	08 db       	rcall	.-2544   	; 0x534 <SendDataToPC>
+#ifndef MYDEBUG
+                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
+     f24:	80 91 dc 00 	lds	r24, 0x00DC
+     f28:	90 91 dd 00 	lds	r25, 0x00DD
+     f2c:	60 91 9a 00 	lds	r22, 0x009A
+     f30:	70 91 9b 00 	lds	r23, 0x009B
+     f34:	5a dc       	rcall	.-1868   	; 0x7ea <WRITE_WORD_EEP>
+                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
+     f36:	80 91 de 00 	lds	r24, 0x00DE
+     f3a:	90 91 df 00 	lds	r25, 0x00DF
+     f3e:	60 91 9c 00 	lds	r22, 0x009C
+     f42:	70 91 9d 00 	lds	r23, 0x009D
+     f46:	51 dc       	rcall	.-1886   	; 0x7ea <WRITE_WORD_EEP>
+                        WRITE_WORD_EEP(VALUE_MAX,pMAX_EEP);
+     f48:	80 91 dc 00 	lds	r24, 0x00DC
+     f4c:	90 91 dd 00 	lds	r25, 0x00DD
+     f50:	60 91 9a 00 	lds	r22, 0x009A
+     f54:	70 91 9b 00 	lds	r23, 0x009B
+     f58:	48 dc       	rcall	.-1904   	; 0x7ea <WRITE_WORD_EEP>
+                        WRITE_WORD_EEP(VALUE_MIN,pMIN_EEP);
+     f5a:	80 91 de 00 	lds	r24, 0x00DE
+     f5e:	90 91 df 00 	lds	r25, 0x00DF
+     f62:	60 91 9c 00 	lds	r22, 0x009C
+     f66:	70 91 9d 00 	lds	r23, 0x009D
+     f6a:	3f dc       	rcall	.-1922   	; 0x7ea <WRITE_WORD_EEP>
+     f6c:	7e cd       	rjmp	.-1284   	; 0xa6a <main+0xf6>
+#endif
+                }
+                break;
+#endif
+            case GET_ID:
+                SendTemp[0] = 0x00;
+     f6e:	19 82       	std	Y+1, r1	; 0x01
+                switch(tempint)
+     f70:	82 31       	cpi	r24, 0x12	; 18
+     f72:	91 05       	cpc	r25, r1
+     f74:	71 f0       	breq	.+28     	; 0xf92 <main+0x61e>
+     f76:	83 31       	cpi	r24, 0x13	; 19
+     f78:	91 05       	cpc	r25, r1
+     f7a:	18 f4       	brcc	.+6      	; 0xf82 <main+0x60e>
+     f7c:	41 97       	sbiw	r24, 0x11	; 17
+     f7e:	91 f4       	brne	.+36     	; 0xfa4 <main+0x630>
+     f80:	06 c0       	rjmp	.+12     	; 0xf8e <main+0x61a>
+     f82:	83 31       	cpi	r24, 0x13	; 19
+     f84:	91 05       	cpc	r25, r1
+     f86:	41 f0       	breq	.+16     	; 0xf98 <main+0x624>
+     f88:	44 97       	sbiw	r24, 0x14	; 20
+     f8a:	61 f4       	brne	.+24     	; 0xfa4 <main+0x630>
+     f8c:	07 c0       	rjmp	.+14     	; 0xf9c <main+0x628>
+                {
+                    case ADDR_CID:
+                        SendTemp[1] = CODE_CID;
+     f8e:	88 e8       	ldi	r24, 0x88	; 136
+     f90:	07 c0       	rjmp	.+14     	; 0xfa0 <main+0x62c>
+                        break;
+                    case ADDR_PID:
+                        SendTemp[1] = CODE_PID;
+     f92:	90 e8       	ldi	r25, 0x80	; 128
+     f94:	9a 83       	std	Y+2, r25	; 0x02
+     f96:	09 c0       	rjmp	.+18     	; 0xfaa <main+0x636>
+                        break;
+                    case ADDR_VID:
+                        SendTemp[1] = CODE_VID;
+     f98:	1a 82       	std	Y+2, r1	; 0x02
+     f9a:	07 c0       	rjmp	.+14     	; 0xfaa <main+0x636>
+                        break;
+                    case ADDR_FID:
+                        SendTemp[1] = MEASURE_MODE;
+     f9c:	80 91 a2 00 	lds	r24, 0x00A2
+     fa0:	8a 83       	std	Y+2, r24	; 0x02
+     fa2:	03 c0       	rjmp	.+6      	; 0xfaa <main+0x636>
+                        break;
+                    default:
+                        SendTemp[0] = 0x00;
+     fa4:	19 82       	std	Y+1, r1	; 0x01
+     fa6:	e0 e8       	ldi	r30, 0x80	; 128
+     fa8:	eb 87       	std	Y+11, r30	; 0x0b
+                        CRCYesOrNo = 0x80;
+                        break;
+                }
+                SendDataToPC(GET_ID | CRCYesOrNo, SendTemp , 2);
+     faa:	8b 85       	ldd	r24, Y+11	; 0x0b
+     fac:	86 66       	ori	r24, 0x66	; 102
+     fae:	b4 01       	movw	r22, r8
+     fb0:	42 e0       	ldi	r20, 0x02	; 2
+     fb2:	50 e0       	ldi	r21, 0x00	; 0
+     fb4:	bf da       	rcall	.-2690   	; 0x534 <SendDataToPC>
+     fb6:	59 cd       	rjmp	.-1358   	; 0xa6a <main+0xf6>
+                        break;
+                }
+                break;
+#endif
+            default:
+                RxFrame.FunCode |= 0x80;
+     fb8:	80 91 b7 00 	lds	r24, 0x00B7
+     fbc:	80 68       	ori	r24, 0x80	; 128
+     fbe:	80 93 b7 00 	sts	0x00B7, r24
+                SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
+     fc2:	80 91 b7 00 	lds	r24, 0x00B7
+     fc6:	60 91 b8 00 	lds	r22, 0x00B8
+     fca:	70 91 b9 00 	lds	r23, 0x00B9
+     fce:	40 91 ba 00 	lds	r20, 0x00BA
+     fd2:	50 91 bb 00 	lds	r21, 0x00BB
+     fd6:	42 50       	subi	r20, 0x02	; 2
+     fd8:	50 40       	sbci	r21, 0x00	; 0
+     fda:	ac da       	rcall	.-2728   	; 0x534 <SendDataToPC>
+        return 0;
+    return 1;
+}
+void ErrorDisplay(unsigned int ErrCode)
+{
+    ErrFlag = 1;
+     fdc:	81 e0       	ldi	r24, 0x01	; 1
+     fde:	90 e0       	ldi	r25, 0x00	; 0
+     fe0:	90 93 d6 00 	sts	0x00D6, r25
+     fe4:	80 93 d5 00 	sts	0x00D5, r24
+    ErrCode &= 0x0FFF;
+    ErrCodeDisplay = ErrCode | 0xE000;
+     fe8:	85 e0       	ldi	r24, 0x05	; 5
+     fea:	90 ee       	ldi	r25, 0xE0	; 224
+     fec:	90 93 e1 00 	sts	0x00E1, r25
+     ff0:	80 93 e0 00 	sts	0x00E0, r24
+#endif
+            default:
+                RxFrame.FunCode |= 0x80;
+                SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
+                ErrorDisplay(ERRCODE_FunCodeInvalid);
+                PORTD ^= (1<<6);
+     ff4:	82 b3       	in	r24, 0x12	; 18
+     ff6:	84 25       	eor	r24, r4
+     ff8:	82 bb       	out	0x12, r24	; 18
+     ffa:	37 cd       	rjmp	.-1426   	; 0xa6a <main+0xf6>
+
+00000ffc <SPISend>:
 //send data to LED
 void SPISend(unsigned char Data)
 {
 	int i;
 
 	WEIBUS_0(bSCLK);
-     f2a:	c0 98       	cbi	0x18, 0	; 24
+     ffc:	c0 98       	cbi	0x18, 0	; 24
 	WEIBUS_0(bLCLK);
-     f2c:	c1 98       	cbi	0x18, 1	; 24
-     f2e:	20 e0       	ldi	r18, 0x00	; 0
-     f30:	30 e0       	ldi	r19, 0x00	; 0
+     ffe:	c1 98       	cbi	0x18, 1	; 24
+    1000:	20 e0       	ldi	r18, 0x00	; 0
+    1002:	30 e0       	ldi	r19, 0x00	; 0
 	for(i=0;i<8;i++)
 	{
 	    if(Data & (0x80>>i))
-     f32:	60 e8       	ldi	r22, 0x80	; 128
-     f34:	70 e0       	ldi	r23, 0x00	; 0
-     f36:	48 2f       	mov	r20, r24
-     f38:	50 e0       	ldi	r21, 0x00	; 0
-     f3a:	cb 01       	movw	r24, r22
-     f3c:	02 2e       	mov	r0, r18
-     f3e:	02 c0       	rjmp	.+4      	; 0xf44 <SPISend+0x1a>
-     f40:	95 95       	asr	r25
-     f42:	87 95       	ror	r24
-     f44:	0a 94       	dec	r0
-     f46:	e2 f7       	brpl	.-8      	; 0xf40 <SPISend+0x16>
-     f48:	84 23       	and	r24, r20
-     f4a:	95 23       	and	r25, r21
-     f4c:	89 2b       	or	r24, r25
-     f4e:	11 f0       	breq	.+4      	; 0xf54 <SPISend+0x2a>
+    1004:	60 e8       	ldi	r22, 0x80	; 128
+    1006:	70 e0       	ldi	r23, 0x00	; 0
+    1008:	48 2f       	mov	r20, r24
+    100a:	50 e0       	ldi	r21, 0x00	; 0
+    100c:	cb 01       	movw	r24, r22
+    100e:	02 2e       	mov	r0, r18
+    1010:	02 c0       	rjmp	.+4      	; 0x1016 <SPISend+0x1a>
+    1012:	95 95       	asr	r25
+    1014:	87 95       	ror	r24
+    1016:	0a 94       	dec	r0
+    1018:	e2 f7       	brpl	.-8      	; 0x1012 <SPISend+0x16>
+    101a:	84 23       	and	r24, r20
+    101c:	95 23       	and	r25, r21
+    101e:	89 2b       	or	r24, r25
+    1020:	11 f0       	breq	.+4      	; 0x1026 <SPISend+0x2a>
 		WEIBUS_1(bSDI);
-     f50:	c2 9a       	sbi	0x18, 2	; 24
-     f52:	01 c0       	rjmp	.+2      	; 0xf56 <SPISend+0x2c>
+    1022:	c2 9a       	sbi	0x18, 2	; 24
+    1024:	01 c0       	rjmp	.+2      	; 0x1028 <SPISend+0x2c>
 	    else
 		WEIBUS_0(bSDI);
-     f54:	c2 98       	cbi	0x18, 2	; 24
+    1026:	c2 98       	cbi	0x18, 2	; 24
 	    WEIBUS_1(bSCLK);
-     f56:	c0 9a       	sbi	0x18, 0	; 24
+    1028:	c0 9a       	sbi	0x18, 0	; 24
 	    WEIBUS_0(bSCLK);
-     f58:	c0 98       	cbi	0x18, 0	; 24
+    102a:	c0 98       	cbi	0x18, 0	; 24
 {
 	int i;
 
 	WEIBUS_0(bSCLK);
 	WEIBUS_0(bLCLK);
 	for(i=0;i<8;i++)
-     f5a:	2f 5f       	subi	r18, 0xFF	; 255
-     f5c:	3f 4f       	sbci	r19, 0xFF	; 255
-     f5e:	28 30       	cpi	r18, 0x08	; 8
-     f60:	31 05       	cpc	r19, r1
-     f62:	59 f7       	brne	.-42     	; 0xf3a <SPISend+0x10>
+    102c:	2f 5f       	subi	r18, 0xFF	; 255
+    102e:	3f 4f       	sbci	r19, 0xFF	; 255
+    1030:	28 30       	cpi	r18, 0x08	; 8
+    1032:	31 05       	cpc	r19, r1
+    1034:	59 f7       	brne	.-42     	; 0x100c <SPISend+0x10>
 	    else
 		WEIBUS_0(bSDI);
 	    WEIBUS_1(bSCLK);
 	    WEIBUS_0(bSCLK);
 	}
 	WEIBUS_1(bLCLK);
-     f64:	c1 9a       	sbi	0x18, 1	; 24
+    1036:	c1 9a       	sbi	0x18, 1	; 24
 	WEIBUS_0(bLCLK);
-     f66:	c1 98       	cbi	0x18, 1	; 24
+    1038:	c1 98       	cbi	0x18, 1	; 24
 }
-     f68:	08 95       	ret
+    103a:	08 95       	ret
 
-00000f6a <__vector_9>:
+0000103c <__vector_9>:
 SIGNAL(SIG_OVERFLOW0)
 {
-     f6a:	1f 92       	push	r1
-     f6c:	0f 92       	push	r0
-     f6e:	0f b6       	in	r0, 0x3f	; 63
-     f70:	0f 92       	push	r0
-     f72:	11 24       	eor	r1, r1
-     f74:	2f 93       	push	r18
-     f76:	3f 93       	push	r19
-     f78:	4f 93       	push	r20
-     f7a:	5f 93       	push	r21
-     f7c:	6f 93       	push	r22
-     f7e:	7f 93       	push	r23
-     f80:	8f 93       	push	r24
-     f82:	9f 93       	push	r25
-     f84:	af 93       	push	r26
-     f86:	bf 93       	push	r27
-     f88:	ef 93       	push	r30
-     f8a:	ff 93       	push	r31
+    103c:	1f 92       	push	r1
+    103e:	0f 92       	push	r0
+    1040:	0f b6       	in	r0, 0x3f	; 63
+    1042:	0f 92       	push	r0
+    1044:	11 24       	eor	r1, r1
+    1046:	2f 93       	push	r18
+    1048:	3f 93       	push	r19
+    104a:	4f 93       	push	r20
+    104c:	5f 93       	push	r21
+    104e:	6f 93       	push	r22
+    1050:	7f 93       	push	r23
+    1052:	8f 93       	push	r24
+    1054:	9f 93       	push	r25
+    1056:	af 93       	push	r26
+    1058:	bf 93       	push	r27
+    105a:	ef 93       	push	r30
+    105c:	ff 93       	push	r31
 	switch(DuanAddr)
-     f8c:	80 91 b5 00 	lds	r24, 0x00B5
-     f90:	81 30       	cpi	r24, 0x01	; 1
-     f92:	79 f0       	breq	.+30     	; 0xfb2 <__vector_9+0x48>
-     f94:	81 30       	cpi	r24, 0x01	; 1
-     f96:	28 f0       	brcs	.+10     	; 0xfa2 <__vector_9+0x38>
-     f98:	82 30       	cpi	r24, 0x02	; 2
-     f9a:	99 f0       	breq	.+38     	; 0xfc2 <__vector_9+0x58>
-     f9c:	83 30       	cpi	r24, 0x03	; 3
-     f9e:	01 f5       	brne	.+64     	; 0xfe0 <__vector_9+0x76>
-     fa0:	18 c0       	rjmp	.+48     	; 0xfd2 <__vector_9+0x68>
+    105e:	80 91 b5 00 	lds	r24, 0x00B5
+    1062:	81 30       	cpi	r24, 0x01	; 1
+    1064:	79 f0       	breq	.+30     	; 0x1084 <__vector_9+0x48>
+    1066:	81 30       	cpi	r24, 0x01	; 1
+    1068:	28 f0       	brcs	.+10     	; 0x1074 <__vector_9+0x38>
+    106a:	82 30       	cpi	r24, 0x02	; 2
+    106c:	99 f0       	breq	.+38     	; 0x1094 <__vector_9+0x58>
+    106e:	83 30       	cpi	r24, 0x03	; 3
+    1070:	01 f5       	brne	.+64     	; 0x10b2 <__vector_9+0x76>
+    1072:	18 c0       	rjmp	.+48     	; 0x10a4 <__vector_9+0x68>
 	{
 	case 0:	DUANALL_1;	
-     fa2:	85 b3       	in	r24, 0x15	; 21
-     fa4:	8f 60       	ori	r24, 0x0F	; 15
-     fa6:	85 bb       	out	0x15, r24	; 21
+    1074:	85 b3       	in	r24, 0x15	; 21
+    1076:	8f 60       	ori	r24, 0x0F	; 15
+    1078:	85 bb       	out	0x15, r24	; 21
 		SPISend(LEDBUFFER[0]);
-     fa8:	80 91 70 00 	lds	r24, 0x0070
-     fac:	be df       	rcall	.-132    	; 0xf2a <SPISend>
+    107a:	80 91 70 00 	lds	r24, 0x0070
+    107e:	be df       	rcall	.-132    	; 0xffc <SPISend>
 		DUANBUS_0(bDUAN1);
-     fae:	a8 98       	cbi	0x15, 0	; 21
-     fb0:	17 c0       	rjmp	.+46     	; 0xfe0 <__vector_9+0x76>
+    1080:	a8 98       	cbi	0x15, 0	; 21
+    1082:	17 c0       	rjmp	.+46     	; 0x10b2 <__vector_9+0x76>
 		break;
 	case 1:	DUANALL_1;	
-     fb2:	85 b3       	in	r24, 0x15	; 21
-     fb4:	8f 60       	ori	r24, 0x0F	; 15
-     fb6:	85 bb       	out	0x15, r24	; 21
+    1084:	85 b3       	in	r24, 0x15	; 21
+    1086:	8f 60       	ori	r24, 0x0F	; 15
+    1088:	85 bb       	out	0x15, r24	; 21
 		SPISend(LEDBUFFER[1]);
-     fb8:	80 91 71 00 	lds	r24, 0x0071
-     fbc:	b6 df       	rcall	.-148    	; 0xf2a <SPISend>
+    108a:	80 91 71 00 	lds	r24, 0x0071
+    108e:	b6 df       	rcall	.-148    	; 0xffc <SPISend>
 		DUANBUS_0(bDUAN2);
-     fbe:	a9 98       	cbi	0x15, 1	; 21
-     fc0:	0f c0       	rjmp	.+30     	; 0xfe0 <__vector_9+0x76>
+    1090:	a9 98       	cbi	0x15, 1	; 21
+    1092:	0f c0       	rjmp	.+30     	; 0x10b2 <__vector_9+0x76>
 		break;
 	case 2:	DUANALL_1;	
-     fc2:	85 b3       	in	r24, 0x15	; 21
-     fc4:	8f 60       	ori	r24, 0x0F	; 15
-     fc6:	85 bb       	out	0x15, r24	; 21
+    1094:	85 b3       	in	r24, 0x15	; 21
+    1096:	8f 60       	ori	r24, 0x0F	; 15
+    1098:	85 bb       	out	0x15, r24	; 21
 		SPISend(LEDBUFFER[2]);
-     fc8:	80 91 72 00 	lds	r24, 0x0072
-     fcc:	ae df       	rcall	.-164    	; 0xf2a <SPISend>
+    109a:	80 91 72 00 	lds	r24, 0x0072
+    109e:	ae df       	rcall	.-164    	; 0xffc <SPISend>
 		DUANBUS_0(bDUAN3);
-     fce:	aa 98       	cbi	0x15, 2	; 21
-     fd0:	07 c0       	rjmp	.+14     	; 0xfe0 <__vector_9+0x76>
+    10a0:	aa 98       	cbi	0x15, 2	; 21
+    10a2:	07 c0       	rjmp	.+14     	; 0x10b2 <__vector_9+0x76>
 		break;
 	case 3:	DUANALL_1;	
-     fd2:	85 b3       	in	r24, 0x15	; 21
-     fd4:	8f 60       	ori	r24, 0x0F	; 15
-     fd6:	85 bb       	out	0x15, r24	; 21
+    10a4:	85 b3       	in	r24, 0x15	; 21
+    10a6:	8f 60       	ori	r24, 0x0F	; 15
+    10a8:	85 bb       	out	0x15, r24	; 21
 		SPISend(LEDBUFFER[3]);
-     fd8:	80 91 73 00 	lds	r24, 0x0073
-     fdc:	a6 df       	rcall	.-180    	; 0xf2a <SPISend>
+    10aa:	80 91 73 00 	lds	r24, 0x0073
+    10ae:	a6 df       	rcall	.-180    	; 0xffc <SPISend>
 		DUANBUS_0(bDUAN4);
-     fde:	ab 98       	cbi	0x15, 3	; 21
+    10b0:	ab 98       	cbi	0x15, 3	; 21
 	}
 	DuanAddr++;
-     fe0:	80 91 b5 00 	lds	r24, 0x00B5
-     fe4:	8f 5f       	subi	r24, 0xFF	; 255
-     fe6:	80 93 b5 00 	sts	0x00B5, r24
+    10b2:	80 91 b5 00 	lds	r24, 0x00B5
+    10b6:	8f 5f       	subi	r24, 0xFF	; 255
+    10b8:	80 93 b5 00 	sts	0x00B5, r24
 	if(DuanAddr>3)
-     fea:	80 91 b5 00 	lds	r24, 0x00B5
-     fee:	84 30       	cpi	r24, 0x04	; 4
-     ff0:	10 f0       	brcs	.+4      	; 0xff6 <__vector_9+0x8c>
+    10bc:	80 91 b5 00 	lds	r24, 0x00B5
+    10c0:	84 30       	cpi	r24, 0x04	; 4
+    10c2:	10 f0       	brcs	.+4      	; 0x10c8 <__vector_9+0x8c>
 		DuanAddr = 0;
-     ff2:	10 92 b5 00 	sts	0x00B5, r1
+    10c4:	10 92 b5 00 	sts	0x00B5, r1
 	TCNT0 = Timer1Count;
-     ff6:	80 ef       	ldi	r24, 0xF0	; 240
-     ff8:	82 bf       	out	0x32, r24	; 50
+    10c8:	80 ef       	ldi	r24, 0xF0	; 240
+    10ca:	82 bf       	out	0x32, r24	; 50
 }
-     ffa:	ff 91       	pop	r31
-     ffc:	ef 91       	pop	r30
-     ffe:	bf 91       	pop	r27
-    1000:	af 91       	pop	r26
-    1002:	9f 91       	pop	r25
-    1004:	8f 91       	pop	r24
-    1006:	7f 91       	pop	r23
-    1008:	6f 91       	pop	r22
-    100a:	5f 91       	pop	r21
-    100c:	4f 91       	pop	r20
-    100e:	3f 91       	pop	r19
-    1010:	2f 91       	pop	r18
-    1012:	0f 90       	pop	r0
-    1014:	0f be       	out	0x3f, r0	; 63
-    1016:	0f 90       	pop	r0
-    1018:	1f 90       	pop	r1
-    101a:	18 95       	reti
+    10cc:	ff 91       	pop	r31
+    10ce:	ef 91       	pop	r30
+    10d0:	bf 91       	pop	r27
+    10d2:	af 91       	pop	r26
+    10d4:	9f 91       	pop	r25
+    10d6:	8f 91       	pop	r24
+    10d8:	7f 91       	pop	r23
+    10da:	6f 91       	pop	r22
+    10dc:	5f 91       	pop	r21
+    10de:	4f 91       	pop	r20
+    10e0:	3f 91       	pop	r19
+    10e2:	2f 91       	pop	r18
+    10e4:	0f 90       	pop	r0
+    10e6:	0f be       	out	0x3f, r0	; 63
+    10e8:	0f 90       	pop	r0
+    10ea:	1f 90       	pop	r1
+    10ec:	18 95       	reti
 
-0000101c <OpenDisplayLED>:
+000010ee <OpenDisplayLED>:
 unsigned char OpenDisplayLED(void)
 {
 	/* clock select clk/32 */
 	TCCR0 = Timer1ClkSel;
-    101c:	85 e0       	ldi	r24, 0x05	; 5
-    101e:	83 bf       	out	0x33, r24	; 51
+    10ee:	85 e0       	ldi	r24, 0x05	; 5
+    10f0:	83 bf       	out	0x33, r24	; 51
 	/* enabile Timer0 */
 	TIMSK |= 0x01;
-    1020:	89 b7       	in	r24, 0x39	; 57
-    1022:	81 60       	ori	r24, 0x01	; 1
-    1024:	89 bf       	out	0x39, r24	; 57
+    10f2:	89 b7       	in	r24, 0x39	; 57
+    10f4:	81 60       	ori	r24, 0x01	; 1
+    10f6:	89 bf       	out	0x39, r24	; 57
 	TCNT0 = Timer1Count;
-    1026:	80 ef       	ldi	r24, 0xF0	; 240
-    1028:	82 bf       	out	0x32, r24	; 50
+    10f8:	80 ef       	ldi	r24, 0xF0	; 240
+    10fa:	82 bf       	out	0x32, r24	; 50
 	DuanAddr = 0;
-    102a:	10 92 b5 00 	sts	0x00B5, r1
+    10fc:	10 92 b5 00 	sts	0x00B5, r1
 	return 0;
 }
-    102e:	80 e0       	ldi	r24, 0x00	; 0
-    1030:	08 95       	ret
+    1100:	80 e0       	ldi	r24, 0x00	; 0
+    1102:	08 95       	ret
 
-00001032 <DisplayHex>:
+00001104 <DisplayHex>:
 /* ********************************************************************** */
 void DisplayHex(unsigned int TempData)
 {
 	LEDBUFFER[3] = LEDMA[(unsigned char)(TempData & 0x0F)];
-    1032:	28 2f       	mov	r18, r24
-    1034:	2f 70       	andi	r18, 0x0F	; 15
-    1036:	40 e6       	ldi	r20, 0x60	; 96
-    1038:	50 e0       	ldi	r21, 0x00	; 0
-    103a:	fa 01       	movw	r30, r20
-    103c:	e2 0f       	add	r30, r18
-    103e:	f1 1d       	adc	r31, r1
-    1040:	20 81       	ld	r18, Z
-    1042:	20 93 73 00 	sts	0x0073, r18
+    1104:	28 2f       	mov	r18, r24
+    1106:	2f 70       	andi	r18, 0x0F	; 15
+    1108:	40 e6       	ldi	r20, 0x60	; 96
+    110a:	50 e0       	ldi	r21, 0x00	; 0
+    110c:	fa 01       	movw	r30, r20
+    110e:	e2 0f       	add	r30, r18
+    1110:	f1 1d       	adc	r31, r1
+    1112:	20 81       	ld	r18, Z
+    1114:	20 93 73 00 	sts	0x0073, r18
 	TempData = TempData>>4;
-    1046:	9c 01       	movw	r18, r24
-    1048:	64 e0       	ldi	r22, 0x04	; 4
-    104a:	36 95       	lsr	r19
-    104c:	27 95       	ror	r18
-    104e:	6a 95       	dec	r22
-    1050:	e1 f7       	brne	.-8      	; 0x104a <DisplayHex+0x18>
+    1118:	9c 01       	movw	r18, r24
+    111a:	64 e0       	ldi	r22, 0x04	; 4
+    111c:	36 95       	lsr	r19
+    111e:	27 95       	ror	r18
+    1120:	6a 95       	dec	r22
+    1122:	e1 f7       	brne	.-8      	; 0x111c <DisplayHex+0x18>
 	LEDBUFFER[2] = LEDMA[(unsigned char)(TempData & 0x0F)];
-    1052:	2f 70       	andi	r18, 0x0F	; 15
-    1054:	fa 01       	movw	r30, r20
-    1056:	e2 0f       	add	r30, r18
-    1058:	f1 1d       	adc	r31, r1
-    105a:	20 81       	ld	r18, Z
-    105c:	a2 e7       	ldi	r26, 0x72	; 114
-    105e:	b0 e0       	ldi	r27, 0x00	; 0
-    1060:	2c 93       	st	X, r18
+    1124:	2f 70       	andi	r18, 0x0F	; 15
+    1126:	fa 01       	movw	r30, r20
+    1128:	e2 0f       	add	r30, r18
+    112a:	f1 1d       	adc	r31, r1
+    112c:	20 81       	ld	r18, Z
+    112e:	a2 e7       	ldi	r26, 0x72	; 114
+    1130:	b0 e0       	ldi	r27, 0x00	; 0
+    1132:	2c 93       	st	X, r18
 	TempData = TempData>>4;
 	LEDBUFFER[1] = LEDMA[(unsigned char)(TempData & 0x0F)];
-    1062:	e9 2f       	mov	r30, r25
-    1064:	ff 27       	eor	r31, r31
-    1066:	ef 70       	andi	r30, 0x0F	; 15
-    1068:	f0 70       	andi	r31, 0x00	; 0
-    106a:	e4 0f       	add	r30, r20
-    106c:	f5 1f       	adc	r31, r21
-    106e:	20 81       	ld	r18, Z
-    1070:	2e 93       	st	-X, r18
+    1134:	e9 2f       	mov	r30, r25
+    1136:	ff 27       	eor	r31, r31
+    1138:	ef 70       	andi	r30, 0x0F	; 15
+    113a:	f0 70       	andi	r31, 0x00	; 0
+    113c:	e4 0f       	add	r30, r20
+    113e:	f5 1f       	adc	r31, r21
+    1140:	20 81       	ld	r18, Z
+    1142:	2e 93       	st	-X, r18
 	TempData = TempData>>4;
 	LEDBUFFER[0] = LEDMA[(unsigned char)(TempData & 0x0F)];
-    1072:	89 2f       	mov	r24, r25
-    1074:	99 27       	eor	r25, r25
-    1076:	82 95       	swap	r24
-    1078:	8f 70       	andi	r24, 0x0F	; 15
-    107a:	48 0f       	add	r20, r24
-    107c:	59 1f       	adc	r21, r25
-    107e:	fa 01       	movw	r30, r20
-    1080:	80 81       	ld	r24, Z
-    1082:	fd 01       	movw	r30, r26
-    1084:	82 93       	st	-Z, r24
+    1144:	89 2f       	mov	r24, r25
+    1146:	99 27       	eor	r25, r25
+    1148:	82 95       	swap	r24
+    114a:	8f 70       	andi	r24, 0x0F	; 15
+    114c:	48 0f       	add	r20, r24
+    114e:	59 1f       	adc	r21, r25
+    1150:	fa 01       	movw	r30, r20
+    1152:	80 81       	ld	r24, Z
+    1154:	fd 01       	movw	r30, r26
+    1156:	82 93       	st	-Z, r24
 	TempData = TempData>>4;
 }
-    1086:	08 95       	ret
+    1158:	08 95       	ret
 
-00001088 <Display10>:
+0000115a <Display10>:
 void Display10(unsigned int TempData)
 {
-    1088:	9c 01       	movw	r18, r24
+    115a:	9c 01       	movw	r18, r24
     if((TempData & 0x8000) != 0){
-    108a:	97 ff       	sbrs	r25, 7
-    108c:	30 c0       	rjmp	.+96     	; 0x10ee <Display10+0x66>
+    115c:	97 ff       	sbrs	r25, 7
+    115e:	30 c0       	rjmp	.+96     	; 0x11c0 <Display10+0x66>
         LEDBUFFER[0] = LED_FU;
-    108e:	8f eb       	ldi	r24, 0xBF	; 191
-    1090:	80 93 70 00 	sts	0x0070, r24
+    1160:	8f eb       	ldi	r24, 0xBF	; 191
+    1162:	80 93 70 00 	sts	0x0070, r24
         TempData = 0xFFFF - TempData;
-    1094:	20 95       	com	r18
-    1096:	30 95       	com	r19
+    1166:	20 95       	com	r18
+    1168:	30 95       	com	r19
 	LEDBUFFER[3] = LEDMA[(unsigned char)(TempData % 10)];
-    1098:	c9 01       	movw	r24, r18
-    109a:	6a e0       	ldi	r22, 0x0A	; 10
-    109c:	70 e0       	ldi	r23, 0x00	; 0
-    109e:	e4 d1       	rcall	.+968    	; 0x1468 <__udivmodhi4>
-    10a0:	e8 2f       	mov	r30, r24
-    10a2:	f0 e0       	ldi	r31, 0x00	; 0
-    10a4:	e0 5a       	subi	r30, 0xA0	; 160
-    10a6:	ff 4f       	sbci	r31, 0xFF	; 255
-    10a8:	80 81       	ld	r24, Z
-    10aa:	80 93 73 00 	sts	0x0073, r24
+    116a:	c9 01       	movw	r24, r18
+    116c:	6a e0       	ldi	r22, 0x0A	; 10
+    116e:	70 e0       	ldi	r23, 0x00	; 0
+    1170:	e4 d1       	rcall	.+968    	; 0x153a <__udivmodhi4>
+    1172:	e8 2f       	mov	r30, r24
+    1174:	f0 e0       	ldi	r31, 0x00	; 0
+    1176:	e0 5a       	subi	r30, 0xA0	; 160
+    1178:	ff 4f       	sbci	r31, 0xFF	; 255
+    117a:	80 81       	ld	r24, Z
+    117c:	80 93 73 00 	sts	0x0073, r24
 	TempData = TempData/10;
-    10ae:	c9 01       	movw	r24, r18
-    10b0:	6a e0       	ldi	r22, 0x0A	; 10
-    10b2:	70 e0       	ldi	r23, 0x00	; 0
-    10b4:	d9 d1       	rcall	.+946    	; 0x1468 <__udivmodhi4>
-    10b6:	9b 01       	movw	r18, r22
+    1180:	c9 01       	movw	r24, r18
+    1182:	6a e0       	ldi	r22, 0x0A	; 10
+    1184:	70 e0       	ldi	r23, 0x00	; 0
+    1186:	d9 d1       	rcall	.+946    	; 0x153a <__udivmodhi4>
+    1188:	9b 01       	movw	r18, r22
 	LEDBUFFER[2] = LEDMA[(unsigned char)(TempData % 10)];
-    10b8:	cb 01       	movw	r24, r22
-    10ba:	6a e0       	ldi	r22, 0x0A	; 10
-    10bc:	70 e0       	ldi	r23, 0x00	; 0
-    10be:	d4 d1       	rcall	.+936    	; 0x1468 <__udivmodhi4>
-    10c0:	e8 2f       	mov	r30, r24
-    10c2:	f0 e0       	ldi	r31, 0x00	; 0
-    10c4:	e0 5a       	subi	r30, 0xA0	; 160
-    10c6:	ff 4f       	sbci	r31, 0xFF	; 255
-    10c8:	80 81       	ld	r24, Z
-    10ca:	80 93 72 00 	sts	0x0072, r24
+    118a:	cb 01       	movw	r24, r22
+    118c:	6a e0       	ldi	r22, 0x0A	; 10
+    118e:	70 e0       	ldi	r23, 0x00	; 0
+    1190:	d4 d1       	rcall	.+936    	; 0x153a <__udivmodhi4>
+    1192:	e8 2f       	mov	r30, r24
+    1194:	f0 e0       	ldi	r31, 0x00	; 0
+    1196:	e0 5a       	subi	r30, 0xA0	; 160
+    1198:	ff 4f       	sbci	r31, 0xFF	; 255
+    119a:	80 81       	ld	r24, Z
+    119c:	80 93 72 00 	sts	0x0072, r24
 	TempData = TempData/10;
 	LEDBUFFER[1] = LEDMA[(unsigned char)(TempData % 10)];
-    10ce:	c9 01       	movw	r24, r18
-    10d0:	6a e0       	ldi	r22, 0x0A	; 10
-    10d2:	70 e0       	ldi	r23, 0x00	; 0
-    10d4:	c9 d1       	rcall	.+914    	; 0x1468 <__udivmodhi4>
-    10d6:	cb 01       	movw	r24, r22
-    10d8:	6a e0       	ldi	r22, 0x0A	; 10
-    10da:	70 e0       	ldi	r23, 0x00	; 0
-    10dc:	c5 d1       	rcall	.+906    	; 0x1468 <__udivmodhi4>
-    10de:	e8 2f       	mov	r30, r24
-    10e0:	f0 e0       	ldi	r31, 0x00	; 0
-    10e2:	e0 5a       	subi	r30, 0xA0	; 160
-    10e4:	ff 4f       	sbci	r31, 0xFF	; 255
-    10e6:	80 81       	ld	r24, Z
-    10e8:	80 93 71 00 	sts	0x0071, r24
-    10ec:	39 c0       	rjmp	.+114    	; 0x1160 <Display10+0xd8>
+    11a0:	c9 01       	movw	r24, r18
+    11a2:	6a e0       	ldi	r22, 0x0A	; 10
+    11a4:	70 e0       	ldi	r23, 0x00	; 0
+    11a6:	c9 d1       	rcall	.+914    	; 0x153a <__udivmodhi4>
+    11a8:	cb 01       	movw	r24, r22
+    11aa:	6a e0       	ldi	r22, 0x0A	; 10
+    11ac:	70 e0       	ldi	r23, 0x00	; 0
+    11ae:	c5 d1       	rcall	.+906    	; 0x153a <__udivmodhi4>
+    11b0:	e8 2f       	mov	r30, r24
+    11b2:	f0 e0       	ldi	r31, 0x00	; 0
+    11b4:	e0 5a       	subi	r30, 0xA0	; 160
+    11b6:	ff 4f       	sbci	r31, 0xFF	; 255
+    11b8:	80 81       	ld	r24, Z
+    11ba:	80 93 71 00 	sts	0x0071, r24
+    11be:	39 c0       	rjmp	.+114    	; 0x1232 <Display10+0xd8>
 	TempData = TempData/10;
     }else{
     	LEDBUFFER[3] = LEDMA[(unsigned char)(TempData % 10)];
-    10ee:	6a e0       	ldi	r22, 0x0A	; 10
-    10f0:	70 e0       	ldi	r23, 0x00	; 0
-    10f2:	ba d1       	rcall	.+884    	; 0x1468 <__udivmodhi4>
-    10f4:	e8 2f       	mov	r30, r24
-    10f6:	f0 e0       	ldi	r31, 0x00	; 0
-    10f8:	e0 5a       	subi	r30, 0xA0	; 160
-    10fa:	ff 4f       	sbci	r31, 0xFF	; 255
-    10fc:	80 81       	ld	r24, Z
-    10fe:	80 93 73 00 	sts	0x0073, r24
+    11c0:	6a e0       	ldi	r22, 0x0A	; 10
+    11c2:	70 e0       	ldi	r23, 0x00	; 0
+    11c4:	ba d1       	rcall	.+884    	; 0x153a <__udivmodhi4>
+    11c6:	e8 2f       	mov	r30, r24
+    11c8:	f0 e0       	ldi	r31, 0x00	; 0
+    11ca:	e0 5a       	subi	r30, 0xA0	; 160
+    11cc:	ff 4f       	sbci	r31, 0xFF	; 255
+    11ce:	80 81       	ld	r24, Z
+    11d0:	80 93 73 00 	sts	0x0073, r24
 	TempData = TempData/10;
-    1102:	c9 01       	movw	r24, r18
-    1104:	6a e0       	ldi	r22, 0x0A	; 10
-    1106:	70 e0       	ldi	r23, 0x00	; 0
-    1108:	af d1       	rcall	.+862    	; 0x1468 <__udivmodhi4>
-    110a:	9b 01       	movw	r18, r22
+    11d4:	c9 01       	movw	r24, r18
+    11d6:	6a e0       	ldi	r22, 0x0A	; 10
+    11d8:	70 e0       	ldi	r23, 0x00	; 0
+    11da:	af d1       	rcall	.+862    	; 0x153a <__udivmodhi4>
+    11dc:	9b 01       	movw	r18, r22
 	LEDBUFFER[2] = LEDMA[(unsigned char)(TempData % 10)];
-    110c:	cb 01       	movw	r24, r22
-    110e:	6a e0       	ldi	r22, 0x0A	; 10
-    1110:	70 e0       	ldi	r23, 0x00	; 0
-    1112:	aa d1       	rcall	.+852    	; 0x1468 <__udivmodhi4>
-    1114:	e8 2f       	mov	r30, r24
-    1116:	f0 e0       	ldi	r31, 0x00	; 0
-    1118:	e0 5a       	subi	r30, 0xA0	; 160
-    111a:	ff 4f       	sbci	r31, 0xFF	; 255
-    111c:	80 81       	ld	r24, Z
-    111e:	80 93 72 00 	sts	0x0072, r24
+    11de:	cb 01       	movw	r24, r22
+    11e0:	6a e0       	ldi	r22, 0x0A	; 10
+    11e2:	70 e0       	ldi	r23, 0x00	; 0
+    11e4:	aa d1       	rcall	.+852    	; 0x153a <__udivmodhi4>
+    11e6:	e8 2f       	mov	r30, r24
+    11e8:	f0 e0       	ldi	r31, 0x00	; 0
+    11ea:	e0 5a       	subi	r30, 0xA0	; 160
+    11ec:	ff 4f       	sbci	r31, 0xFF	; 255
+    11ee:	80 81       	ld	r24, Z
+    11f0:	80 93 72 00 	sts	0x0072, r24
 	TempData = TempData/10;
-    1122:	c9 01       	movw	r24, r18
-    1124:	6a e0       	ldi	r22, 0x0A	; 10
-    1126:	70 e0       	ldi	r23, 0x00	; 0
-    1128:	9f d1       	rcall	.+830    	; 0x1468 <__udivmodhi4>
-    112a:	9b 01       	movw	r18, r22
+    11f4:	c9 01       	movw	r24, r18
+    11f6:	6a e0       	ldi	r22, 0x0A	; 10
+    11f8:	70 e0       	ldi	r23, 0x00	; 0
+    11fa:	9f d1       	rcall	.+830    	; 0x153a <__udivmodhi4>
+    11fc:	9b 01       	movw	r18, r22
 	LEDBUFFER[1] = LEDMA[(unsigned char)(TempData % 10)];
-    112c:	cb 01       	movw	r24, r22
-    112e:	6a e0       	ldi	r22, 0x0A	; 10
-    1130:	70 e0       	ldi	r23, 0x00	; 0
-    1132:	9a d1       	rcall	.+820    	; 0x1468 <__udivmodhi4>
-    1134:	e8 2f       	mov	r30, r24
-    1136:	f0 e0       	ldi	r31, 0x00	; 0
-    1138:	e0 5a       	subi	r30, 0xA0	; 160
-    113a:	ff 4f       	sbci	r31, 0xFF	; 255
-    113c:	80 81       	ld	r24, Z
-    113e:	80 93 71 00 	sts	0x0071, r24
+    11fe:	cb 01       	movw	r24, r22
+    1200:	6a e0       	ldi	r22, 0x0A	; 10
+    1202:	70 e0       	ldi	r23, 0x00	; 0
+    1204:	9a d1       	rcall	.+820    	; 0x153a <__udivmodhi4>
+    1206:	e8 2f       	mov	r30, r24
+    1208:	f0 e0       	ldi	r31, 0x00	; 0
+    120a:	e0 5a       	subi	r30, 0xA0	; 160
+    120c:	ff 4f       	sbci	r31, 0xFF	; 255
+    120e:	80 81       	ld	r24, Z
+    1210:	80 93 71 00 	sts	0x0071, r24
 	TempData = TempData/10;
 	LEDBUFFER[0] = LEDMA[(unsigned char)(TempData % 10)];
-    1142:	c9 01       	movw	r24, r18
-    1144:	6a e0       	ldi	r22, 0x0A	; 10
-    1146:	70 e0       	ldi	r23, 0x00	; 0
-    1148:	8f d1       	rcall	.+798    	; 0x1468 <__udivmodhi4>
-    114a:	cb 01       	movw	r24, r22
-    114c:	6a e0       	ldi	r22, 0x0A	; 10
-    114e:	70 e0       	ldi	r23, 0x00	; 0
-    1150:	8b d1       	rcall	.+790    	; 0x1468 <__udivmodhi4>
-    1152:	e8 2f       	mov	r30, r24
-    1154:	f0 e0       	ldi	r31, 0x00	; 0
-    1156:	e0 5a       	subi	r30, 0xA0	; 160
-    1158:	ff 4f       	sbci	r31, 0xFF	; 255
-    115a:	80 81       	ld	r24, Z
-    115c:	80 93 70 00 	sts	0x0070, r24
+    1214:	c9 01       	movw	r24, r18
+    1216:	6a e0       	ldi	r22, 0x0A	; 10
+    1218:	70 e0       	ldi	r23, 0x00	; 0
+    121a:	8f d1       	rcall	.+798    	; 0x153a <__udivmodhi4>
+    121c:	cb 01       	movw	r24, r22
+    121e:	6a e0       	ldi	r22, 0x0A	; 10
+    1220:	70 e0       	ldi	r23, 0x00	; 0
+    1222:	8b d1       	rcall	.+790    	; 0x153a <__udivmodhi4>
+    1224:	e8 2f       	mov	r30, r24
+    1226:	f0 e0       	ldi	r31, 0x00	; 0
+    1228:	e0 5a       	subi	r30, 0xA0	; 160
+    122a:	ff 4f       	sbci	r31, 0xFF	; 255
+    122c:	80 81       	ld	r24, Z
+    122e:	80 93 70 00 	sts	0x0070, r24
 	TempData = TempData/10;	
     }
 
 
 	if((XiaoShuDian < 5) && XiaoShuDian){
-    1160:	80 91 be 00 	lds	r24, 0x00BE
-    1164:	85 30       	cpi	r24, 0x05	; 5
-    1166:	78 f4       	brcc	.+30     	; 0x1186 <Display10+0xfe>
-    1168:	80 91 be 00 	lds	r24, 0x00BE
-    116c:	88 23       	and	r24, r24
-    116e:	59 f0       	breq	.+22     	; 0x1186 <Display10+0xfe>
+    1232:	80 91 be 00 	lds	r24, 0x00BE
+    1236:	85 30       	cpi	r24, 0x05	; 5
+    1238:	78 f4       	brcc	.+30     	; 0x1258 <Display10+0xfe>
+    123a:	80 91 be 00 	lds	r24, 0x00BE
+    123e:	88 23       	and	r24, r24
+    1240:	59 f0       	breq	.+22     	; 0x1258 <Display10+0xfe>
 #ifdef LEDGONGYANG
 		LEDBUFFER[4 - XiaoShuDian] &= 0x7F;
-    1170:	80 91 be 00 	lds	r24, 0x00BE
-    1174:	e4 e0       	ldi	r30, 0x04	; 4
-    1176:	f0 e0       	ldi	r31, 0x00	; 0
-    1178:	e8 1b       	sub	r30, r24
-    117a:	f1 09       	sbc	r31, r1
-    117c:	e0 59       	subi	r30, 0x90	; 144
-    117e:	ff 4f       	sbci	r31, 0xFF	; 255
-    1180:	80 81       	ld	r24, Z
-    1182:	8f 77       	andi	r24, 0x7F	; 127
-    1184:	80 83       	st	Z, r24
-    1186:	08 95       	ret
+    1242:	80 91 be 00 	lds	r24, 0x00BE
+    1246:	e4 e0       	ldi	r30, 0x04	; 4
+    1248:	f0 e0       	ldi	r31, 0x00	; 0
+    124a:	e8 1b       	sub	r30, r24
+    124c:	f1 09       	sbc	r31, r1
+    124e:	e0 59       	subi	r30, 0x90	; 144
+    1250:	ff 4f       	sbci	r31, 0xFF	; 255
+    1252:	80 81       	ld	r24, Z
+    1254:	8f 77       	andi	r24, 0x7F	; 127
+    1256:	80 83       	st	Z, r24
+    1258:	08 95       	ret
 
-00001188 <DisplayFloat>:
+0000125a <DisplayFloat>:
 	}
 }
 void DisplayFloat(int FZData,int FMData)
 {
 	
 }
-    1188:	08 95       	ret
+    125a:	08 95       	ret
 
-0000118a <CRC16>:
+0000125c <CRC16>:
 	0xF001, 0x3C00, 0x2800, 0xE401,
 	0xA001, 0x6C00, 0x7800, 0xB401,
 	0x5000, 0x9C01, 0x8801, 0x4400, 
 };
 unsigned short CRC16(unsigned char *puchMsg,unsigned short usDataLen )
 {
-    118a:	cf 93       	push	r28
-    118c:	df 93       	push	r29
-    118e:	ec 01       	movw	r28, r24
-    1190:	2f ef       	ldi	r18, 0xFF	; 255
-    1192:	3f ef       	ldi	r19, 0xFF	; 255
-    1194:	40 e0       	ldi	r20, 0x00	; 0
-    1196:	50 e0       	ldi	r21, 0x00	; 0
-    1198:	2a c0       	rjmp	.+84     	; 0x11ee <CRC16+0x64>
+    125c:	cf 93       	push	r28
+    125e:	df 93       	push	r29
+    1260:	ec 01       	movw	r28, r24
+    1262:	2f ef       	ldi	r18, 0xFF	; 255
+    1264:	3f ef       	ldi	r19, 0xFF	; 255
+    1266:	40 e0       	ldi	r20, 0x00	; 0
+    1268:	50 e0       	ldi	r21, 0x00	; 0
+    126a:	2a c0       	rjmp	.+84     	; 0x12c0 <CRC16+0x64>
 	unsigned short i;
 	unsigned char chChar;
 
 	for (i = 0; i < usDataLen; i++)
 	{
 		chChar = *puchMsg++;
-    119a:	e9 91       	ld	r30, Y+
+    126c:	e9 91       	ld	r30, Y+
 		wCRC = wCRCTalbeAbs[(chChar ^ wCRC) & 15] ^ (wCRC >> 4);
-    119c:	ae 2f       	mov	r26, r30
-    119e:	b0 e0       	ldi	r27, 0x00	; 0
-    11a0:	a2 27       	eor	r26, r18
-    11a2:	b3 27       	eor	r27, r19
-    11a4:	af 70       	andi	r26, 0x0F	; 15
-    11a6:	b0 70       	andi	r27, 0x00	; 0
-    11a8:	aa 0f       	add	r26, r26
-    11aa:	bb 1f       	adc	r27, r27
-    11ac:	ac 58       	subi	r26, 0x8C	; 140
-    11ae:	bf 4f       	sbci	r27, 0xFF	; 255
-    11b0:	8d 91       	ld	r24, X+
-    11b2:	9c 91       	ld	r25, X
-    11b4:	b4 e0       	ldi	r27, 0x04	; 4
-    11b6:	36 95       	lsr	r19
-    11b8:	27 95       	ror	r18
-    11ba:	ba 95       	dec	r27
-    11bc:	e1 f7       	brne	.-8      	; 0x11b6 <CRC16+0x2c>
-    11be:	82 27       	eor	r24, r18
-    11c0:	93 27       	eor	r25, r19
+    126e:	ae 2f       	mov	r26, r30
+    1270:	b0 e0       	ldi	r27, 0x00	; 0
+    1272:	a2 27       	eor	r26, r18
+    1274:	b3 27       	eor	r27, r19
+    1276:	af 70       	andi	r26, 0x0F	; 15
+    1278:	b0 70       	andi	r27, 0x00	; 0
+    127a:	aa 0f       	add	r26, r26
+    127c:	bb 1f       	adc	r27, r27
+    127e:	ac 58       	subi	r26, 0x8C	; 140
+    1280:	bf 4f       	sbci	r27, 0xFF	; 255
+    1282:	8d 91       	ld	r24, X+
+    1284:	9c 91       	ld	r25, X
+    1286:	b4 e0       	ldi	r27, 0x04	; 4
+    1288:	36 95       	lsr	r19
+    128a:	27 95       	ror	r18
+    128c:	ba 95       	dec	r27
+    128e:	e1 f7       	brne	.-8      	; 0x1288 <CRC16+0x2c>
+    1290:	82 27       	eor	r24, r18
+    1292:	93 27       	eor	r25, r19
 		wCRC = wCRCTalbeAbs[((chChar >> 4) ^ wCRC) & 15] ^ (wCRC >> 4);
-    11c2:	e2 95       	swap	r30
-    11c4:	ef 70       	andi	r30, 0x0F	; 15
-    11c6:	f0 e0       	ldi	r31, 0x00	; 0
-    11c8:	e8 27       	eor	r30, r24
-    11ca:	f9 27       	eor	r31, r25
-    11cc:	ef 70       	andi	r30, 0x0F	; 15
-    11ce:	f0 70       	andi	r31, 0x00	; 0
-    11d0:	ee 0f       	add	r30, r30
-    11d2:	ff 1f       	adc	r31, r31
-    11d4:	ec 58       	subi	r30, 0x8C	; 140
-    11d6:	ff 4f       	sbci	r31, 0xFF	; 255
-    11d8:	20 81       	ld	r18, Z
-    11da:	31 81       	ldd	r19, Z+1	; 0x01
-    11dc:	e4 e0       	ldi	r30, 0x04	; 4
-    11de:	96 95       	lsr	r25
-    11e0:	87 95       	ror	r24
-    11e2:	ea 95       	dec	r30
-    11e4:	e1 f7       	brne	.-8      	; 0x11de <CRC16+0x54>
-    11e6:	28 27       	eor	r18, r24
-    11e8:	39 27       	eor	r19, r25
+    1294:	e2 95       	swap	r30
+    1296:	ef 70       	andi	r30, 0x0F	; 15
+    1298:	f0 e0       	ldi	r31, 0x00	; 0
+    129a:	e8 27       	eor	r30, r24
+    129c:	f9 27       	eor	r31, r25
+    129e:	ef 70       	andi	r30, 0x0F	; 15
+    12a0:	f0 70       	andi	r31, 0x00	; 0
+    12a2:	ee 0f       	add	r30, r30
+    12a4:	ff 1f       	adc	r31, r31
+    12a6:	ec 58       	subi	r30, 0x8C	; 140
+    12a8:	ff 4f       	sbci	r31, 0xFF	; 255
+    12aa:	20 81       	ld	r18, Z
+    12ac:	31 81       	ldd	r19, Z+1	; 0x01
+    12ae:	e4 e0       	ldi	r30, 0x04	; 4
+    12b0:	96 95       	lsr	r25
+    12b2:	87 95       	ror	r24
+    12b4:	ea 95       	dec	r30
+    12b6:	e1 f7       	brne	.-8      	; 0x12b0 <CRC16+0x54>
+    12b8:	28 27       	eor	r18, r24
+    12ba:	39 27       	eor	r19, r25
 {
 	unsigned short wCRC = 0xFFFF;
 	unsigned short i;
 	unsigned char chChar;
 
 	for (i = 0; i < usDataLen; i++)
-    11ea:	4f 5f       	subi	r20, 0xFF	; 255
-    11ec:	5f 4f       	sbci	r21, 0xFF	; 255
-    11ee:	46 17       	cp	r20, r22
-    11f0:	57 07       	cpc	r21, r23
-    11f2:	98 f2       	brcs	.-90     	; 0x119a <CRC16+0x10>
+    12bc:	4f 5f       	subi	r20, 0xFF	; 255
+    12be:	5f 4f       	sbci	r21, 0xFF	; 255
+    12c0:	46 17       	cp	r20, r22
+    12c2:	57 07       	cpc	r21, r23
+    12c4:	98 f2       	brcs	.-90     	; 0x126c <CRC16+0x10>
 		wCRC = wCRCTalbeAbs[(chChar ^ wCRC) & 15] ^ (wCRC >> 4);
 		wCRC = wCRCTalbeAbs[((chChar >> 4) ^ wCRC) & 15] ^ (wCRC >> 4);
 	}
 
 	return wCRC;
 }
-    11f4:	c9 01       	movw	r24, r18
-    11f6:	df 91       	pop	r29
-    11f8:	cf 91       	pop	r28
-    11fa:	08 95       	ret
+    12c6:	c9 01       	movw	r24, r18
+    12c8:	df 91       	pop	r29
+    12ca:	cf 91       	pop	r28
+    12cc:	08 95       	ret
 
-000011fc <IIC_Start>:
+000012ce <IIC_Start>:
 #endif
 
 //IIC起始信号
 void IIC_Start(void)
 {
     SDA1;
-    11fc:	00 00       	nop
-    11fe:	ac 9a       	sbi	0x15, 4	; 21
-    1200:	00 00       	nop
-    1202:	00 00       	nop
+    12ce:	00 00       	nop
+    12d0:	ac 9a       	sbi	0x15, 4	; 21
+    12d2:	00 00       	nop
+    12d4:	00 00       	nop
     SCL1;
-    1204:	00 00       	nop
-    1206:	ad 9a       	sbi	0x15, 5	; 21
-    1208:	00 00       	nop
+    12d6:	00 00       	nop
+    12d8:	ad 9a       	sbi	0x15, 5	; 21
+    12da:	00 00       	nop
     SDA0;
-    120a:	00 00       	nop
-    120c:	ac 98       	cbi	0x15, 4	; 21
-    120e:	00 00       	nop
-    1210:	00 00       	nop
+    12dc:	00 00       	nop
+    12de:	ac 98       	cbi	0x15, 4	; 21
+    12e0:	00 00       	nop
+    12e2:	00 00       	nop
     SCL0;
-    1212:	00 00       	nop
-    1214:	ad 98       	cbi	0x15, 5	; 21
-    1216:	00 00       	nop
+    12e4:	00 00       	nop
+    12e6:	ad 98       	cbi	0x15, 5	; 21
+    12e8:	00 00       	nop
 }
-    1218:	08 95       	ret
+    12ea:	08 95       	ret
 
-0000121a <IIC_Stop>:
+000012ec <IIC_Stop>:
 //IIC结束信号
 void IIC_Stop(void)
 {
     SCL0;
-    121a:	00 00       	nop
-    121c:	ad 98       	cbi	0x15, 5	; 21
-    121e:	00 00       	nop
+    12ec:	00 00       	nop
+    12ee:	ad 98       	cbi	0x15, 5	; 21
+    12f0:	00 00       	nop
     SDA0;
-    1220:	00 00       	nop
-    1222:	ac 98       	cbi	0x15, 4	; 21
-    1224:	00 00       	nop
-    1226:	00 00       	nop
+    12f2:	00 00       	nop
+    12f4:	ac 98       	cbi	0x15, 4	; 21
+    12f6:	00 00       	nop
+    12f8:	00 00       	nop
     SCL1;
-    1228:	00 00       	nop
-    122a:	ad 9a       	sbi	0x15, 5	; 21
-    122c:	00 00       	nop
+    12fa:	00 00       	nop
+    12fc:	ad 9a       	sbi	0x15, 5	; 21
+    12fe:	00 00       	nop
     SDA1;
-    122e:	00 00       	nop
-    1230:	ac 9a       	sbi	0x15, 4	; 21
-    1232:	00 00       	nop
-    1234:	00 00       	nop
+    1300:	00 00       	nop
+    1302:	ac 9a       	sbi	0x15, 4	; 21
+    1304:	00 00       	nop
+    1306:	00 00       	nop
 }
-    1236:	08 95       	ret
+    1308:	08 95       	ret
 
-00001238 <IIC_Send_Byte>:
+0000130a <IIC_Send_Byte>:
 void IIC_Send_Byte(uchar Data)
 {
-    1238:	20 e0       	ldi	r18, 0x00	; 0
-    123a:	30 e0       	ldi	r19, 0x00	; 0
+    130a:	20 e0       	ldi	r18, 0x00	; 0
+    130c:	30 e0       	ldi	r19, 0x00	; 0
     unsigned char cnt;
     for(cnt=0;cnt<8;cnt++){
         if((Data<<cnt)&0x80){
-    123c:	48 2f       	mov	r20, r24
-    123e:	50 e0       	ldi	r21, 0x00	; 0
-    1240:	ca 01       	movw	r24, r20
-    1242:	02 2e       	mov	r0, r18
-    1244:	02 c0       	rjmp	.+4      	; 0x124a <IIC_Send_Byte+0x12>
-    1246:	88 0f       	add	r24, r24
-    1248:	99 1f       	adc	r25, r25
-    124a:	0a 94       	dec	r0
-    124c:	e2 f7       	brpl	.-8      	; 0x1246 <IIC_Send_Byte+0xe>
-    124e:	87 ff       	sbrs	r24, 7
-    1250:	05 c0       	rjmp	.+10     	; 0x125c <IIC_Send_Byte+0x24>
+    130e:	48 2f       	mov	r20, r24
+    1310:	50 e0       	ldi	r21, 0x00	; 0
+    1312:	ca 01       	movw	r24, r20
+    1314:	02 2e       	mov	r0, r18
+    1316:	02 c0       	rjmp	.+4      	; 0x131c <IIC_Send_Byte+0x12>
+    1318:	88 0f       	add	r24, r24
+    131a:	99 1f       	adc	r25, r25
+    131c:	0a 94       	dec	r0
+    131e:	e2 f7       	brpl	.-8      	; 0x1318 <IIC_Send_Byte+0xe>
+    1320:	87 ff       	sbrs	r24, 7
+    1322:	05 c0       	rjmp	.+10     	; 0x132e <IIC_Send_Byte+0x24>
 	    SDA1;
-    1252:	00 00       	nop
-    1254:	ac 9a       	sbi	0x15, 4	; 21
-    1256:	00 00       	nop
-    1258:	00 00       	nop
-    125a:	04 c0       	rjmp	.+8      	; 0x1264 <IIC_Send_Byte+0x2c>
+    1324:	00 00       	nop
+    1326:	ac 9a       	sbi	0x15, 4	; 21
+    1328:	00 00       	nop
+    132a:	00 00       	nop
+    132c:	04 c0       	rjmp	.+8      	; 0x1336 <IIC_Send_Byte+0x2c>
 	}else{
 	    SDA0;
-    125c:	00 00       	nop
-    125e:	ac 98       	cbi	0x15, 4	; 21
-    1260:	00 00       	nop
-    1262:	00 00       	nop
+    132e:	00 00       	nop
+    1330:	ac 98       	cbi	0x15, 4	; 21
+    1332:	00 00       	nop
+    1334:	00 00       	nop
 	}
         SCL1;
-    1264:	00 00       	nop
-    1266:	ad 9a       	sbi	0x15, 5	; 21
-    1268:	00 00       	nop
+    1336:	00 00       	nop
+    1338:	ad 9a       	sbi	0x15, 5	; 21
+    133a:	00 00       	nop
 	asm("NOP");
-    126a:	00 00       	nop
+    133c:	00 00       	nop
 	asm("NOP");
-    126c:	00 00       	nop
+    133e:	00 00       	nop
 	SCL0;
-    126e:	00 00       	nop
-    1270:	ad 98       	cbi	0x15, 5	; 21
-    1272:	00 00       	nop
-    1274:	2f 5f       	subi	r18, 0xFF	; 255
-    1276:	3f 4f       	sbci	r19, 0xFF	; 255
+    1340:	00 00       	nop
+    1342:	ad 98       	cbi	0x15, 5	; 21
+    1344:	00 00       	nop
+    1346:	2f 5f       	subi	r18, 0xFF	; 255
+    1348:	3f 4f       	sbci	r19, 0xFF	; 255
     SDA1;
 }
 void IIC_Send_Byte(uchar Data)
 {
     unsigned char cnt;
     for(cnt=0;cnt<8;cnt++){
-    1278:	28 30       	cpi	r18, 0x08	; 8
-    127a:	31 05       	cpc	r19, r1
-    127c:	09 f7       	brne	.-62     	; 0x1240 <IIC_Send_Byte+0x8>
+    134a:	28 30       	cpi	r18, 0x08	; 8
+    134c:	31 05       	cpc	r19, r1
+    134e:	09 f7       	brne	.-62     	; 0x1312 <IIC_Send_Byte+0x8>
         SCL1;
 	asm("NOP");
 	asm("NOP");
 	SCL0;
     }
     SCL0;
-    127e:	00 00       	nop
-    1280:	ad 98       	cbi	0x15, 5	; 21
-    1282:	00 00       	nop
+    1350:	00 00       	nop
+    1352:	ad 98       	cbi	0x15, 5	; 21
+    1354:	00 00       	nop
     SDA0;
-    1284:	00 00       	nop
-    1286:	ac 98       	cbi	0x15, 4	; 21
-    1288:	00 00       	nop
-    128a:	00 00       	nop
+    1356:	00 00       	nop
+    1358:	ac 98       	cbi	0x15, 4	; 21
+    135a:	00 00       	nop
+    135c:	00 00       	nop
     SCL1;
-    128c:	00 00       	nop
-    128e:	ad 9a       	sbi	0x15, 5	; 21
-    1290:	00 00       	nop
+    135e:	00 00       	nop
+    1360:	ad 9a       	sbi	0x15, 5	; 21
+    1362:	00 00       	nop
     asm("NOP");
-    1292:	00 00       	nop
+    1364:	00 00       	nop
     asm("NOP");
-    1294:	00 00       	nop
+    1366:	00 00       	nop
     SCL0;
-    1296:	00 00       	nop
-    1298:	ad 98       	cbi	0x15, 5	; 21
-    129a:	00 00       	nop
+    1368:	00 00       	nop
+    136a:	ad 98       	cbi	0x15, 5	; 21
+    136c:	00 00       	nop
 }
-    129c:	08 95       	ret
+    136e:	08 95       	ret
 
-0000129e <IIC_Receive_Byte>:
+00001370 <IIC_Receive_Byte>:
 void IIC_Receive_Byte(uchar * Data)
 {
-    129e:	fc 01       	movw	r30, r24
+    1370:	fc 01       	movw	r30, r24
     unsigned char cnt;
     *Data = 0;
     SCL0;
-    12a0:	00 00       	nop
-    12a2:	ad 98       	cbi	0x15, 5	; 21
-    12a4:	00 00       	nop
+    1372:	00 00       	nop
+    1374:	ad 98       	cbi	0x15, 5	; 21
+    1376:	00 00       	nop
     SDA_SET_IN;
-    12a6:	a4 98       	cbi	0x14, 4	; 20
+    1378:	a4 98       	cbi	0x14, 4	; 20
     SDA0;
-    12a8:	00 00       	nop
-    12aa:	ac 98       	cbi	0x15, 4	; 21
-    12ac:	00 00       	nop
-    12ae:	00 00       	nop
-    12b0:	90 e0       	ldi	r25, 0x00	; 0
-    12b2:	80 e0       	ldi	r24, 0x00	; 0
+    137a:	00 00       	nop
+    137c:	ac 98       	cbi	0x15, 4	; 21
+    137e:	00 00       	nop
+    1380:	00 00       	nop
+    1382:	90 e0       	ldi	r25, 0x00	; 0
+    1384:	80 e0       	ldi	r24, 0x00	; 0
     for(cnt=0;cnt<8;cnt++){
     	SCL0;
-    12b4:	00 00       	nop
-    12b6:	ad 98       	cbi	0x15, 5	; 21
-    12b8:	00 00       	nop
+    1386:	00 00       	nop
+    1388:	ad 98       	cbi	0x15, 5	; 21
+    138a:	00 00       	nop
         SCL1;
-    12ba:	00 00       	nop
-    12bc:	ad 9a       	sbi	0x15, 5	; 21
-    12be:	00 00       	nop
+    138c:	00 00       	nop
+    138e:	ad 9a       	sbi	0x15, 5	; 21
+    1390:	00 00       	nop
         (*Data) <<= 1;
-    12c0:	88 0f       	add	r24, r24
+    1392:	88 0f       	add	r24, r24
 	if(READ_SDA){
-    12c2:	9c 99       	sbic	0x13, 4	; 19
+    1394:	9c 99       	sbic	0x13, 4	; 19
 	    (*Data) |= 0x01;
-    12c4:	81 60       	ori	r24, 0x01	; 1
+    1396:	81 60       	ori	r24, 0x01	; 1
     unsigned char cnt;
     *Data = 0;
     SCL0;
     SDA_SET_IN;
     SDA0;
     for(cnt=0;cnt<8;cnt++){
-    12c6:	9f 5f       	subi	r25, 0xFF	; 255
-    12c8:	98 30       	cpi	r25, 0x08	; 8
-    12ca:	a1 f7       	brne	.-24     	; 0x12b4 <IIC_Receive_Byte+0x16>
-    12cc:	80 83       	st	Z, r24
+    1398:	9f 5f       	subi	r25, 0xFF	; 255
+    139a:	98 30       	cpi	r25, 0x08	; 8
+    139c:	a1 f7       	brne	.-24     	; 0x1386 <IIC_Receive_Byte+0x16>
+    139e:	80 83       	st	Z, r24
 	if(READ_SDA){
 	    (*Data) |= 0x01;
 	}
 
     }
     SCL0;
-    12ce:	00 00       	nop
-    12d0:	ad 98       	cbi	0x15, 5	; 21
-    12d2:	00 00       	nop
+    13a0:	00 00       	nop
+    13a2:	ad 98       	cbi	0x15, 5	; 21
+    13a4:	00 00       	nop
     SDA0;
-    12d4:	00 00       	nop
-    12d6:	ac 98       	cbi	0x15, 4	; 21
-    12d8:	00 00       	nop
-    12da:	00 00       	nop
+    13a6:	00 00       	nop
+    13a8:	ac 98       	cbi	0x15, 4	; 21
+    13aa:	00 00       	nop
+    13ac:	00 00       	nop
     SDA_SET_OUT;
-    12dc:	a4 9a       	sbi	0x14, 4	; 20
+    13ae:	a4 9a       	sbi	0x14, 4	; 20
     SCL1;
-    12de:	00 00       	nop
-    12e0:	ad 9a       	sbi	0x15, 5	; 21
-    12e2:	00 00       	nop
+    13b0:	00 00       	nop
+    13b2:	ad 9a       	sbi	0x15, 5	; 21
+    13b4:	00 00       	nop
     asm("NOP");
-    12e4:	00 00       	nop
+    13b6:	00 00       	nop
     asm("NOP");
-    12e6:	00 00       	nop
+    13b8:	00 00       	nop
     SCL0;
-    12e8:	00 00       	nop
-    12ea:	ad 98       	cbi	0x15, 5	; 21
-    12ec:	00 00       	nop
+    13ba:	00 00       	nop
+    13bc:	ad 98       	cbi	0x15, 5	; 21
+    13be:	00 00       	nop
 }
-    12ee:	08 95       	ret
+    13c0:	08 95       	ret
 
-000012f0 <SetUpADS1110>:
+000013c2 <SetUpADS1110>:
 void SetUpADS1110(unsigned char x)
 {
-    12f0:	1f 93       	push	r17
-    12f2:	18 2f       	mov	r17, r24
+    13c2:	1f 93       	push	r17
+    13c4:	18 2f       	mov	r17, r24
     IIC_Start();
-    12f4:	83 df       	rcall	.-250    	; 0x11fc <IIC_Start>
+    13c6:	83 df       	rcall	.-250    	; 0x12ce <IIC_Start>
     IIC_Send_Byte(ADS1110_ADDR & 0xFE);
-    12f6:	80 e9       	ldi	r24, 0x90	; 144
-    12f8:	9f df       	rcall	.-194    	; 0x1238 <IIC_Send_Byte>
+    13c8:	80 e9       	ldi	r24, 0x90	; 144
+    13ca:	9f df       	rcall	.-194    	; 0x130a <IIC_Send_Byte>
     IIC_Send_Byte(x);
-    12fa:	81 2f       	mov	r24, r17
-    12fc:	9d df       	rcall	.-198    	; 0x1238 <IIC_Send_Byte>
+    13cc:	81 2f       	mov	r24, r17
+    13ce:	9d df       	rcall	.-198    	; 0x130a <IIC_Send_Byte>
     IIC_Stop();
-    12fe:	8d df       	rcall	.-230    	; 0x121a <IIC_Stop>
+    13d0:	8d df       	rcall	.-230    	; 0x12ec <IIC_Stop>
 }
-    1300:	1f 91       	pop	r17
-    1302:	08 95       	ret
+    13d2:	1f 91       	pop	r17
+    13d4:	08 95       	ret
 
-00001304 <Init_ADS1110>:
+000013d6 <Init_ADS1110>:
     return data;
 }
 #else
 void Init_ADS1110(void)
 {
     SDA_SET_OUT;
-    1304:	a4 9a       	sbi	0x14, 4	; 20
+    13d6:	a4 9a       	sbi	0x14, 4	; 20
     SCL_SET_OUT;
-    1306:	a5 9a       	sbi	0x14, 5	; 20
+    13d8:	a5 9a       	sbi	0x14, 5	; 20
     SetUpADS1110(0x1C);
-    1308:	8c e1       	ldi	r24, 0x1C	; 28
-    130a:	f2 df       	rcall	.-28     	; 0x12f0 <SetUpADS1110>
+    13da:	8c e1       	ldi	r24, 0x1C	; 28
+    13dc:	f2 df       	rcall	.-28     	; 0x13c2 <SetUpADS1110>
 }
-    130c:	08 95       	ret
+    13de:	08 95       	ret
 
-0000130e <ReadADS1110>:
+000013e0 <ReadADS1110>:
 unsigned int ReadADS1110(void)
 {
-    130e:	af 92       	push	r10
-    1310:	bf 92       	push	r11
-    1312:	cf 92       	push	r12
-    1314:	df 92       	push	r13
-    1316:	ef 92       	push	r14
-    1318:	ff 92       	push	r15
-    131a:	0f 93       	push	r16
-    131c:	1f 93       	push	r17
-    131e:	df 93       	push	r29
-    1320:	cf 93       	push	r28
-    1322:	00 d0       	rcall	.+0      	; 0x1324 <ReadADS1110+0x16>
-    1324:	0f 92       	push	r0
-    1326:	cd b7       	in	r28, 0x3d	; 61
-    1328:	de b7       	in	r29, 0x3e	; 62
+    13e0:	af 92       	push	r10
+    13e2:	bf 92       	push	r11
+    13e4:	cf 92       	push	r12
+    13e6:	df 92       	push	r13
+    13e8:	ef 92       	push	r14
+    13ea:	ff 92       	push	r15
+    13ec:	0f 93       	push	r16
+    13ee:	1f 93       	push	r17
+    13f0:	df 93       	push	r29
+    13f2:	cf 93       	push	r28
+    13f4:	00 d0       	rcall	.+0      	; 0x13f6 <ReadADS1110+0x16>
+    13f6:	0f 92       	push	r0
+    13f8:	cd b7       	in	r28, 0x3d	; 61
+    13fa:	de b7       	in	r29, 0x3e	; 62
     unsigned int data = 0;
     unsigned char tmpH = 0;
-    132a:	19 82       	std	Y+1, r1	; 0x01
+    13fc:	19 82       	std	Y+1, r1	; 0x01
     unsigned char tmpL = 0;
-    132c:	1a 82       	std	Y+2, r1	; 0x02
+    13fe:	1a 82       	std	Y+2, r1	; 0x02
     unsigned char setup = 0;
-    132e:	1b 82       	std	Y+3, r1	; 0x03
+    1400:	1b 82       	std	Y+3, r1	; 0x03
     int i;
     SetUpADS1110(0x1C | 0x80);
-    1330:	8c e9       	ldi	r24, 0x9C	; 156
-    1332:	de df       	rcall	.-68     	; 0x12f0 <SetUpADS1110>
-    1334:	04 ef       	ldi	r16, 0xF4	; 244
-    1336:	11 e0       	ldi	r17, 0x01	; 1
+    1402:	8c e9       	ldi	r24, 0x9C	; 156
+    1404:	de df       	rcall	.-68     	; 0x13c2 <SetUpADS1110>
+    1406:	04 ef       	ldi	r16, 0xF4	; 244
+    1408:	11 e0       	ldi	r17, 0x01	; 1
     for(i = 0;i < 500;i++);
     do{
     i--;
     IIC_Start();
     IIC_Send_Byte(ADS1110_ADDR | 0x01);
     IIC_Receive_Byte(&tmpH);
-    1338:	5e 01       	movw	r10, r28
-    133a:	08 94       	sec
-    133c:	a1 1c       	adc	r10, r1
-    133e:	b1 1c       	adc	r11, r1
+    140a:	5e 01       	movw	r10, r28
+    140c:	08 94       	sec
+    140e:	a1 1c       	adc	r10, r1
+    1410:	b1 1c       	adc	r11, r1
     IIC_Receive_Byte(&tmpL);
-    1340:	92 e0       	ldi	r25, 0x02	; 2
-    1342:	c9 2e       	mov	r12, r25
-    1344:	d1 2c       	mov	r13, r1
-    1346:	cc 0e       	add	r12, r28
-    1348:	dd 1e       	adc	r13, r29
+    1412:	92 e0       	ldi	r25, 0x02	; 2
+    1414:	c9 2e       	mov	r12, r25
+    1416:	d1 2c       	mov	r13, r1
+    1418:	cc 0e       	add	r12, r28
+    141a:	dd 1e       	adc	r13, r29
     IIC_Receive_Byte(&setup);
-    134a:	83 e0       	ldi	r24, 0x03	; 3
-    134c:	e8 2e       	mov	r14, r24
-    134e:	f1 2c       	mov	r15, r1
-    1350:	ec 0e       	add	r14, r28
-    1352:	fd 1e       	adc	r15, r29
+    141c:	83 e0       	ldi	r24, 0x03	; 3
+    141e:	e8 2e       	mov	r14, r24
+    1420:	f1 2c       	mov	r15, r1
+    1422:	ec 0e       	add	r14, r28
+    1424:	fd 1e       	adc	r15, r29
     unsigned char setup = 0;
     int i;
     SetUpADS1110(0x1C | 0x80);
     for(i = 0;i < 500;i++);
     do{
     i--;
-    1354:	01 50       	subi	r16, 0x01	; 1
-    1356:	10 40       	sbci	r17, 0x00	; 0
+    1426:	01 50       	subi	r16, 0x01	; 1
+    1428:	10 40       	sbci	r17, 0x00	; 0
     IIC_Start();
-    1358:	51 df       	rcall	.-350    	; 0x11fc <IIC_Start>
+    142a:	51 df       	rcall	.-350    	; 0x12ce <IIC_Start>
     IIC_Send_Byte(ADS1110_ADDR | 0x01);
-    135a:	81 e9       	ldi	r24, 0x91	; 145
-    135c:	6d df       	rcall	.-294    	; 0x1238 <IIC_Send_Byte>
+    142c:	81 e9       	ldi	r24, 0x91	; 145
+    142e:	6d df       	rcall	.-294    	; 0x130a <IIC_Send_Byte>
     IIC_Receive_Byte(&tmpH);
-    135e:	c5 01       	movw	r24, r10
-    1360:	9e df       	rcall	.-196    	; 0x129e <IIC_Receive_Byte>
+    1430:	c5 01       	movw	r24, r10
+    1432:	9e df       	rcall	.-196    	; 0x1370 <IIC_Receive_Byte>
     IIC_Receive_Byte(&tmpL);
-    1362:	c6 01       	movw	r24, r12
-    1364:	9c df       	rcall	.-200    	; 0x129e <IIC_Receive_Byte>
+    1434:	c6 01       	movw	r24, r12
+    1436:	9c df       	rcall	.-200    	; 0x1370 <IIC_Receive_Byte>
     IIC_Receive_Byte(&setup);
-    1366:	c7 01       	movw	r24, r14
-    1368:	9a df       	rcall	.-204    	; 0x129e <IIC_Receive_Byte>
+    1438:	c7 01       	movw	r24, r14
+    143a:	9a df       	rcall	.-204    	; 0x1370 <IIC_Receive_Byte>
     IIC_Stop();
-    136a:	57 df       	rcall	.-338    	; 0x121a <IIC_Stop>
+    143c:	57 df       	rcall	.-338    	; 0x12ec <IIC_Stop>
     }while(((setup | 0x80) == 0x80) && (i > 0));
-    136c:	8b 81       	ldd	r24, Y+3	; 0x03
-    136e:	80 68       	ori	r24, 0x80	; 128
-    1370:	80 38       	cpi	r24, 0x80	; 128
-    1372:	19 f4       	brne	.+6      	; 0x137a <ReadADS1110+0x6c>
-    1374:	01 15       	cp	r16, r1
-    1376:	11 05       	cpc	r17, r1
-    1378:	69 f7       	brne	.-38     	; 0x1354 <ReadADS1110+0x46>
+    143e:	8b 81       	ldd	r24, Y+3	; 0x03
+    1440:	80 68       	ori	r24, 0x80	; 128
+    1442:	80 38       	cpi	r24, 0x80	; 128
+    1444:	19 f4       	brne	.+6      	; 0x144c <ReadADS1110+0x6c>
+    1446:	01 15       	cp	r16, r1
+    1448:	11 05       	cpc	r17, r1
+    144a:	69 f7       	brne	.-38     	; 0x1426 <ReadADS1110+0x46>
     if(i<0)
-    137a:	17 ff       	sbrs	r17, 7
-    137c:	03 c0       	rjmp	.+6      	; 0x1384 <ReadADS1110+0x76>
-    137e:	20 e0       	ldi	r18, 0x00	; 0
-    1380:	30 e0       	ldi	r19, 0x00	; 0
-    1382:	07 c0       	rjmp	.+14     	; 0x1392 <ReadADS1110+0x84>
+    144c:	17 ff       	sbrs	r17, 7
+    144e:	03 c0       	rjmp	.+6      	; 0x1456 <ReadADS1110+0x76>
+    1450:	20 e0       	ldi	r18, 0x00	; 0
+    1452:	30 e0       	ldi	r19, 0x00	; 0
+    1454:	07 c0       	rjmp	.+14     	; 0x1464 <ReadADS1110+0x84>
         return 0;
     data = (unsigned int)tmpH << 8;
-    1384:	99 81       	ldd	r25, Y+1	; 0x01
-    1386:	80 e0       	ldi	r24, 0x00	; 0
+    1456:	99 81       	ldd	r25, Y+1	; 0x01
+    1458:	80 e0       	ldi	r24, 0x00	; 0
     data += tmpL;
-    1388:	2a 81       	ldd	r18, Y+2	; 0x02
-    138a:	ac 01       	movw	r20, r24
-    138c:	42 0f       	add	r20, r18
-    138e:	51 1d       	adc	r21, r1
-    1390:	9a 01       	movw	r18, r20
+    145a:	2a 81       	ldd	r18, Y+2	; 0x02
+    145c:	ac 01       	movw	r20, r24
+    145e:	42 0f       	add	r20, r18
+    1460:	51 1d       	adc	r21, r1
+    1462:	9a 01       	movw	r18, r20
     return data;
 }
-    1392:	c9 01       	movw	r24, r18
-    1394:	0f 90       	pop	r0
-    1396:	0f 90       	pop	r0
-    1398:	0f 90       	pop	r0
-    139a:	cf 91       	pop	r28
-    139c:	df 91       	pop	r29
-    139e:	1f 91       	pop	r17
-    13a0:	0f 91       	pop	r16
-    13a2:	ff 90       	pop	r15
-    13a4:	ef 90       	pop	r14
-    13a6:	df 90       	pop	r13
-    13a8:	cf 90       	pop	r12
-    13aa:	bf 90       	pop	r11
-    13ac:	af 90       	pop	r10
-    13ae:	08 95       	ret
+    1464:	c9 01       	movw	r24, r18
+    1466:	0f 90       	pop	r0
+    1468:	0f 90       	pop	r0
+    146a:	0f 90       	pop	r0
+    146c:	cf 91       	pop	r28
+    146e:	df 91       	pop	r29
+    1470:	1f 91       	pop	r17
+    1472:	0f 91       	pop	r16
+    1474:	ff 90       	pop	r15
+    1476:	ef 90       	pop	r14
+    1478:	df 90       	pop	r13
+    147a:	cf 90       	pop	r12
+    147c:	bf 90       	pop	r11
+    147e:	af 90       	pop	r10
+    1480:	08 95       	ret
 
-000013b0 <__floatunsisf>:
-    13b0:	e8 94       	clt
-    13b2:	09 c0       	rjmp	.+18     	; 0x13c6 <__floatsisf+0x12>
+00001482 <__floatunsisf>:
+    1482:	e8 94       	clt
+    1484:	09 c0       	rjmp	.+18     	; 0x1498 <__floatsisf+0x12>
 
-000013b4 <__floatsisf>:
-    13b4:	97 fb       	bst	r25, 7
-    13b6:	3e f4       	brtc	.+14     	; 0x13c6 <__floatsisf+0x12>
-    13b8:	90 95       	com	r25
-    13ba:	80 95       	com	r24
-    13bc:	70 95       	com	r23
-    13be:	61 95       	neg	r22
-    13c0:	7f 4f       	sbci	r23, 0xFF	; 255
-    13c2:	8f 4f       	sbci	r24, 0xFF	; 255
-    13c4:	9f 4f       	sbci	r25, 0xFF	; 255
-    13c6:	99 23       	and	r25, r25
-    13c8:	a9 f0       	breq	.+42     	; 0x13f4 <__floatsisf+0x40>
-    13ca:	f9 2f       	mov	r31, r25
-    13cc:	96 e9       	ldi	r25, 0x96	; 150
-    13ce:	bb 27       	eor	r27, r27
-    13d0:	93 95       	inc	r25
-    13d2:	f6 95       	lsr	r31
-    13d4:	87 95       	ror	r24
-    13d6:	77 95       	ror	r23
-    13d8:	67 95       	ror	r22
-    13da:	b7 95       	ror	r27
-    13dc:	f1 11       	cpse	r31, r1
-    13de:	f8 cf       	rjmp	.-16     	; 0x13d0 <__floatsisf+0x1c>
-    13e0:	fa f4       	brpl	.+62     	; 0x1420 <__floatsisf+0x6c>
-    13e2:	bb 0f       	add	r27, r27
-    13e4:	11 f4       	brne	.+4      	; 0x13ea <__floatsisf+0x36>
-    13e6:	60 ff       	sbrs	r22, 0
-    13e8:	1b c0       	rjmp	.+54     	; 0x1420 <__floatsisf+0x6c>
-    13ea:	6f 5f       	subi	r22, 0xFF	; 255
-    13ec:	7f 4f       	sbci	r23, 0xFF	; 255
-    13ee:	8f 4f       	sbci	r24, 0xFF	; 255
-    13f0:	9f 4f       	sbci	r25, 0xFF	; 255
-    13f2:	16 c0       	rjmp	.+44     	; 0x1420 <__floatsisf+0x6c>
-    13f4:	88 23       	and	r24, r24
-    13f6:	11 f0       	breq	.+4      	; 0x13fc <__floatsisf+0x48>
-    13f8:	96 e9       	ldi	r25, 0x96	; 150
-    13fa:	11 c0       	rjmp	.+34     	; 0x141e <__floatsisf+0x6a>
-    13fc:	77 23       	and	r23, r23
-    13fe:	21 f0       	breq	.+8      	; 0x1408 <__floatsisf+0x54>
-    1400:	9e e8       	ldi	r25, 0x8E	; 142
-    1402:	87 2f       	mov	r24, r23
-    1404:	76 2f       	mov	r23, r22
-    1406:	05 c0       	rjmp	.+10     	; 0x1412 <__floatsisf+0x5e>
-    1408:	66 23       	and	r22, r22
-    140a:	71 f0       	breq	.+28     	; 0x1428 <__floatsisf+0x74>
-    140c:	96 e8       	ldi	r25, 0x86	; 134
-    140e:	86 2f       	mov	r24, r22
-    1410:	70 e0       	ldi	r23, 0x00	; 0
-    1412:	60 e0       	ldi	r22, 0x00	; 0
-    1414:	2a f0       	brmi	.+10     	; 0x1420 <__floatsisf+0x6c>
-    1416:	9a 95       	dec	r25
-    1418:	66 0f       	add	r22, r22
-    141a:	77 1f       	adc	r23, r23
-    141c:	88 1f       	adc	r24, r24
-    141e:	da f7       	brpl	.-10     	; 0x1416 <__floatsisf+0x62>
-    1420:	88 0f       	add	r24, r24
-    1422:	96 95       	lsr	r25
-    1424:	87 95       	ror	r24
-    1426:	97 f9       	bld	r25, 7
-    1428:	08 95       	ret
+00001486 <__floatsisf>:
+    1486:	97 fb       	bst	r25, 7
+    1488:	3e f4       	brtc	.+14     	; 0x1498 <__floatsisf+0x12>
+    148a:	90 95       	com	r25
+    148c:	80 95       	com	r24
+    148e:	70 95       	com	r23
+    1490:	61 95       	neg	r22
+    1492:	7f 4f       	sbci	r23, 0xFF	; 255
+    1494:	8f 4f       	sbci	r24, 0xFF	; 255
+    1496:	9f 4f       	sbci	r25, 0xFF	; 255
+    1498:	99 23       	and	r25, r25
+    149a:	a9 f0       	breq	.+42     	; 0x14c6 <__floatsisf+0x40>
+    149c:	f9 2f       	mov	r31, r25
+    149e:	96 e9       	ldi	r25, 0x96	; 150
+    14a0:	bb 27       	eor	r27, r27
+    14a2:	93 95       	inc	r25
+    14a4:	f6 95       	lsr	r31
+    14a6:	87 95       	ror	r24
+    14a8:	77 95       	ror	r23
+    14aa:	67 95       	ror	r22
+    14ac:	b7 95       	ror	r27
+    14ae:	f1 11       	cpse	r31, r1
+    14b0:	f8 cf       	rjmp	.-16     	; 0x14a2 <__floatsisf+0x1c>
+    14b2:	fa f4       	brpl	.+62     	; 0x14f2 <__floatsisf+0x6c>
+    14b4:	bb 0f       	add	r27, r27
+    14b6:	11 f4       	brne	.+4      	; 0x14bc <__floatsisf+0x36>
+    14b8:	60 ff       	sbrs	r22, 0
+    14ba:	1b c0       	rjmp	.+54     	; 0x14f2 <__floatsisf+0x6c>
+    14bc:	6f 5f       	subi	r22, 0xFF	; 255
+    14be:	7f 4f       	sbci	r23, 0xFF	; 255
+    14c0:	8f 4f       	sbci	r24, 0xFF	; 255
+    14c2:	9f 4f       	sbci	r25, 0xFF	; 255
+    14c4:	16 c0       	rjmp	.+44     	; 0x14f2 <__floatsisf+0x6c>
+    14c6:	88 23       	and	r24, r24
+    14c8:	11 f0       	breq	.+4      	; 0x14ce <__floatsisf+0x48>
+    14ca:	96 e9       	ldi	r25, 0x96	; 150
+    14cc:	11 c0       	rjmp	.+34     	; 0x14f0 <__floatsisf+0x6a>
+    14ce:	77 23       	and	r23, r23
+    14d0:	21 f0       	breq	.+8      	; 0x14da <__floatsisf+0x54>
+    14d2:	9e e8       	ldi	r25, 0x8E	; 142
+    14d4:	87 2f       	mov	r24, r23
+    14d6:	76 2f       	mov	r23, r22
+    14d8:	05 c0       	rjmp	.+10     	; 0x14e4 <__floatsisf+0x5e>
+    14da:	66 23       	and	r22, r22
+    14dc:	71 f0       	breq	.+28     	; 0x14fa <__floatsisf+0x74>
+    14de:	96 e8       	ldi	r25, 0x86	; 134
+    14e0:	86 2f       	mov	r24, r22
+    14e2:	70 e0       	ldi	r23, 0x00	; 0
+    14e4:	60 e0       	ldi	r22, 0x00	; 0
+    14e6:	2a f0       	brmi	.+10     	; 0x14f2 <__floatsisf+0x6c>
+    14e8:	9a 95       	dec	r25
+    14ea:	66 0f       	add	r22, r22
+    14ec:	77 1f       	adc	r23, r23
+    14ee:	88 1f       	adc	r24, r24
+    14f0:	da f7       	brpl	.-10     	; 0x14e8 <__floatsisf+0x62>
+    14f2:	88 0f       	add	r24, r24
+    14f4:	96 95       	lsr	r25
+    14f6:	87 95       	ror	r24
+    14f8:	97 f9       	bld	r25, 7
+    14fa:	08 95       	ret
 
-0000142a <__mulsi3>:
-    142a:	62 9f       	mul	r22, r18
-    142c:	d0 01       	movw	r26, r0
-    142e:	73 9f       	mul	r23, r19
-    1430:	f0 01       	movw	r30, r0
-    1432:	82 9f       	mul	r24, r18
-    1434:	e0 0d       	add	r30, r0
-    1436:	f1 1d       	adc	r31, r1
-    1438:	64 9f       	mul	r22, r20
-    143a:	e0 0d       	add	r30, r0
-    143c:	f1 1d       	adc	r31, r1
-    143e:	92 9f       	mul	r25, r18
-    1440:	f0 0d       	add	r31, r0
-    1442:	83 9f       	mul	r24, r19
-    1444:	f0 0d       	add	r31, r0
-    1446:	74 9f       	mul	r23, r20
-    1448:	f0 0d       	add	r31, r0
-    144a:	65 9f       	mul	r22, r21
-    144c:	f0 0d       	add	r31, r0
-    144e:	99 27       	eor	r25, r25
-    1450:	72 9f       	mul	r23, r18
-    1452:	b0 0d       	add	r27, r0
-    1454:	e1 1d       	adc	r30, r1
-    1456:	f9 1f       	adc	r31, r25
-    1458:	63 9f       	mul	r22, r19
-    145a:	b0 0d       	add	r27, r0
-    145c:	e1 1d       	adc	r30, r1
-    145e:	f9 1f       	adc	r31, r25
-    1460:	bd 01       	movw	r22, r26
-    1462:	cf 01       	movw	r24, r30
-    1464:	11 24       	eor	r1, r1
-    1466:	08 95       	ret
+000014fc <__mulsi3>:
+    14fc:	62 9f       	mul	r22, r18
+    14fe:	d0 01       	movw	r26, r0
+    1500:	73 9f       	mul	r23, r19
+    1502:	f0 01       	movw	r30, r0
+    1504:	82 9f       	mul	r24, r18
+    1506:	e0 0d       	add	r30, r0
+    1508:	f1 1d       	adc	r31, r1
+    150a:	64 9f       	mul	r22, r20
+    150c:	e0 0d       	add	r30, r0
+    150e:	f1 1d       	adc	r31, r1
+    1510:	92 9f       	mul	r25, r18
+    1512:	f0 0d       	add	r31, r0
+    1514:	83 9f       	mul	r24, r19
+    1516:	f0 0d       	add	r31, r0
+    1518:	74 9f       	mul	r23, r20
+    151a:	f0 0d       	add	r31, r0
+    151c:	65 9f       	mul	r22, r21
+    151e:	f0 0d       	add	r31, r0
+    1520:	99 27       	eor	r25, r25
+    1522:	72 9f       	mul	r23, r18
+    1524:	b0 0d       	add	r27, r0
+    1526:	e1 1d       	adc	r30, r1
+    1528:	f9 1f       	adc	r31, r25
+    152a:	63 9f       	mul	r22, r19
+    152c:	b0 0d       	add	r27, r0
+    152e:	e1 1d       	adc	r30, r1
+    1530:	f9 1f       	adc	r31, r25
+    1532:	bd 01       	movw	r22, r26
+    1534:	cf 01       	movw	r24, r30
+    1536:	11 24       	eor	r1, r1
+    1538:	08 95       	ret
 
-00001468 <__udivmodhi4>:
-    1468:	aa 1b       	sub	r26, r26
-    146a:	bb 1b       	sub	r27, r27
-    146c:	51 e1       	ldi	r21, 0x11	; 17
-    146e:	07 c0       	rjmp	.+14     	; 0x147e <__udivmodhi4_ep>
+0000153a <__udivmodhi4>:
+    153a:	aa 1b       	sub	r26, r26
+    153c:	bb 1b       	sub	r27, r27
+    153e:	51 e1       	ldi	r21, 0x11	; 17
+    1540:	07 c0       	rjmp	.+14     	; 0x1550 <__udivmodhi4_ep>
 
-00001470 <__udivmodhi4_loop>:
-    1470:	aa 1f       	adc	r26, r26
-    1472:	bb 1f       	adc	r27, r27
-    1474:	a6 17       	cp	r26, r22
-    1476:	b7 07       	cpc	r27, r23
-    1478:	10 f0       	brcs	.+4      	; 0x147e <__udivmodhi4_ep>
-    147a:	a6 1b       	sub	r26, r22
-    147c:	b7 0b       	sbc	r27, r23
+00001542 <__udivmodhi4_loop>:
+    1542:	aa 1f       	adc	r26, r26
+    1544:	bb 1f       	adc	r27, r27
+    1546:	a6 17       	cp	r26, r22
+    1548:	b7 07       	cpc	r27, r23
+    154a:	10 f0       	brcs	.+4      	; 0x1550 <__udivmodhi4_ep>
+    154c:	a6 1b       	sub	r26, r22
+    154e:	b7 0b       	sbc	r27, r23
 
-0000147e <__udivmodhi4_ep>:
-    147e:	88 1f       	adc	r24, r24
-    1480:	99 1f       	adc	r25, r25
-    1482:	5a 95       	dec	r21
-    1484:	a9 f7       	brne	.-22     	; 0x1470 <__udivmodhi4_loop>
-    1486:	80 95       	com	r24
-    1488:	90 95       	com	r25
-    148a:	bc 01       	movw	r22, r24
-    148c:	cd 01       	movw	r24, r26
-    148e:	08 95       	ret
+00001550 <__udivmodhi4_ep>:
+    1550:	88 1f       	adc	r24, r24
+    1552:	99 1f       	adc	r25, r25
+    1554:	5a 95       	dec	r21
+    1556:	a9 f7       	brne	.-22     	; 0x1542 <__udivmodhi4_loop>
+    1558:	80 95       	com	r24
+    155a:	90 95       	com	r25
+    155c:	bc 01       	movw	r22, r24
+    155e:	cd 01       	movw	r24, r26
+    1560:	08 95       	ret
 
-00001490 <__udivmodsi4>:
-    1490:	a1 e2       	ldi	r26, 0x21	; 33
-    1492:	1a 2e       	mov	r1, r26
-    1494:	aa 1b       	sub	r26, r26
-    1496:	bb 1b       	sub	r27, r27
-    1498:	fd 01       	movw	r30, r26
-    149a:	0d c0       	rjmp	.+26     	; 0x14b6 <__udivmodsi4_ep>
+00001562 <__udivmodsi4>:
+    1562:	a1 e2       	ldi	r26, 0x21	; 33
+    1564:	1a 2e       	mov	r1, r26
+    1566:	aa 1b       	sub	r26, r26
+    1568:	bb 1b       	sub	r27, r27
+    156a:	fd 01       	movw	r30, r26
+    156c:	0d c0       	rjmp	.+26     	; 0x1588 <__udivmodsi4_ep>
 
-0000149c <__udivmodsi4_loop>:
-    149c:	aa 1f       	adc	r26, r26
-    149e:	bb 1f       	adc	r27, r27
-    14a0:	ee 1f       	adc	r30, r30
-    14a2:	ff 1f       	adc	r31, r31
-    14a4:	a2 17       	cp	r26, r18
-    14a6:	b3 07       	cpc	r27, r19
-    14a8:	e4 07       	cpc	r30, r20
-    14aa:	f5 07       	cpc	r31, r21
-    14ac:	20 f0       	brcs	.+8      	; 0x14b6 <__udivmodsi4_ep>
-    14ae:	a2 1b       	sub	r26, r18
-    14b0:	b3 0b       	sbc	r27, r19
-    14b2:	e4 0b       	sbc	r30, r20
-    14b4:	f5 0b       	sbc	r31, r21
+0000156e <__udivmodsi4_loop>:
+    156e:	aa 1f       	adc	r26, r26
+    1570:	bb 1f       	adc	r27, r27
+    1572:	ee 1f       	adc	r30, r30
+    1574:	ff 1f       	adc	r31, r31
+    1576:	a2 17       	cp	r26, r18
+    1578:	b3 07       	cpc	r27, r19
+    157a:	e4 07       	cpc	r30, r20
+    157c:	f5 07       	cpc	r31, r21
+    157e:	20 f0       	brcs	.+8      	; 0x1588 <__udivmodsi4_ep>
+    1580:	a2 1b       	sub	r26, r18
+    1582:	b3 0b       	sbc	r27, r19
+    1584:	e4 0b       	sbc	r30, r20
+    1586:	f5 0b       	sbc	r31, r21
 
-000014b6 <__udivmodsi4_ep>:
-    14b6:	66 1f       	adc	r22, r22
-    14b8:	77 1f       	adc	r23, r23
-    14ba:	88 1f       	adc	r24, r24
-    14bc:	99 1f       	adc	r25, r25
-    14be:	1a 94       	dec	r1
-    14c0:	69 f7       	brne	.-38     	; 0x149c <__udivmodsi4_loop>
-    14c2:	60 95       	com	r22
-    14c4:	70 95       	com	r23
-    14c6:	80 95       	com	r24
-    14c8:	90 95       	com	r25
-    14ca:	9b 01       	movw	r18, r22
-    14cc:	ac 01       	movw	r20, r24
-    14ce:	bd 01       	movw	r22, r26
-    14d0:	cf 01       	movw	r24, r30
-    14d2:	08 95       	ret
+00001588 <__udivmodsi4_ep>:
+    1588:	66 1f       	adc	r22, r22
+    158a:	77 1f       	adc	r23, r23
+    158c:	88 1f       	adc	r24, r24
+    158e:	99 1f       	adc	r25, r25
+    1590:	1a 94       	dec	r1
+    1592:	69 f7       	brne	.-38     	; 0x156e <__udivmodsi4_loop>
+    1594:	60 95       	com	r22
+    1596:	70 95       	com	r23
+    1598:	80 95       	com	r24
+    159a:	90 95       	com	r25
+    159c:	9b 01       	movw	r18, r22
+    159e:	ac 01       	movw	r20, r24
+    15a0:	bd 01       	movw	r22, r26
+    15a2:	cf 01       	movw	r24, r30
+    15a4:	08 95       	ret
 
-000014d4 <__divmodsi4>:
-    14d4:	97 fb       	bst	r25, 7
-    14d6:	09 2e       	mov	r0, r25
-    14d8:	05 26       	eor	r0, r21
-    14da:	0e d0       	rcall	.+28     	; 0x14f8 <__divmodsi4_neg1>
-    14dc:	57 fd       	sbrc	r21, 7
-    14de:	04 d0       	rcall	.+8      	; 0x14e8 <__divmodsi4_neg2>
-    14e0:	d7 df       	rcall	.-82     	; 0x1490 <__udivmodsi4>
-    14e2:	0a d0       	rcall	.+20     	; 0x14f8 <__divmodsi4_neg1>
-    14e4:	00 1c       	adc	r0, r0
-    14e6:	38 f4       	brcc	.+14     	; 0x14f6 <__divmodsi4_exit>
+000015a6 <__divmodsi4>:
+    15a6:	97 fb       	bst	r25, 7
+    15a8:	09 2e       	mov	r0, r25
+    15aa:	05 26       	eor	r0, r21
+    15ac:	0e d0       	rcall	.+28     	; 0x15ca <__divmodsi4_neg1>
+    15ae:	57 fd       	sbrc	r21, 7
+    15b0:	04 d0       	rcall	.+8      	; 0x15ba <__divmodsi4_neg2>
+    15b2:	d7 df       	rcall	.-82     	; 0x1562 <__udivmodsi4>
+    15b4:	0a d0       	rcall	.+20     	; 0x15ca <__divmodsi4_neg1>
+    15b6:	00 1c       	adc	r0, r0
+    15b8:	38 f4       	brcc	.+14     	; 0x15c8 <__divmodsi4_exit>
 
-000014e8 <__divmodsi4_neg2>:
-    14e8:	50 95       	com	r21
-    14ea:	40 95       	com	r20
-    14ec:	30 95       	com	r19
-    14ee:	21 95       	neg	r18
-    14f0:	3f 4f       	sbci	r19, 0xFF	; 255
-    14f2:	4f 4f       	sbci	r20, 0xFF	; 255
-    14f4:	5f 4f       	sbci	r21, 0xFF	; 255
+000015ba <__divmodsi4_neg2>:
+    15ba:	50 95       	com	r21
+    15bc:	40 95       	com	r20
+    15be:	30 95       	com	r19
+    15c0:	21 95       	neg	r18
+    15c2:	3f 4f       	sbci	r19, 0xFF	; 255
+    15c4:	4f 4f       	sbci	r20, 0xFF	; 255
+    15c6:	5f 4f       	sbci	r21, 0xFF	; 255
 
-000014f6 <__divmodsi4_exit>:
-    14f6:	08 95       	ret
+000015c8 <__divmodsi4_exit>:
+    15c8:	08 95       	ret
 
-000014f8 <__divmodsi4_neg1>:
-    14f8:	f6 f7       	brtc	.-4      	; 0x14f6 <__divmodsi4_exit>
-    14fa:	90 95       	com	r25
-    14fc:	80 95       	com	r24
-    14fe:	70 95       	com	r23
-    1500:	61 95       	neg	r22
-    1502:	7f 4f       	sbci	r23, 0xFF	; 255
-    1504:	8f 4f       	sbci	r24, 0xFF	; 255
-    1506:	9f 4f       	sbci	r25, 0xFF	; 255
-    1508:	08 95       	ret
+000015ca <__divmodsi4_neg1>:
+    15ca:	f6 f7       	brtc	.-4      	; 0x15c8 <__divmodsi4_exit>
+    15cc:	90 95       	com	r25
+    15ce:	80 95       	com	r24
+    15d0:	70 95       	com	r23
+    15d2:	61 95       	neg	r22
+    15d4:	7f 4f       	sbci	r23, 0xFF	; 255
+    15d6:	8f 4f       	sbci	r24, 0xFF	; 255
+    15d8:	9f 4f       	sbci	r25, 0xFF	; 255
+    15da:	08 95       	ret
 
-0000150a <__eerd_byte_m8>:
-    150a:	e1 99       	sbic	0x1c, 1	; 28
-    150c:	fe cf       	rjmp	.-4      	; 0x150a <__eerd_byte_m8>
-    150e:	9f bb       	out	0x1f, r25	; 31
-    1510:	8e bb       	out	0x1e, r24	; 30
-    1512:	e0 9a       	sbi	0x1c, 0	; 28
-    1514:	99 27       	eor	r25, r25
-    1516:	8d b3       	in	r24, 0x1d	; 29
-    1518:	08 95       	ret
+000015dc <__eerd_byte_m8>:
+    15dc:	e1 99       	sbic	0x1c, 1	; 28
+    15de:	fe cf       	rjmp	.-4      	; 0x15dc <__eerd_byte_m8>
+    15e0:	9f bb       	out	0x1f, r25	; 31
+    15e2:	8e bb       	out	0x1e, r24	; 30
+    15e4:	e0 9a       	sbi	0x1c, 0	; 28
+    15e6:	99 27       	eor	r25, r25
+    15e8:	8d b3       	in	r24, 0x1d	; 29
+    15ea:	08 95       	ret
 
-0000151a <__eerd_word_m8>:
-    151a:	a8 e1       	ldi	r26, 0x18	; 24
-    151c:	b0 e0       	ldi	r27, 0x00	; 0
-    151e:	42 e0       	ldi	r20, 0x02	; 2
-    1520:	50 e0       	ldi	r21, 0x00	; 0
-    1522:	12 c0       	rjmp	.+36     	; 0x1548 <__eerd_blraw_m8>
+000015ec <__eerd_word_m8>:
+    15ec:	a8 e1       	ldi	r26, 0x18	; 24
+    15ee:	b0 e0       	ldi	r27, 0x00	; 0
+    15f0:	42 e0       	ldi	r20, 0x02	; 2
+    15f2:	50 e0       	ldi	r21, 0x00	; 0
+    15f4:	12 c0       	rjmp	.+36     	; 0x161a <__eerd_blraw_m8>
 
-00001524 <__eewr_byte_m8>:
-    1524:	26 2f       	mov	r18, r22
+000015f6 <__eewr_byte_m8>:
+    15f6:	26 2f       	mov	r18, r22
 
-00001526 <__eewr_r18_m8>:
-    1526:	e1 99       	sbic	0x1c, 1	; 28
-    1528:	fe cf       	rjmp	.-4      	; 0x1526 <__eewr_r18_m8>
-    152a:	9f bb       	out	0x1f, r25	; 31
-    152c:	8e bb       	out	0x1e, r24	; 30
-    152e:	2d bb       	out	0x1d, r18	; 29
-    1530:	0f b6       	in	r0, 0x3f	; 63
-    1532:	f8 94       	cli
-    1534:	e2 9a       	sbi	0x1c, 2	; 28
-    1536:	e1 9a       	sbi	0x1c, 1	; 28
-    1538:	0f be       	out	0x3f, r0	; 63
-    153a:	01 96       	adiw	r24, 0x01	; 1
-    153c:	08 95       	ret
+000015f8 <__eewr_r18_m8>:
+    15f8:	e1 99       	sbic	0x1c, 1	; 28
+    15fa:	fe cf       	rjmp	.-4      	; 0x15f8 <__eewr_r18_m8>
+    15fc:	9f bb       	out	0x1f, r25	; 31
+    15fe:	8e bb       	out	0x1e, r24	; 30
+    1600:	2d bb       	out	0x1d, r18	; 29
+    1602:	0f b6       	in	r0, 0x3f	; 63
+    1604:	f8 94       	cli
+    1606:	e2 9a       	sbi	0x1c, 2	; 28
+    1608:	e1 9a       	sbi	0x1c, 1	; 28
+    160a:	0f be       	out	0x3f, r0	; 63
+    160c:	01 96       	adiw	r24, 0x01	; 1
+    160e:	08 95       	ret
 
-0000153e <__eewr_word_m8>:
-    153e:	f2 df       	rcall	.-28     	; 0x1524 <__eewr_byte_m8>
-    1540:	27 2f       	mov	r18, r23
-    1542:	f1 cf       	rjmp	.-30     	; 0x1526 <__eewr_r18_m8>
+00001610 <__eewr_word_m8>:
+    1610:	f2 df       	rcall	.-28     	; 0x15f6 <__eewr_byte_m8>
+    1612:	27 2f       	mov	r18, r23
+    1614:	f1 cf       	rjmp	.-30     	; 0x15f8 <__eewr_r18_m8>
 
-00001544 <__eerd_block_m8>:
-    1544:	dc 01       	movw	r26, r24
-    1546:	cb 01       	movw	r24, r22
+00001616 <__eerd_block_m8>:
+    1616:	dc 01       	movw	r26, r24
+    1618:	cb 01       	movw	r24, r22
 
-00001548 <__eerd_blraw_m8>:
-    1548:	fc 01       	movw	r30, r24
-    154a:	e1 99       	sbic	0x1c, 1	; 28
-    154c:	fe cf       	rjmp	.-4      	; 0x154a <__eerd_blraw_m8+0x2>
-    154e:	06 c0       	rjmp	.+12     	; 0x155c <__eerd_blraw_m8+0x14>
-    1550:	ff bb       	out	0x1f, r31	; 31
-    1552:	ee bb       	out	0x1e, r30	; 30
-    1554:	e0 9a       	sbi	0x1c, 0	; 28
-    1556:	31 96       	adiw	r30, 0x01	; 1
-    1558:	0d b2       	in	r0, 0x1d	; 29
-    155a:	0d 92       	st	X+, r0
-    155c:	41 50       	subi	r20, 0x01	; 1
-    155e:	50 40       	sbci	r21, 0x00	; 0
-    1560:	b8 f7       	brcc	.-18     	; 0x1550 <__eerd_blraw_m8+0x8>
-    1562:	08 95       	ret
+0000161a <__eerd_blraw_m8>:
+    161a:	fc 01       	movw	r30, r24
+    161c:	e1 99       	sbic	0x1c, 1	; 28
+    161e:	fe cf       	rjmp	.-4      	; 0x161c <__eerd_blraw_m8+0x2>
+    1620:	06 c0       	rjmp	.+12     	; 0x162e <__eerd_blraw_m8+0x14>
+    1622:	ff bb       	out	0x1f, r31	; 31
+    1624:	ee bb       	out	0x1e, r30	; 30
+    1626:	e0 9a       	sbi	0x1c, 0	; 28
+    1628:	31 96       	adiw	r30, 0x01	; 1
+    162a:	0d b2       	in	r0, 0x1d	; 29
+    162c:	0d 92       	st	X+, r0
+    162e:	41 50       	subi	r20, 0x01	; 1
+    1630:	50 40       	sbci	r21, 0x00	; 0
+    1632:	b8 f7       	brcc	.-18     	; 0x1622 <__eerd_blraw_m8+0x8>
+    1634:	08 95       	ret
 
-00001564 <_exit>:
-    1564:	f8 94       	cli
+00001636 <_exit>:
+    1636:	f8 94       	cli
 
-00001566 <__stop_program>:
-    1566:	ff cf       	rjmp	.-2      	; 0x1566 <__stop_program>
+00001638 <__stop_program>:
+    1638:	ff cf       	rjmp	.-2      	; 0x1638 <__stop_program>
