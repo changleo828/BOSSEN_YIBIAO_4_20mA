@@ -12,18 +12,10 @@
 #include <avr/eeprom.h>
 #include <util/delay.h>
 #include <avr/wdt.h>
-
+#include "ctype.h"
 #include "led.h"
 #include "CRC16.h"
-/* ********************************************************************** */
-
-//
-/* ********************************************************************** */
-#define uchar unsigned char
-
-#ifndef NULL
-#define NULL (void *)(0)
-#endif
+#include "config.h"
 /* ********************************************************************** */
 
 //#define MYDEBUG
@@ -35,140 +27,21 @@ void ErrorDisplay(unsigned int ErrCode);
 
 
 /* ********************************************************************** */
-#define CODE_CID        (0x88)
-#define CODE_PID        (0x80)
-#define CODE_VID        (0x00)
-
-#define ID0        (0x1234)
-#define ID1        (0x5678)
-
-#define CHAR_COMPANY    ("BOSSUN\r\n")
-#define CHAR_DESCRIBE   ("Change 4~20mA to 485, ADC And Display!\r\n")
-#define def_DeviceAddr  (0x01)
-#define UartBaud        (9600)
-#define Timer2ClkSel    (5)    //0:none,1:CLK,2:CLK/8,3:CLK/32,4:CLK/64,5:CLK/128,6:CLK/256,7:CLK/1024
-#define FrameInterval   (0xFF - (10000/(UartBaud/100) * 28)/(128/8))   //3.5 byte
-#define RXARRAYTEMP_MAX (20)
-#define RX485()         (PORTD &= ~(1<<2))
-#define TX485()         (PORTD |= (1<<2))
-
-#define ADC_ADS1110
-
-#define AUTO_ZERO (-75)
-
-#define I_RangeMAX        (20000L)
-#define I_RangeMIN        (0L)
-#define I_DEF_XiaoShuDian (2)
-#ifdef ADC_ADS1110
-#define I_ZERO            AUTO_ZERO
-#else
-#define I_ZERO            (0)
-#endif
-
-#define T_RangeMAX        (800L)
-#define T_RangeMIN        (0L)
-#define T_DEF_XiaoShuDian (1)
-#ifdef ADC_ADS1110
-#define T_ZERO            AUTO_ZERO
-#else
-#define T_ZERO            (0)
-#endif
-
-#define Y_RangeMAX        (2000L)
-#define Y_RangeMIN        (400L)
-#define Y_DEF_XiaoShuDian (2)
-#ifdef ADC_ADS1110
-#define Y_ZERO            AUTO_ZERO
-#else
-#define Y_ZERO            (0)
-#endif
-
-#define L_RangeMAX        (2000L)
-#define L_RangeMIN        (400L)
-#define L_DEF_XiaoShuDian (1)
-#ifdef ADC_ADS1110
-#define L_ZERO            AUTO_ZERO
-#else
-#define L_ZERO            (0)
-#endif
-
-
-
-#ifdef MYDEBUG
-#ifdef ADC_ADS1110
-#undef ADC_ADS1110
-#endif
-#else
-#include "ads1110.h"
-#endif
-
-#ifdef ADC_ADS1110
-
-#define ADC_VREF_mV     (2048)
-#define ADC_JINGDU      (32768)
-//Range       xx     RMIN     RMAX      xx
-//DEF_VALUE   VMIN   RMIN     RMAX      VMAX
-//I_uA        0(uA)  4000(uA) 20000(uA) 20480(uA)
-//U_mV        0(mV)  400(mV)  2000(mV)  2048(mV)
-//ADC_RESULT  0                         65535
-#define DEF_VALUE_MAX(MAX,MIN)   ( (long)MIN + ((long)MAX - (long)MIN) * (long)(2048 - 400) / (long)(2000 - 400) )
-#define DEF_VALUE_MIN(MAX,MIN)   ( (long)MIN - ((long)MAX - (long)MIN) / (long)4 )
-signed long Out_MAX(signed int max,signed int min)
-{
-    signed long temp;
-
-    temp = max - min;
-    temp *= (signed long)(2048-400);
-    temp /= (signed long)(2000-400);
-    temp += min;
-    return temp;
-}
-signed long Out_MIN(signed int max,signed int min)
-{
-    signed long temp;
-
-    temp = max - min;
-    temp /= (signed long)(4);
-    temp = min - temp;
-    return temp;
-}
-#else
-
-#define ADC_VREF_mV     (2500)
-#define ADC_JINGDU      (1024)
-//Range       xx     RMIN     RMAX     xx
-//DEF_VALUE   VMIN   RMIN     RMAX     VMAX
-//I_mA        0(mA)  4(mA)    20(mA)   25(mA)
-//U_V         0(V)   0.4(V)   2(V)     2.5(V)
-//ADC_RESULT  0                        1024
-#define DEF_VALUE_MAX(MAX,MIN)   ( (long)MIN + ((long)MAX - (long)MIN) * (25 - 4) / (20 - 4) )
-#define DEF_VALUE_MIN(MAX,MIN)   ( (long)MIN - ((long)MAX - (long)MIN) / 4 )
-signed long Out_MAX(signed int max,signed int min)
-{
-    signed long temp;
-
-    temp = max - min;
-    temp *= (signed long)(25-4);
-    temp /= (signed long)(20-4);
-    temp += min;
-    return temp;
-}
-signed long Out_MIN(signed int max,signed int min)
-{
-    signed long temp;
-
-    temp = max - min;
-    temp /= (signed long)(4);
-    temp = min - temp;
-    return temp;
-}
-#endif
-
-/* ********************************************************************** */
 #ifndef MYDEBUG
+
+static YI_BOAI_REG REG_MAP[] = {
+    {ADDR_DEV,def_DeviceAddr},
+    {ADDR_CID,CODE_CID},
+    {ADDR_PID,CODE_PID},
+    {ADDR_VID,CODE_VID},
+    {ADDR_FID,CODE_FID},
+    {ADDR_XSD,},
+    {ADDR_F1_VALUE,},
+    {ADDR_F2_VALUE,},
+}
+
 unsigned char ADDR_EEP __attribute__((section(".eeprom"))) = def_DeviceAddr;
 unsigned char MEASURE_MODE_EEP __attribute__((section(".eeprom"))) = (-1);
-
 
 unsigned int  I_MAX_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MAX(I_RangeMAX,I_RangeMIN);
 unsigned int  I_MIN_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MIN(I_RangeMAX,I_RangeMIN);
@@ -207,74 +80,7 @@ void WRITE_WORD_EEP(unsigned int x,unsigned int * addr) {eeprom_busy_wait();eepr
 unsigned char READ_BYTE_EEP(unsigned char * addr) {eeprom_busy_wait();return eeprom_read_byte(addr);}
 void WRITE_BYTE_EEP(unsigned char x,unsigned char * addr) {eeprom_busy_wait();eeprom_write_byte(addr,x);}
 /* ********************************************************************** */
-typedef enum _ErrorCode{
-    ERRCODE_DeviceAddrErr = 1,
-    ERRCODE_CRC16Error,
-    ERRCODE_OnlyReceiveAddr,
-    ERRCODE_ReceiveDataErr,
-    ERRCODE_FunCodeInvalid,
-    ERRCODE_ReceiveBitErr,
-    ERRCODE_RXARRAYTEMP_MAXErr,
-} ERRORCODE;
-typedef enum _FunCode{
-    GET_DATA = 3,
-    GET_VALUE = 4,
-    SET_DEVICEADDR = 6,
-    CommunicationTest = 0x64, 
-    SET_VALUE = 0x65,
-    GET_ID = 0x66,
-    GET_CHAR,
-} FUNCODE;
-#if 0
-enum SELECT_GET_DATA{
-    SEL_DATA_ADC,
-    SEL_DATA_XSD,
-    SEL_DATA_FREQ,
-};
-enum SELECT_SET_CODE{
-    SEL_SET_ADDR,
-    SEL_SET_VALUE,
-    SEL_SET_XSD,
-};
-#endif
-enum{
-    ADDR_DEV = 0x0010,
-    ADDR_CID,
-    ADDR_PID,
-    ADDR_VID,
-    ADDR_FID,
-    ADDR_XSD = 0x0022,
-    ADDR_F1_VALUE,
-    ADDR_F2_VALUE,
-    ADDR_ZERO,
-    ADDR_RETURN_ID,
-    ADDR_FW_MAX = 0x1016,
-    ADDR_FW_MIN = 0x1018,
-    ADDR_VALUE = 0x1020,
-};
-enum SELECT_GET_CHAR{
-    SEL_CHAR_COMPANY,
-    SEL_CHAR_DESCRIBE
-};
-typedef struct _MODBUSFrame{
-    unsigned char Addr;
-    FUNCODE FunCode;
-    unsigned char *Data;
-    unsigned int  Len;
-    unsigned char CRCH;
-    unsigned char CRCL;
-} MODBUSFRAME;
 
-typedef union {
-    unsigned char ch[4];
-    float F;
-    //double D;
-} FLOAT;
-typedef union {
-    unsigned char ch[4];
-    long L;
-    //double D;
-} LONG;
 static LONG V_MAX;
 static LONG V_MIN;
 static FLOAT V_DATA;
@@ -309,9 +115,9 @@ volatile unsigned int  T_C;
 #define TimerStart()        do{TCCR1B |= (1 << CS11);}while(0)
 
 #define SetTimerCount(v)    do{\
-                            	TCNT1H = (unsigned char)((unsigned int)(v)>>8);\
-								TCNT1L = (unsigned char)((unsigned int)(v)& 0xFF);\
-							}while(0)
+                                TCNT1H = (unsigned char)((unsigned int)(v)>>8);\
+                                TCNT1L = (unsigned char)((unsigned int)(v)& 0xFF);\
+                            }while(0)
 /* ---------------------------------------------------------------------- */
 volatile unsigned int   TimerCycleI;//
 volatile unsigned int   TimerCycleF;//
@@ -319,47 +125,47 @@ volatile unsigned char  TimerOver;//
 /* ---------------------------------------------------------------------- */
 void TimerDelayMs(unsigned int s)
 {
-	TimerCycleI = s >> 6;                   //TimerCycleN = s/64
-	TimerCycleF = 65535 - (s & 0x3F)*1000;  //TimerCycleF = s%64
-	TimerOver = 0;
-
-	switch(TimerCycleI)
-	{
-		case 0:
-			SetTimerCount(TimerCycleF);
-			break;
-		case -1:
-			TimerDisable();
-			TimerOver = 1;
-			break; 
-		default:
-			SetTimerCount(1535);
-			//TCNT1H = 1535/256;
-			//TCNT1L = 1535%256;
-			break;	
-	}
-	TimerEnable();
-	TimerStart();
+    TimerCycleI = s >> 6;                   //TimerCycleN = s/64
+    TimerCycleF = 65535 - (s & 0x3F)*1000;  //TimerCycleF = s%64
+    TimerOver = 0;
+    
+    switch(TimerCycleI)
+    {
+    case 0:
+        SetTimerCount(TimerCycleF);
+        break;
+    case -1:
+        TimerDisable();
+        TimerOver = 1;
+        break;
+    default:
+        SetTimerCount(1535);
+        //TCNT1H = 1535/256;
+        //TCNT1L = 1535%256;
+        break;
+    }
+TimerEnable();
+TimerStart();
 }
 /* ---------------------------------------------------------------------- */
 SIGNAL(SIG_OVERFLOW1)
 {
-	
-	TimerCycleI--;
-	switch(TimerCycleI)
-	{
-		case 0:
-			SetTimerCount(TimerCycleF);
-			break;
-		case -1:
-			TimerStop();
-			TimerDisable();
-			TimerOver = 1;
-			return;
-		default:
-			SetTimerCount(1535);
-			break;	
-	}
+    
+    TimerCycleI--;
+    switch(TimerCycleI)
+    {
+    case 0:
+    	SetTimerCount(TimerCycleF);
+    	break;
+    case -1:
+    	TimerStop();
+    	TimerDisable();
+    	TimerOver = 1;
+    	return;
+    default:
+    	SetTimerCount(1535);
+    	break;	
+    }
 }
 #endif
 /* ********************************************************************** */
@@ -495,7 +301,7 @@ SIGNAL(SIG_UART_RECV)
 /* ********************************************************************** */
 void ADCInit(void)
 {
-#ifdef ADC_ADS1110	
+#ifdef ADC_ADS1110
      Init_ADS1110();
 #else
     ADMUX =  (0<<REFS0)|    /* 0:Aref,1:AVCC,2:-,3:2.56V */
@@ -514,7 +320,7 @@ unsigned int ADCOutOne(void)
     unsigned int i;
     unsigned long sum = 0;
 
-#ifdef ADC_ADS1110	
+#ifdef ADC_ADS1110
     #define ADC_COUNT 2
     for(i = 0;i < ADC_COUNT; i++){
         sum += ReadADS1110();
@@ -533,34 +339,50 @@ unsigned int ADCOutOne(void)
         tmpH = ADCH;
         ret =(unsigned int)(tmpH << 2);
         ret = ret + (tmpL>>6 & 0x3);
-	sum = sum + ret;
+    sum = sum + ret;
     }
 
-    return sum>>6;//
+    return sum>>6;
 #endif
 
 }
+#define ADC_Arrya_Len_MAX   (64)
+unsigned int ADC_Arrya_Num;
+unsigned int ADC_Arrya[ADC_Arrya_Len_MAX];
 unsigned int ADCOut(void)
 {
     unsigned int temp;
     unsigned int tempMAX = 0,tempMIN = 0;
     unsigned long SUM = 0;
     unsigned char i;
-    
+
     tempMAX = ADCOutOne();
     tempMIN = ADCOutOne();
-    
+
     for(i = 0;i < 34;i++)
     {
         temp = ADCOutOne();
-	if(temp < tempMIN)
-	    tempMIN = temp;
+    if(temp < tempMIN)
+        tempMIN = temp;
         if(temp > tempMAX)
-	    tempMAX = temp;
-	SUM = SUM + temp;
+        tempMAX = temp;
+    SUM = SUM + temp;
     }
     SUM = SUM - tempMAX - tempMIN;
     temp = (unsigned int)(SUM>>5);
+
+    ADC_Arrya_Num ++;
+    if(ADC_Arrya_Num >= ADC_Arrya_Len_MAX){
+        ADC_Arrya_Num = 0;
+    }
+    ADC_Arrya[ADC_Arrya_Num] = temp;
+
+    SUM = 0;
+    for(i = 0;i < ADC_Arrya_Len_MAX;i++){
+        SUM += ADC_Arrya[i];
+    }
+    temp = SUM / (long)ADC_Arrya_Len_MAX;
+
     return  temp;
 }
 unsigned int ChangeADCResult(void)
@@ -580,16 +402,16 @@ void RefreshLED(void)
     T_C_temp = ChangeADCResult();
     if(T_C > T_C_temp){
         if( (T_C - T_C_temp) > 3 )
-	{
+    {
             T_C = T_C_temp;
-    	    Display10(T_C_temp);
-	}
+            Display10(T_C_temp);
+    }
     } else {
         if( (T_C_temp - T_C) > 3 )
-	{
+    {
             T_C = T_C_temp;
-    	    Display10(T_C_temp);
-	}
+            Display10(T_C_temp);
+    }
     }
 #ifdef TIMERDELAY
     if(TimerOver != 0)
@@ -600,41 +422,16 @@ void RefreshLED(void)
         /*  */
         TimerOver = 0;
         TimerDelayMs(1000);
-	/* D2 LED 1S flicker */
+        /* D2 LED 1S flicker */
         PORTD ^= (1<<7);
-	if(ErrFlag !=0)
+    if(ErrFlag !=0)
             ErrFlag ++;
     }
 #endif
 }
 void SendDataToPC(FUNCODE Fcode, unsigned char * SendTemp, unsigned int Len)
 {
-#if 0
-    MODBUSFRAME ModbusTemp;
-    unsigned short RxCRC16;
 
-    ModbusTemp.Addr = DeviceAddr;
-    ModbusTemp.FunCode = Fcode;
-    ModbusTemp.Data = SendTemp;
-    ModbusTemp.Len = Len;
-    RxCRC16 = CRC16(ModbusTemp.Data, ModbusTemp.Len);
-    ModbusTemp.CRCH = (unsigned char) (RxCRC16 >> 8);
-    ModbusTemp.CRCL = (unsigned char) (RxCRC16 & 0xFF);
-    
-    TX485();
-    putchar(ModbusTemp.Addr);
-    putchar(ModbusTemp.FunCode);
-    //putchar( (unsigned char)(Len >> 8) );
-    if(Fcode != SET_DEVICEADDR)
-        putchar( (unsigned char)(Len & 0xFF) );
-    while(Len--){
-        putchar(*(SendTemp++));
-    }
-    putchar(ModbusTemp.CRCL);
-    putchar(ModbusTemp.CRCH);
-    _delay_ms(10);
-    RX485();
-#else
     unsigned char ModbusTemp[RXARRAYTEMP_MAX];
     unsigned short RxCRC16;
     unsigned char i;
@@ -664,7 +461,7 @@ void SendDataToPC(FUNCODE Fcode, unsigned char * SendTemp, unsigned int Len)
     
     _delay_ms(10);
     RX485();
-#endif
+
 }
 unsigned char FrameCRC16IsOK(MODBUSFRAME Temp)
 {
@@ -699,11 +496,8 @@ void IsErrorOrNot(void)
         DisplayHex(ErrCodeDisplay);
     }
 }
-/* ********************************************************************** */
-void SystemInit(void)
+void LoadEEPROM(void)
 {
-//MODE
-
 #ifdef MYDEBUG
     MEASURE_MODE = 0;
     DeviceAddr  = def_DeviceAddr;
@@ -720,31 +514,31 @@ void SystemInit(void)
 
     switch(MEASURE_MODE){
     case 0:
-	pMAX_EEP = &I_MAX_EEP;
-	pMIN_EEP = &I_MIN_EEP;
-	pXSD_EEP = &I_XSD_EEP;
+        pMAX_EEP = &I_MAX_EEP;
+        pMIN_EEP = &I_MIN_EEP;
+        pXSD_EEP = &I_XSD_EEP;
         pADJ_ZERO = &I_ZERO_EEP;
-	break;
+        break;
     case 1:
-	pMAX_EEP = &T_MAX_EEP;
-	pMIN_EEP = &T_MIN_EEP;
-	pXSD_EEP = &T_XSD_EEP;
+        pMAX_EEP = &T_MAX_EEP;
+        pMIN_EEP = &T_MIN_EEP;
+        pXSD_EEP = &T_XSD_EEP;
         pADJ_ZERO = &T_ZERO_EEP;
-	break;
+        break;
     case 2:
-	pMAX_EEP = &Y_MAX_EEP;
-	pMIN_EEP = &Y_MIN_EEP;
-	pXSD_EEP = &Y_XSD_EEP;
-	pADJ_ZERO = &Y_ZERO_EEP;
-	break;
+        pMAX_EEP = &Y_MAX_EEP;
+        pMIN_EEP = &Y_MIN_EEP;
+        pXSD_EEP = &Y_XSD_EEP;
+        pADJ_ZERO = &Y_ZERO_EEP;
+        break;
     case 3:
-	pMAX_EEP = &L_MAX_EEP;
-	pMIN_EEP = &L_MIN_EEP;
-	pXSD_EEP = &L_XSD_EEP;
-	pADJ_ZERO = &L_ZERO_EEP;
-	break;
+        pMAX_EEP = &L_MAX_EEP;
+        pMIN_EEP = &L_MIN_EEP;
+        pXSD_EEP = &L_XSD_EEP;
+        pADJ_ZERO = &L_ZERO_EEP;
+        break;
     default:
-	MEASURE_MODE = 0;
+        MEASURE_MODE = 0;
         break;
     }
     WRITE_BYTE_EEP(MEASURE_MODE,&MEASURE_MODE_EEP);
@@ -753,11 +547,19 @@ void SystemInit(void)
     VALUE_MIN   = READ_WORD_EEP(pMIN_EEP);
     XiaoShuDian = READ_BYTE_EEP(pXSD_EEP);
     ADJ_ZERO    = READ_WORD_EEP(pADJ_ZERO);
-#endif    
+#endif
+}
+/* ********************************************************************** */
+void SystemInit(void)
+{
+
+    
 //IO Direction
     DDRC = 0x0F;
     DDRB = 0x07;
     DDRD = 0xFE;
+//
+    LoadEEPROM();
 //enable interrupt 
     sei();
 //Display Open
@@ -882,6 +684,14 @@ int main(void)
                 switch(tempint){
                     case ADDR_VALUE:/* Get ADC data */
                         V_DATA.F = (float)T_C;
+                        switch(XiaoShuDian){
+                            case 2:V_DATA.F /= 10;
+                                   break;
+                            case 3:V_DATA.F /= 100;
+                                   break;
+                            case 4:V_DATA.F /= 1000;
+                                   break;
+                        }
                         SendTemp[0] = V_DATA.ch[3];
                         SendTemp[1] = V_DATA.ch[2];
                         SendTemp[2] = V_DATA.ch[1];
@@ -999,7 +809,6 @@ int main(void)
                 }
                 break;
             case SET_VALUE:
-#if 1
                 switch(tempint){
                     case ADDR_FW_MAX:
 
@@ -1032,7 +841,6 @@ int main(void)
 #endif
                 }
                 break;
-#endif
             case GET_ID:
                 SendTemp[0] = 0x00;
                 switch(tempint)

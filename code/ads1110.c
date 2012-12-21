@@ -2,10 +2,10 @@
 
 
 
-typedef unsigned char   BYTE;
+typedef unsigned char    BYTE;
 typedef unsigned short   WORD;
-typedef unsigned long   DWORD;
-#define	uchar  unsigned char
+typedef unsigned long    DWORD;
+#define uchar  unsigned char
 volatile struct ADS1110_READ_REG
 {
     unsigned char Addr;
@@ -170,7 +170,7 @@ void SetUpADS1110(unsigned char x)
     IIC_Send_Byte(x);
     IIC_Stop();
 }
-#if 0
+#if 1
 void Init_ADS1110(void)
 {
     SDA_SET_OUT;

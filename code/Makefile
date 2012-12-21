@@ -603,7 +603,7 @@ clean_list :
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVEDIR) .dep
 	$(REMOVE) $(TARGET).bin
-
+	$(REMOVE) $(TARGET).hex.asm
 # Create object files directory
 $(shell mkdir $(OBJDIR) 2>/dev/null)
 
