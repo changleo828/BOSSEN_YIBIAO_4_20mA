@@ -6,7 +6,7 @@
 /* ********************************************************************** */
 #define CODE_CID        (0x88)
 #define CODE_PID        (0x80)
-#define CODE_VID        (0x00)
+#define CODE_VID        (0x01)
 
 #define ID0        (0x1234)
 #define ID1        (0x5678)
@@ -34,9 +34,9 @@
 #define I_ZERO            (0)
 #endif
 
-#define T_RangeMAX        (800L)
-#define T_RangeMIN        (0L)
-#define T_DEF_XiaoShuDian (2)
+#define T_RangeMAX        (2000L)
+#define T_RangeMIN        (400L)
+#define T_DEF_XiaoShuDian (3)
 #ifdef ADC_ADS1110
 #define T_ZERO            AUTO_ZERO
 #else
@@ -46,6 +46,7 @@
 #define Y_RangeMAX        (2000L)
 #define Y_RangeMIN        (400L)
 #define Y_DEF_XiaoShuDian (3)
+#define DEF_YW_H          (200)
 #ifdef ADC_ADS1110
 #define Y_ZERO            AUTO_ZERO
 #else
@@ -54,7 +55,7 @@
 
 #define L_RangeMAX        (2000L)
 #define L_RangeMIN        (400L)
-#define L_DEF_XiaoShuDian (2)
+#define L_DEF_XiaoShuDian (3)
 #ifdef ADC_ADS1110
 #define L_ZERO            AUTO_ZERO
 #else

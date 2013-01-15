@@ -86,11 +86,11 @@ volatile struct ADS1110_SETUP_REG
 #else
 #define SDA0  asm("NOP");\
 	      PORTC &= ~(1<<4);\
-              asm("NOP");\
+	      asm("NOP");\
               asm("NOP")
 #define SDA1  asm("NOP");\
 	      PORTC |= (1<<4);\
-              asm("NOP");\
+	      asm("NOP");\
               asm("NOP")
 #define SCL0  asm("NOP");\
 	      PORTC &= ~(1<<5);\

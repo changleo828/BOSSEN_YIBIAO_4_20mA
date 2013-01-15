@@ -446,7 +446,7 @@
  464               	.LM56:
  465 010a A59A      		sbi 52-32,5
  466               	.LM57:
- 467 010c 8CE1      		ldi r24,lo8(28)
+ 467 010c 8CE8      		ldi r24,lo8(-116)
  468 010e 00D0      		rcall SetUpADS1110
  469               	/* epilogue start */
  470               	.LM58:
@@ -456,145 +456,79 @@
  476               	ReadADS1110:
  477               	.LFB8:
  478               	.LM59:
- 479 0112 AF92      		push r10
- 480 0114 BF92      		push r11
- 481 0116 CF92      		push r12
- 482 0118 DF92      		push r13
- 483 011a EF92      		push r14
- 484 011c FF92      		push r15
- 485 011e 0F93      		push r16
- 486 0120 1F93      		push r17
- 487 0122 DF93      		push r29
- 488 0124 CF93      		push r28
- 489 0126 00D0      		rcall .
- 490 0128 0F92      		push __tmp_reg__
- 491 012a CDB7      		in r28,__SP_L__
- 492 012c DEB7      		in r29,__SP_H__
- 493               	/* prologue: function */
- 494               	/* frame size = 3 */
- 495               	.LM60:
- 496 012e 1982      		std Y+1,__zero_reg__
- 497               	.LVL8:
- 498               	.LM61:
- 499 0130 1A82      		std Y+2,__zero_reg__
- 500               	.LVL9:
- 501               	.LM62:
- 502 0132 1B82      		std Y+3,__zero_reg__
- 503               	.LVL10:
- 504               	.LM63:
- 505 0134 8CE9      		ldi r24,lo8(-100)
- 506 0136 00D0      		rcall SetUpADS1110
- 507 0138 04EF      		ldi r16,lo8(500)
- 508 013a 11E0      		ldi r17,hi8(500)
- 509               	.LVL11:
- 510               	.LM64:
- 511 013c 5E01      		movw r10,r28
- 512 013e 0894      		sec
- 513 0140 A11C      		adc r10,__zero_reg__
- 514 0142 B11C      		adc r11,__zero_reg__
- 515               	.LM65:
- 516 0144 92E0      		ldi r25,lo8(2)
- 517 0146 C92E      		mov r12,r25
- 518 0148 D12C      		mov r13,__zero_reg__
- 519 014a CC0E      		add r12,r28
- 520 014c DD1E      		adc r13,r29
- 521               	.LM66:
- 522 014e 83E0      		ldi r24,lo8(3)
- 523 0150 E82E      		mov r14,r24
- 524 0152 F12C      		mov r15,__zero_reg__
- 525 0154 EC0E      		add r14,r28
- 526 0156 FD1E      		adc r15,r29
- 527               	.LVL12:
- 528               	.L22:
- 529               	.LM67:
- 530 0158 0150      		subi r16,lo8(-(-1))
- 531 015a 1040      		sbci r17,hi8(-(-1))
- 532               	.LM68:
- 533 015c 00D0      		rcall IIC_Start
- 534               	.LM69:
- 535 015e 81E9      		ldi r24,lo8(-111)
- 536 0160 00D0      		rcall IIC_Send_Byte
- 537               	.LM70:
- 538 0162 C501      		movw r24,r10
- 539 0164 00D0      		rcall IIC_Receive_Byte
- 540               	.LM71:
- 541 0166 C601      		movw r24,r12
- 542 0168 00D0      		rcall IIC_Receive_Byte
- 543               	.LM72:
- 544 016a C701      		movw r24,r14
- 545 016c 00D0      		rcall IIC_Receive_Byte
- 546               	.LM73:
- 547 016e 00D0      		rcall IIC_Stop
- 548               	.LM74:
- 549 0170 8B81      		ldd r24,Y+3
- 550 0172 8068      		ori r24,lo8(-128)
- 551               	.LVL13:
- 552 0174 8038      		cpi r24,lo8(-128)
- 553 0176 01F4      		brne .L21
- 554 0178 0115      		cp r16,__zero_reg__
- 555 017a 1105      		cpc r17,__zero_reg__
- 556 017c 01F4      		brne .L22
- 557               	.L21:
- 558               	.LM75:
- 559 017e 17FF      		sbrs r17,7
- 560 0180 00C0      		rjmp .L23
- 561 0182 20E0      		ldi r18,lo8(0)
- 562 0184 30E0      		ldi r19,hi8(0)
- 563               	.LVL14:
- 564 0186 00C0      		rjmp .L24
- 565               	.LVL15:
- 566               	.L23:
- 567               	.LM76:
- 568 0188 9981      		ldd r25,Y+1
- 569               	.LVL16:
- 570 018a 80E0      		ldi r24,lo8(0)
- 571               	.LVL17:
- 572               	.LM77:
- 573 018c 2A81      		ldd r18,Y+2
- 574 018e AC01      		movw r20,r24
- 575 0190 420F      		add r20,r18
- 576 0192 511D      		adc r21,__zero_reg__
- 577 0194 9A01      		movw r18,r20
- 578               	.LVL18:
- 579               	.L24:
- 580               	.LM78:
- 581 0196 C901      		movw r24,r18
- 582               	.LVL19:
- 583               	/* epilogue start */
- 584 0198 0F90      		pop __tmp_reg__
- 585 019a 0F90      		pop __tmp_reg__
- 586 019c 0F90      		pop __tmp_reg__
- 587 019e CF91      		pop r28
- 588 01a0 DF91      		pop r29
- 589 01a2 1F91      		pop r17
- 590 01a4 0F91      		pop r16
- 591               	.LVL20:
- 592 01a6 FF90      		pop r15
- 593 01a8 EF90      		pop r14
- 594 01aa DF90      		pop r13
- 595 01ac CF90      		pop r12
- 596 01ae BF90      		pop r11
- 597 01b0 AF90      		pop r10
- 598 01b2 0895      		ret
- 599               	.LFE8:
- 601               		.comm ADS1110_READ_DATA,4,1
- 602               		.comm ADS1110_SETUP_DATA,2,1
- 675               	.Letext0:
+ 479 0112 DF93      		push r29
+ 480 0114 CF93      		push r28
+ 481 0116 00D0      		rcall .
+ 482 0118 0F92      		push __tmp_reg__
+ 483 011a CDB7      		in r28,__SP_L__
+ 484 011c DEB7      		in r29,__SP_H__
+ 485               	/* prologue: function */
+ 486               	/* frame size = 3 */
+ 487               	.LM60:
+ 488 011e 1982      		std Y+1,__zero_reg__
+ 489               	.LVL8:
+ 490               	.LM61:
+ 491 0120 1A82      		std Y+2,__zero_reg__
+ 492               	.LVL9:
+ 493               	.LM62:
+ 494 0122 1B82      		std Y+3,__zero_reg__
+ 495               	.LVL10:
+ 496               	.LM63:
+ 497 0124 00D0      		rcall IIC_Start
+ 498               	.LM64:
+ 499 0126 81E9      		ldi r24,lo8(-111)
+ 500 0128 00D0      		rcall IIC_Send_Byte
+ 501               	.LM65:
+ 502 012a CE01      		movw r24,r28
+ 503 012c 0196      		adiw r24,1
+ 504 012e 00D0      		rcall IIC_Receive_Byte
+ 505               	.LM66:
+ 506 0130 CE01      		movw r24,r28
+ 507 0132 0296      		adiw r24,2
+ 508 0134 00D0      		rcall IIC_Receive_Byte
+ 509               	.LM67:
+ 510 0136 CE01      		movw r24,r28
+ 511 0138 0396      		adiw r24,3
+ 512 013a 00D0      		rcall IIC_Receive_Byte
+ 513               	.LM68:
+ 514 013c 00D0      		rcall IIC_Stop
+ 515               	.LM69:
+ 516 013e 3981      		ldd r19,Y+1
+ 517               	.LVL11:
+ 518 0140 20E0      		ldi r18,lo8(0)
+ 519               	.LVL12:
+ 520 0142 8A81      		ldd r24,Y+2
+ 521 0144 280F      		add r18,r24
+ 522 0146 311D      		adc r19,__zero_reg__
+ 523               	.LVL13:
+ 524               	.LM70:
+ 525 0148 C901      		movw r24,r18
+ 526               	/* epilogue start */
+ 527 014a 0F90      		pop __tmp_reg__
+ 528 014c 0F90      		pop __tmp_reg__
+ 529 014e 0F90      		pop __tmp_reg__
+ 530 0150 CF91      		pop r28
+ 531 0152 DF91      		pop r29
+ 532 0154 0895      		ret
+ 533               	.LFE8:
+ 535               		.comm ADS1110_READ_DATA,4,1
+ 536               		.comm ADS1110_SETUP_DATA,2,1
+ 609               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 ads1110.c
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:2      *ABS*:0000003f __SREG__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:3      *ABS*:0000003e __SP_H__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:4      *ABS*:0000003d __SP_L__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:5      *ABS*:00000034 __CCP__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:6      *ABS*:00000000 __tmp_reg__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:7      *ABS*:00000001 __zero_reg__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:18     .text:00000000 IIC_Start
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:78     .text:0000001e IIC_Stop
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:138    .text:0000003c IIC_Send_Byte
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:290    .text:000000a2 IIC_Receive_Byte
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:429    .text:000000f4 SetUpADS1110
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:457    .text:00000108 Init_ADS1110
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cc3eSR26.s:476    .text:00000112 ReadADS1110
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:18     .text:00000000 IIC_Start
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:78     .text:0000001e IIC_Stop
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:138    .text:0000003c IIC_Send_Byte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:290    .text:000000a2 IIC_Receive_Byte
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:429    .text:000000f4 SetUpADS1110
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:457    .text:00000108 Init_ADS1110
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccTUVN0p.s:476    .text:00000112 ReadADS1110
                             *COM*:00000004 ADS1110_READ_DATA
                             *COM*:00000002 ADS1110_SETUP_DATA
 

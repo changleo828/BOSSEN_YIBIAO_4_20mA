@@ -455,21 +455,21 @@
  544               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 led.c
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:2      *ABS*:0000003f __SREG__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:3      *ABS*:0000003e __SP_H__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:4      *ABS*:0000003d __SP_L__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:5      *ABS*:00000034 __CCP__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:6      *ABS*:00000000 __tmp_reg__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:7      *ABS*:00000001 __zero_reg__
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:18     .text:00000000 SPISend
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:77     .text:00000040 __vector_9
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:449    .bss:00000000 DuanAddr
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:475    .data:00000010 LEDBUFFER
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:191    .text:000000f2 OpenDisplayLED
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:216    .text:00000108 DisplayHex
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:455    .data:00000000 LEDMA
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:282    .text:0000015e Display10
-C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cctoWzWH.s:433    .text:0000025e DisplayFloat
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:18     .text:00000000 SPISend
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:77     .text:00000040 __vector_9
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:449    .bss:00000000 DuanAddr
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:475    .data:00000010 LEDBUFFER
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:191    .text:000000f2 OpenDisplayLED
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:216    .text:00000108 DisplayHex
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:455    .data:00000000 LEDMA
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:282    .text:0000015e Display10
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/cco5efzc.s:433    .text:0000025e DisplayFloat
 
 UNDEFINED SYMBOLS
 __udivmodhi4

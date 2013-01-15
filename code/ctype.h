@@ -14,6 +14,7 @@ enum{
     ADDR_F1_VALUE,
     ADDR_F2_VALUE,
     ADDR_ZERO,
+	ADDR_YW_H,
     ADDR_RETURN_ID,
     ADDR_FW_MAX = 0x1016,
     ADDR_FW_MIN = 0x1018,

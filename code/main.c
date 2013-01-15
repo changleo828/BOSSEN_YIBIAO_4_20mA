@@ -12,6 +12,7 @@
 #include <avr/eeprom.h>
 #include <util/delay.h>
 #include <avr/wdt.h>
+#include <math.h>
 #include "ctype.h"
 #include "led.h"
 #include "CRC16.h"
@@ -19,6 +20,17 @@
 /* ********************************************************************** */
 
 //#define MYDEBUG
+#define ONE_MODE_DL 0   /*电流*/
+#define ONE_MODE_LL 1   /*流量*/
+#define ONE_MODE_YW 2   /*液位*/
+#define ONE_MODE_WD 3   /*温度*/
+#define ONE_MODE_YL 4   /*压力*/
+
+#define MEASURE_MODE_NUMBER  ONE_MODE_DL
+
+#define ONE_MODE
+
+//#define LL_DEBUG
 
 //
 /* ********************************************************************** */
@@ -28,7 +40,7 @@ void ErrorDisplay(unsigned int ErrCode);
 
 /* ********************************************************************** */
 #ifndef MYDEBUG
-
+/*
 static YI_BOAI_REG REG_MAP[] = {
     {ADDR_DEV,def_DeviceAddr},
     {ADDR_CID,CODE_CID},
@@ -39,9 +51,9 @@ static YI_BOAI_REG REG_MAP[] = {
     {ADDR_F1_VALUE,},
     {ADDR_F2_VALUE,},
 }
-
+*/
 unsigned char ADDR_EEP __attribute__((section(".eeprom"))) = def_DeviceAddr;
-unsigned char MEASURE_MODE_EEP __attribute__((section(".eeprom"))) = (-1);
+unsigned char MEASURE_MODE_EEP __attribute__((section(".eeprom"))) = (MEASURE_MODE_NUMBER);
 
 unsigned int  I_MAX_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MAX(I_RangeMAX,I_RangeMIN);
 unsigned int  I_MIN_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MIN(I_RangeMAX,I_RangeMIN);
@@ -57,6 +69,7 @@ unsigned int  Y_MAX_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MAX(Y_R
 unsigned int  Y_MIN_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MIN(Y_RangeMAX,Y_RangeMIN);
 unsigned char Y_XSD_EEP  __attribute__((section(".eeprom"))) = Y_DEF_XiaoShuDian;
 unsigned int Y_ZERO_EEP  __attribute__((section(".eeprom"))) = Y_ZERO;
+unsigned int Y_H_EEP  __attribute__((section(".eeprom"))) = DEF_YW_H;
 
 unsigned int  L_MAX_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MAX(L_RangeMAX,L_RangeMIN);
 unsigned int  L_MIN_EEP  __attribute__((section(".eeprom"))) = DEF_VALUE_MIN(L_RangeMAX,L_RangeMIN);
@@ -71,9 +84,12 @@ static unsigned int  * pMAX_EEP;
 static unsigned int  * pMIN_EEP;
 static unsigned char * pXSD_EEP;
 static unsigned int  * pADJ_ZERO;
+
 #endif
 static unsigned char MEASURE_MODE;
 static unsigned int  ADJ_ZERO;
+static unsigned int  YW_H;
+
 /* ********************************************************************** */
 unsigned int READ_WORD_EEP(unsigned int * addr) {eeprom_busy_wait();return eeprom_read_word(addr);}
 void WRITE_WORD_EEP(unsigned int x,unsigned int * addr) {eeprom_busy_wait();eeprom_write_word(addr,x);}
@@ -231,7 +247,7 @@ SIGNAL(SIG_OVERFLOW2)
             break;
         case 3: /* receive All */
             if(RxFrame.Len < 2){
-                ErrorDisplay(ERRCODE_ReceiveDataErr);
+                //ErrorDisplay(ERRCODE_ReceiveDataErr);
                 RxFrame.Data = RxArrayTemp + 2;
                 break;
             }
@@ -241,7 +257,8 @@ SIGNAL(SIG_OVERFLOW2)
             RxFrame.Data = RxArrayTemp + 2;
             break;
         default :
-            ErrorDisplay(ERRCODE_ReceiveDataErr);
+		    break;
+            //ErrorDisplay(ERRCODE_ReceiveDataErr);
     }
     /* Stop Timer2 */
     TIMSK &= ~(1<<TOIE2);
@@ -260,9 +277,9 @@ SIGNAL(SIG_UART_RECV)
     }
     cli();
     TIMSK &= ~(1<<TOIE2);
-    if(UCSRA & ((1<<FE)|(1<<DOR)|(1<<PE))){
-        ErrorDisplay(ERRCODE_ReceiveBitErr);
-    }
+    //if(UCSRA & ((1<<FE)|(1<<DOR)|(1<<PE))){
+        //ErrorDisplay(ERRCODE_ReceiveBitErr);
+    //}
     RXDataTemp = UDR;
 #if 0
     TX485();
@@ -290,7 +307,7 @@ SIGNAL(SIG_UART_RECV)
             if(RxFrame.Len == (RXARRAYTEMP_MAX-2)){
                 RxFrame.Data = RxArrayTemp + 2;
                 RxFrame.Len = 0;
-                ErrorDisplay(ERRCODE_RXARRAYTEMP_MAXErr);
+                //ErrorDisplay(ERRCODE_RXARRAYTEMP_MAXErr);
             }
             RxMode = 0x03;
             break;
@@ -315,6 +332,9 @@ void ADCInit(void)
              (0<<ADPS1);    /* ADC Prescaler Select Bits */
 #endif
 }
+#ifdef ADC_ADS1110
+#define ADCOutOne ReadADS1110
+#else
 unsigned int ADCOutOne(void)
 {
     unsigned int i;
@@ -344,8 +364,8 @@ unsigned int ADCOutOne(void)
 
     return sum>>6;
 #endif
-
 }
+#endif
 #define ADC_Arrya_Len_MAX   (64)
 unsigned int ADC_Arrya_Num;
 unsigned int ADC_Arrya[ADC_Arrya_Len_MAX];
@@ -385,15 +405,108 @@ unsigned int ADCOut(void)
 
     return  temp;
 }
+#ifdef LL_DEBUG
+float  QC_TS;
+#endif
+#if 1
+float  QC_K_h = 0.00085;
+float  QC_C_e = 0.577;
+float  QC_C_ = 2.361 * 0.577;
+#else
+#define  QC_K_h  (0.00085)
+#define  QC_C_e  (0.577)
+//#define  QC_C_   (2.361 * 0.577)
+#define  QC_C_   (1.362)
+#endif
+float ChangeADCResult_LL(void)
+{
+    float LL_Result;
+    float temp;
+    float tmp;
+    long adc = 0;
+#if 0
+    LL_Result =  (float)(ADCOut());
+    LL_Result += (float)ADJ_ZERO;
+	
+    temp = (LL_Result * (float)(VALUE_MAX - VALUE_MIN)) /(float)ADC_JINGDU + (float)VALUE_MIN ;
+#endif
+    ADCResult = ADCOut();
+    ADCResult = ADCResult + ADJ_ZERO;
+    adc = ((long) ADCResult * (long)(VALUE_MAX - VALUE_MIN)) /(long)ADC_JINGDU + VALUE_MIN ;
+    ADCResult = (unsigned int) adc;
+    
+    temp = (float)ADCResult;
+    
+    temp /= 1000.0;
+#ifdef LL_DEBUG
+    QC_TS = temp;
+#endif
+    temp = temp + QC_K_h;
+    tmp = powf(temp,5);
+    temp = sqrtf(tmp);
+
+    LL_Result = (QC_C_ * temp);
+    
+    LL_Result *= 1000;
+    return LL_Result;
+}
+
+float LL_value;
+void RefreshLED_LL(void)
+{
+    float T_C_temp;
+    unsigned int tmp;
+
+    T_C_temp = ChangeADCResult_LL();
+    if(LL_value > T_C_temp){
+        if( (LL_value - T_C_temp) > 3 )
+    {
+            LL_value = T_C_temp;
+            tmp = (unsigned int)ceil(LL_value);
+            Display10(tmp);
+    }
+    } else {
+        if( (T_C_temp - LL_value) > 3 )
+    {
+            LL_value = T_C_temp;
+            tmp = (unsigned int)ceil(LL_value);
+            Display10(tmp);
+    }
+    }
+#ifdef TIMERDELAY
+    if(TimerOver != 0)
+    {
+        /* change T_C value 1S */
+        tmp = (unsigned int)ceil(LL_value);
+        Display10(tmp);
+        LL_value = ChangeADCResult_LL();
+        /*  */
+        TimerOver = 0;
+        TimerDelayMs(1000);
+        /* D2 LED 1S flicker */
+        PORTD ^= (1<<7);
+    if(ErrFlag !=0)
+            ErrFlag ++;
+    }
+#endif
+}
+
 unsigned int ChangeADCResult(void)
 {
     long temp;
+    //double tmp;
 
     ADCResult = ADCOut();
     ADCResult += ADJ_ZERO;
+	
     temp = ((long) ADCResult * (long)(VALUE_MAX - VALUE_MIN)) /(long)ADC_JINGDU + VALUE_MIN ;
     ADCResult = (unsigned int) temp;
-
+    
+	
+	if(MEASURE_MODE == ONE_MODE_YW)
+	
+	ADCResult = YW_H - ADCResult;
+	
     return ADCResult;
 }
 void RefreshLED(void)
@@ -480,6 +593,7 @@ unsigned char FrameCRC16IsOK(MODBUSFRAME Temp)
         return 0;
     return 1;
 }
+#if 0
 void ErrorDisplay(unsigned int ErrCode)
 {
     ErrFlag = 1;
@@ -487,6 +601,7 @@ void ErrorDisplay(unsigned int ErrCode)
     ErrCodeDisplay = ErrCode | 0xE000;
 
 }
+#endif
 void IsErrorOrNot(void)
 {
     if(ErrFlag)
@@ -496,21 +611,22 @@ void IsErrorOrNot(void)
         DisplayHex(ErrCodeDisplay);
     }
 }
+#if 1
 void LoadEEPROM(void)
 {
-#ifdef MYDEBUG
-    MEASURE_MODE = 0;
+#ifndef ONE_MODE
+    /*
+    MEASURE_MODE = MEASURE_MODE_NUMBER;
     DeviceAddr  = def_DeviceAddr;
     VALUE_MAX   = DEF_VALUE_MAX(I_RangeMAX,I_RangeMIN);
     VALUE_MIN   = DEF_VALUE_MIN(I_RangeMAX,I_RangeMIN);
     XiaoShuDian = I_DEF_XiaoShuDian;
     ADJ_ZERO    = 0;
-#else
+    */
     MEASURE_MODE = READ_BYTE_EEP(&MEASURE_MODE_EEP);
     MEASURE_MODE ++;
     if(MEASURE_MODE>3)
         MEASURE_MODE = 0;
-    DeviceAddr   = READ_BYTE_EEP(&ADDR_EEP);
 
     switch(MEASURE_MODE){
     case 0:
@@ -542,13 +658,27 @@ void LoadEEPROM(void)
         break;
     }
     WRITE_BYTE_EEP(MEASURE_MODE,&MEASURE_MODE_EEP);
+#else
+    MEASURE_MODE = READ_BYTE_EEP(&MEASURE_MODE_EEP);
+    pMAX_EEP = &I_MAX_EEP;
+    pMIN_EEP = &I_MIN_EEP;
+    pXSD_EEP = &I_XSD_EEP;
+    pADJ_ZERO = &I_ZERO_EEP;
+	
+#endif
+    DeviceAddr   = READ_BYTE_EEP(&ADDR_EEP);
 
     VALUE_MAX   = READ_WORD_EEP(pMAX_EEP);
     VALUE_MIN   = READ_WORD_EEP(pMIN_EEP);
-    XiaoShuDian = READ_BYTE_EEP(pXSD_EEP);
+    if(MEASURE_MODE == ONE_MODE_LL)
+        XiaoShuDian = 0;
+    else
+        XiaoShuDian = READ_BYTE_EEP(pXSD_EEP);
+    
     ADJ_ZERO    = READ_WORD_EEP(pADJ_ZERO);
-#endif
+	YW_H = READ_WORD_EEP(&Y_H_EEP);
 }
+#endif
 /* ********************************************************************** */
 void SystemInit(void)
 {
@@ -620,7 +750,10 @@ int main(void)
         if(!RxFrameComplete)
         {
             //if(ErrFlag == 0)
-            RefreshLED();
+            if(MEASURE_MODE == ONE_MODE_LL)
+                RefreshLED_LL();
+            else
+                RefreshLED();
             IsErrorOrNot();
             wdt_reset();
             continue;
@@ -649,6 +782,7 @@ int main(void)
                 }
             continue;
             }
+#if 0
             if(RxFrame.FunCode == 0x89){
                 if(RxFrame.Data[0] == ID.ch[3] &&
                    RxFrame.Data[1] == ID.ch[2] &&
@@ -664,11 +798,12 @@ int main(void)
                 }
             continue;
             }
+#endif
         }
         /* Judge CRC16 is OK */
         if(!FrameCRC16IsOK(RxFrame))
         {
-            ErrorDisplay(ERRCODE_CRC16Error);
+            //ErrorDisplay(ERRCODE_CRC16Error);
              CRCYesOrNo = 0x80;
         }else{
              CRCYesOrNo = 0;
@@ -683,7 +818,10 @@ int main(void)
             case GET_VALUE:
                 switch(tempint){
                     case ADDR_VALUE:/* Get ADC data */
-                        V_DATA.F = (float)T_C;
+                        if(MEASURE_MODE == ONE_MODE_LL)
+                            V_DATA.F = LL_value;
+                        else{
+                            V_DATA.F = (float)T_C;
                         switch(XiaoShuDian){
                             case 2:V_DATA.F /= 10;
                                    break;
@@ -692,11 +830,22 @@ int main(void)
                             case 4:V_DATA.F /= 1000;
                                    break;
                         }
+                        }
                         SendTemp[0] = V_DATA.ch[3];
                         SendTemp[1] = V_DATA.ch[2];
                         SendTemp[2] = V_DATA.ch[1];
                         SendTemp[3] = V_DATA.ch[0];
                         SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
+#ifdef LL_DEBUG
+                        if(MEASURE_MODE == ONE_MODE_LL){
+                            V_DATA.F = QC_TS;
+                            SendTemp[0] = V_DATA.ch[3];
+                            SendTemp[1] = V_DATA.ch[2];
+                            SendTemp[2] = V_DATA.ch[1];
+                            SendTemp[3] = V_DATA.ch[0];
+                            SendDataToPC(GET_VALUE | CRCYesOrNo, SendTemp , 4);
+                        }
+#endif
                         break;
                     default:
                         SendTemp[0] = 0x00;
@@ -717,6 +866,7 @@ int main(void)
                         SendTemp[1] = ADJ_ZERO;
                         SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
                         break;
+#if 0
                     case ADDR_F1_VALUE:/* Get Freq Data */
                         SendTemp[0] = 0x00;
                         SendTemp[1] = 0x00;
@@ -727,18 +877,7 @@ int main(void)
                         SendTemp[1] = 0x00;
                         SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 2);
                         break;
-                    case ADDR_FW_MAX:
-                        SendTemp[0] = V_MAX.ch[3];
-                        SendTemp[1] = V_MAX.ch[2];
-                        SendTemp[2] = V_MAX.ch[1];
-                        SendTemp[3] = V_MAX.ch[0];
-
-                        SendTemp[4] = V_MIN.ch[3];
-                        SendTemp[5] = V_MIN.ch[2];
-                        SendTemp[6] = V_MIN.ch[1];
-                        SendTemp[7] = V_MIN.ch[0];
-                        SendDataToPC(GET_DATA | CRCYesOrNo, SendTemp , 8);
-                        break;
+#endif
                     default:
                         SendTemp[0] = 0x00;
                         CRCYesOrNo = 0x80;
@@ -788,6 +927,33 @@ int main(void)
 #ifndef MYDEBUG
                         WRITE_WORD_EEP(ADJ_ZERO,pADJ_ZERO);
 #endif
+                        break;
+                    case ADDR_YW_H:/* change device addr */
+                        if(RxFrame.Data[3] == 0x00){
+                            break;
+                        }
+                        YW_H = RxFrame.Data[3];
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        //SendTemp[2] = 0x00;
+                        //SendTemp[3] = YW_H;
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+#ifndef MYDEBUG
+                        WRITE_WORD_EEP(DeviceAddr,&Y_H_EEP);
+#endif
+                        break;
+                    case ADDR_FID:/* change device addr */
+
+                        MEASURE_MODE = RxFrame.Data[3];
+                        SendTemp[0] = RxFrame.Data[0];
+                        SendTemp[1] = RxFrame.Data[1];
+                        SendTemp[2] = 0x00;
+                        SendTemp[3] = MEASURE_MODE;
+                        SendDataToPC(SET_DEVICEADDR | CRCYesOrNo, SendTemp , 4);
+#ifndef MYDEBUG
+                        WRITE_BYTE_EEP(MEASURE_MODE,&MEASURE_MODE_EEP);
+#endif
+                        while(1);
                         break;
                     case ADDR_RETURN_ID:
                         if(RxFrame.Data[3] != 0){
@@ -883,12 +1049,12 @@ int main(void)
             default:
                 RxFrame.FunCode |= 0x80;
                 SendDataToPC(RxFrame.FunCode, RxFrame.Data, RxFrame.Len - 2);
-                ErrorDisplay(ERRCODE_FunCodeInvalid);
-                PORTD ^= (1<<6);
+                //ErrorDisplay(ERRCODE_FunCodeInvalid);
+                //PORTD ^= (1<<6);
                 break;
         }//switch end
     }//while end
-    return 0;
+    //return 0;
 }//main end
 
 
